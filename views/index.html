@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>One Word World</title>
+    <!-- Bootstrap import -->
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+
+  </head>
+  <body ng-app="oneWord">
+  <div class="container" ng-controller="oneWordCtrl">
+    <h1>This is One Word World: Welcome!</h1>
+    <div class="row">
+        <div class="col-xs-6" ng-controller="personWordCtrl">
+            person week
+
+            <form action="">
+              <input id="m" autocomplete="off" /><button class="btn btn-primary" >Send</button>
+            </form>
+            <ul id="messages"></ul>
+        </div>
+        <ui-view="EventView"></ui-view>
+    </div>
+
+</div>
+<!-- Libs -->
+<!-- jQuery library -->
+<script src="js/jquery-2.1.4.min.js"></script>
+<!-- Bootstrap Library -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- AngularJS Libraries -->
+<script src="js/angular.min.js"></script>
+<script src="js/angular-ui-router.min.js"></script>
+
+<!-- Main OneWordWorld Module -->
+<script src="application/oneword.module.js"></script>
+
+<!-- Socket.io script -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+  $('form').submit(null, function(){
+    console.log("Person");
+    socket.emit('chat message', $('#m').val());
+    $('#m').val('');
+    return false;
+  });
+  socket.on('chat message', function(msg){
+    $('#messages').append($('<li>').text(msg));
+  });
+</script>
+
+  </body>
+</html>
