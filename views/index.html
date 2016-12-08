@@ -7,22 +7,25 @@
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 
   </head>
-  <body ng-app="oneWord">
-  <div class="container" ng-controller="oneWordCtrl">
+  <body ng-app="oneWordWorld">
+    <div ui-view></div> <!-- contacts.html plugs in here -->
+
+  <!-- <div class="container" ng-controller="OwwController as owwCtrl">
     <h1>This is One Word World: Welcome!</h1>
+
     <div class="row">
-        <div class="col-xs-6" ng-controller="personWordCtrl">
-            person week
+        <div class="col-xs-6">
+            Person week
 
             <form action="">
               <input id="m" autocomplete="off" /><button class="btn btn-primary" >Send</button>
             </form>
             <ul id="messages"></ul>
         </div>
-        <ui-view="EventView"></ui-view>
+        <ui-view="event"></ui-view>
     </div>
 
-</div>
+</div> -->
 <!-- Libs -->
 <!-- jQuery library -->
 <script src="js/jquery-2.1.4.min.js"></script>
@@ -34,21 +37,10 @@
 
 <!-- Main OneWordWorld Module -->
 <script src="application/oneword.module.js"></script>
+<!-- <script src="application/oneword.routes.js"></script> -->
+<script src="application/controllers/oneword.controller.js"></script>
 
-<!-- Socket.io script -->
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  var socket = io();
-  $('form').submit(null, function(){
-    console.log("Person");
-    socket.emit('chat message', $('#m').val());
-    $('#m').val('');
-    return false;
-  });
-  socket.on('chat message', function(msg){
-    $('#messages').append($('<li>').text(msg));
-  });
-</script>
+
 
   </body>
 </html>

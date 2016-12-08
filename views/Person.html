@@ -1,0 +1,23 @@
+
+    <div class="col-xs-6">
+        Person week
+
+        <form id="formPerson" action="">
+          <input id="p" autocomplete="off" /><button class="btn btn-primary" >Send</button>
+        </form>
+        <ul id="persons"></ul>
+    </div>
+    <!-- Socket.io script -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+      $('#formPerson').submit(null, function(){
+        console.log("Person");
+        socket.emit('person', 'person', $('#p').val());
+        $('#p').val('');
+        return false;
+      });
+      socket.on('personWord', function(prs){
+        $('#persons').append($('<li>').text(prs));
+      });
+    </script>

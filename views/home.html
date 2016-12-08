@@ -1,0 +1,57 @@
+
+<h1>This is One Word World: Welcome!</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6">
+        Person week
+
+        <form id="formPerson" action="">
+          <input id="p" autocomplete="off" /><button class="btn btn-primary" >Send</button>
+        </form>
+        <ul id="persons"></ul>
+    </div>
+    <!-- <div ui-view="person"></div>
+    <div ui-view="event"></div> -->
+    <div class="col-xs-6">
+        Event week
+
+        <form id="formEvent" action="">
+          <input id="e" autocomplete="off" onmousedown="ChangeChannel('event')"/><button class="btn btn-primary" >Send</button>
+        </form>
+        <ul id="events"></ul>
+    </div>
+  </div>
+
+  <label for="number">Number of users online</label>
+  <label id="users"></label>
+</div>
+<!-- Socket.io script -->
+<script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io.connect();
+    function ChangeChannel(newroom) {
+      socket.on('changeChannel', newroom);
+    };
+    socket.on('newconn', function(num){
+      $('#users').text(num);
+    });
+
+    $('#formEvent').submit(null, function(){
+      socket.emit('event', 'event', $('#e').val());
+      $('#e').val('');
+      return false;
+    });
+    $('#formPerson').submit(null, function(){
+      console.log("Person");
+      socket.emit('person', 'person', $('#p').val());
+      $('#p').val('');
+      return false;
+    });
+    socket.on('eventWord', function(evt){
+      $('#events').append($('<li>').text(evt));
+    });
+
+    socket.on('personWord', function(prs){
+      $('#persons').append($('<li>').text(prs));
+    });
+  </script>
