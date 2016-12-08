@@ -1,18 +1,15 @@
 
-<h1>This is One Word World: Welcome!</h1>
+<h1 class="text-center">This is One Word World: Welcome!</h1>
 <div class="container">
   <div class="row">
-    <div class="col-xs-6">
+    <div class="col-xs-6 center">
         Person week
-
         <form id="formPerson" action="">
           <input id="p" autocomplete="off" /><button class="btn btn-primary" >Send</button>
         </form>
         <ul id="persons"></ul>
     </div>
-    <!-- <div ui-view="person"></div>
-    <div ui-view="event"></div> -->
-    <div class="col-xs-6">
+    <div class="col-xs-6 center">
         Event week
 
         <form id="formEvent" action="">
@@ -21,9 +18,12 @@
         <ul id="events"></ul>
     </div>
   </div>
+  <div class="row">
+    <label for="number">Number of users online</label>
+    <label id="users"></label>
+  </div>
 
-  <label for="number">Number of users online</label>
-  <label id="users"></label>
+
 </div>
 <!-- Socket.io script -->
 <script src="/socket.io/socket.io.js"></script>

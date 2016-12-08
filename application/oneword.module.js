@@ -23,18 +23,15 @@ function config($urlRouterProvider, $stateProvider) {
             '': { templateUrl: 'views/home.html' },
 
             // the child views will be defined here (absolutely named)
-            'person@home': { templateUrl: 'views/test1.html' },
+            'person@home': { templateUrl: 'views/person.html' },
 
             // for column two, we'll define a separate controller
             'event@home': {
-                templateUrl: 'views/test1.html'
+                templateUrl: 'views/event.html'
             }
         }
 
     });
-
-
-
-      };
+  };
 
 })();
