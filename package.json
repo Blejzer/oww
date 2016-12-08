@@ -1,6 +1,10 @@
 {
   "name": "one-word-world",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git:https://github.com/Blejzer/oneWordWorld.git"
+  },
   "main": "server.js",
   "version": "0.0.1",
   "description": "one word world app",
