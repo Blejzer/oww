@@ -13,6 +13,21 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/views/index.html');
 });
 
+// Pravimo konekciju na bazu podataka
+var mysql = require('mysql')
+var dbcon = mysql.createConnection({
+  host: 'localhost',
+  user: 'owwuser',
+  password: 'myscrtW0rd',
+  database : 'oneword'
+})
+dbcon.connect()
+
+// mysql queries
+
+var insert1 = "INSERT INTO toneword (word) VALUES('";
+var insert3 = "');";
+
 
 // Brojac korisnika online:
 var brojacKorisnika = 0;
@@ -23,7 +38,7 @@ io.sockets.on('connection', function (socket) {
 
   /////////////////////////////////////////////
   //                                         //
-  //         FAZA PRVA PRIJAVLJIVANJE        //
+  //         FAZA  PRIJAVLJIVANJE            //
   // Odmah nakon konekcije idemo sa prijavom //
   // korisnika i povecanjem broja korisnika  //
   // za jedan                                //
@@ -44,6 +59,13 @@ io.sockets.on('connection', function (socket) {
   socket.on('event', function (newroom, eventWord) {
     var word = eventWord;
     console.log("Registrujem event socket ", word);
+    var string = insert1+eventWord+insert3;
+    console.log(string);
+    dbcon.query(insert1+word+insert3, function (err, rows, fields) {
+      if (err) throw err
+
+      console.log('result of insert is: ', rows)
+    });
     // Emitujemo klijentu izmjenu na event
   	io.emit('eventWord', word);
   });
@@ -69,6 +91,7 @@ io.sockets.on('connection', function (socket) {
     console.log("Broj trenutnih korisnika: ", brojacKorisnika);
     socket.leave(socket.room);
     io.emit('newconn', brojacKorisnika);
+    dbcon.end();
   })
 });
 
@@ -76,19 +99,10 @@ http.listen(3000, function(){
   console.log('listening on *:3000');
 });
 
-// var mysql = require('mysql')
-// var connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'oww',
-//   password: 'myscrtW0rd'
-// })
-//
-// connection.connect()
-//
-// connection.query('SELECT 1 + 1 AS solution', function (err, rows, fields) {
-//   if (err) throw err
-//
-//   console.log('The solution is: ', rows[0].solution)
-// })
-//
-// connection.end()
+
+
+dbcon.query('SELECT * from toneword', function (err, rows, fields) {
+  if (err) throw err
+
+  console.log('The solution is: ', rows)
+})
