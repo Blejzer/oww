@@ -2,15 +2,27 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>One Word World</title>
     <!-- Bootstrap import -->
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 
   </head>
-  <body ng-app="oneWordWorld">
+  <body ng-app="oneWordWorld" style="background-color:yellow">
     <div class="container">
-      <img src="images/wow.png" alt="" class="center-block" alt="WOW" width="236" height="236"/>
-      <div ui-view></div>
+      <div class="row">
+        <div class="col-xs-3 ">
+          <img src="images/wowMarine.png" class="img-responsive img-circle" alt="WOW" width="80" height="80"/>
+        </div>
+        <div class="col-xs-9">
+          <h1 class="text-center">This is One Word World!</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div ui-view></div>
+      </div>
+
+
     </div>
 
 

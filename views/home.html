@@ -1,24 +1,73 @@
-
-<h1 class="text-center">This is One Word World: Welcome!</h1>
-<div class="container">
-  <div class="row">
-    <div class="col-xs-6 center">
-        Person week
-        <form id="formPerson" action="">
-          <input id="p" autocomplete="off" /><button class="btn btn-primary" >Send</button>
-        </form>
-        <ul id="persons"></ul>
+<div class="container-fluid">
+  <!-- theme divs (person & event) -->
+  <div class="row text-center">
+    <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
+      <div class="thumbnail">
+        <img src="images/wowMarine.png" alt="WOW" width="200" height="200"/>
+      </div>
+      <div class="thumbnail">
+        <h3>Person of the week</h3>
+      </div>
     </div>
-    <div class="col-xs-6 center">
-        Event week
-
-        <form id="formEvent" action="">
-          <input id="e" autocomplete="off" onmousedown="ChangeChannel('event')"/><button class="btn btn-primary" >Send</button>
-        </form>
-        <ul id="events"></ul>
+    <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
+    <div class="thumbnail">
+      <h3>Event of the week</h3>
+    </div>
+      <div class="thumbnail">
+        <img src="images/wowMarine.png" alt="WOW" width="200" height="200"/>
+      </div>
     </div>
   </div>
-  <div class="row">
+
+<!-- oneWordInput part -->
+  <div class="row center">
+    <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+        <div class="thumbnail">
+          <form id="formPerson" action="">
+            <input id="p" class="form-control" autocomplete="off" pattern="^([\Sa-zA-Z]){1,25}$" oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
+    onchange="try{setCustomValidity('')}catch(e){}" />
+            <button class="form-control btn pull-right" style="background-color:yellow"><strong>Send</strong></button>
+          </form>
+        </div>
+        <div class="thumbnail" style="overflow:hidden; height: 150px">
+          <ul id="persons"></ul>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+      <div class="center thumbnail">
+        <form id="formEvent" action="">
+          <input id="e" class="form-control" autocomplete="off" pattern="^([\Sa-zA-Z]){1,25}$" oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
+                                                                onchange="try{setCustomValidity('')}catch(e){}" />
+          <button class="form-control btn pull-right" style="background-color:yellow; color:navyblue"><strong>Send</strong></button>
+        </form>
+      </div>
+      <div class="content thumbnail" style="overflow:hidden; height: 150px">
+        <ul id="events"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- results part -->
+  <div class="row thumbnail">
+    <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+        <div class="thumbnail">
+          <!-- <ul id="eventList"></ul> -->
+          <label for="personList">Most popular words for person</label>
+          <table id="personList">
+        </table>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+      <div class="thumbnail">
+        <!-- <ul id="eventList"></ul> -->
+        <label for="eventList">Most popular words for event</label>
+        <table id="eventList">
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row thumbnail" >
     <label for="number">Number of users online</label>
     <label id="users"></label>
   </div>
@@ -48,10 +97,38 @@
       return false;
     });
     socket.on('eventWord', function(evt){
-      $('#events').append($('<li>').text(evt));
+        $('#events').prepend($('<li>').text(evt));
+
+    });
+    socket.on('eventList', function(json){
+      // da bi dobili ponovo objekat iz stringa
+      var evt = JSON.parse(json);
+      $('#eventList').children().remove();
+      var tr;
+        for (var i = 0; i < evt.length; i++) {
+            tr = $('<tr/>');
+            tr.append("<td> " + evt[i].a + "</td>");
+            tr.append("<td>&nbsp</td>");
+            tr.append('<td class="text-right"> ' + ' ' +evt[i].c + "</td>");
+            $('#eventList').append(tr);
+        }
     });
 
     socket.on('personWord', function(prs){
-      $('#persons').append($('<li>').text(prs));
+      $('#persons').prepend($('<li>').text(prs));
     });
+    socket.on('personList', function(json){
+      // da bi dobili ponovo objekat iz stringa
+      var evt = JSON.parse(json);
+      $('#personList').children().remove();
+      var tr;
+        for (var i = 0; i < evt.length; i++) {
+            tr = $('<tr/>');
+            tr.append("<td> " + evt[i].a + "</td>");
+            tr.append("<td>&nbsp</td>");
+            tr.append('<td class="text-right"> ' + ' ' +evt[i].c + "</td>");
+            $('#personList').append(tr);
+        }
+    });
+
   </script>

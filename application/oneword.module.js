@@ -10,7 +10,6 @@ angular.module('oneWordWorld', ['ui.router'])
 config.$inject = ['$urlRouterProvider', '$stateProvider'];
 function config($urlRouterProvider, $stateProvider) {
 
-
     // If user goes to a path that doesn't exist, redirect to public root
     $urlRouterProvider.otherwise('/');
 
@@ -21,17 +20,23 @@ function config($urlRouterProvider, $stateProvider) {
 
             // the main template will be placed here (relatively named)
             '': { templateUrl: 'views/home.html' }
-
-            // // the child views will be defined here (absolutely named)
-            // 'person@home': { templateUrl: 'views/person.html' },
-            //
-            // // for column two, we'll define a separate controller
-            // 'event@home': {
-            //     templateUrl: 'views/event.html'
+            // 'week@home': {
+            //     templateUrl: 'views/week.html'
+            // },
+            // 'oneWordInput@home': {
+            //     templateUrl: 'views/onewordinput.html'
+            // },
+            // 'results@home': {
+            //     templateUrl: 'views/results.html'
             // }
         }
 
     });
+    // .state('home.results',{
+    //   views:{
+    //     '': {templateUrl: 'views/results.html'}
+    //   }
+    // });
   };
 
 })();

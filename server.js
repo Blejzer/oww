@@ -24,21 +24,24 @@ var dbcon = mysql.createConnection({
   password: 'myscrtW0rd',
   database : 'oneword'
 })
-dbcon.connect()
-dbcon.query('SELECT 1 + 1 AS solution', function (err, rows, fields) {
-  if (err) throw err
+var json;
+// dbcon.connect()
+var connection = false;
+var connCounter = 0;
+var errorMsg;
+testDbConn();
 
-  console.log('Connection is successful: ', rows[0].solution)
-})
-
-// mysql queries
-
-var pInsert1 = "INSERT INTO tperson (pword) VALUES('";
-var pInsert3 = "');";
-var eInsert1 = "INSERT INTO tevent (eword) VALUES('";
-var eInsert3 = "');";
-
-
+function testDbConn() {
+  var connCounter = 0;
+  dbcon.connect()
+  dbcon.query('SELECT 1+0 AS selection', function (err, rows, fields) {
+    if (err) {
+      console.error('Could not connect to the db. Check if the DB is running?', err);
+      throw err;
+    }
+      console.log('Connection successful', rows[0].selection);
+    });
+  };
 
 // Brojac korisnika online:
 var brojacKorisnika = 0;
@@ -59,6 +62,25 @@ io.sockets.on('connection', function (socket) {
   console.log("Broj trenutnih korisnika: ", brojacKorisnika);
   io.emit('newconn', brojacKorisnika);
 
+  setTimeout(function(){}, 2000);
+  dbcon.query('SELECT eword a, COUNT(eword) c FROM tevent GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows, fields) {
+    if (err) {
+      throw err
+    }
+    json = JSON.stringify(rows);
+    console.log(json);
+    setTimeout(function(){}, 2000);
+    io.emit('eventList', json);
+  });
+  dbcon.query('SELECT pword a, COUNT(pword) c FROM tperson GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows, fields) {
+    if (err) {
+      throw err
+    }
+    json = JSON.stringify(rows);
+    console.log(json);
+    io.emit('personList', json);
+  });
+
   /////////////////////////////////////////////
   //                                         //
   //    FAZA DRUGA KONEKTOVANJE ELEMENATA    //
@@ -70,7 +92,7 @@ io.sockets.on('connection', function (socket) {
   socket.on('event', function (newroom, eventWord) {
     var word = eventWord;
     console.log("Registrujem event socket ", word);
-    dbcon.query(eInsert1+word+eInsert3, function (err, rows, fields) {
+    dbcon.query('INSERT INTO tevent (eword) VALUES(?);', word, function (err, rows, fields) {
       if (err) {
         var d = new Date();
         throw err
@@ -79,18 +101,34 @@ io.sockets.on('connection', function (socket) {
     });
     // Emitujemo klijentu izmjenu na event
   	io.emit('eventWord', word);
+    dbcon.query('SELECT eword a, COUNT(eword) c FROM tevent GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows, fields) {
+      if (err) {
+        throw err
+      }
+      json = JSON.stringify(rows);
+      console.log(json);
+      io.emit('eventList', json);
+    });
   });
 
   socket.on('person', function (newroom, personWord) {
     var word = personWord;
     console.log("Registrujem person socket ", word);
-    dbcon.query(pInsert1+word+pInsert3, function (err, rows, fields) {
-      if (err) throw err
-
-      console.log('result of insert is: ', rows)
+    dbcon.query('INSERT INTO tperson (pword) VALUES(?);', word, function (err, rows, fields) {
+      if (err){
+        throw err
+      };
     });
     // Emitujemo klijentu izmjenu na person
   	io.emit('personWord', personWord);
+    dbcon.query('SELECT pword a, COUNT(pword) c FROM tperson GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows, fields) {
+      if (err) {
+        throw err
+      }
+      json = JSON.stringify(rows);
+      console.log(json);
+      io.emit('personList', json);
+    });
   });
 
   /////////////////////////////////////////////
@@ -107,7 +145,7 @@ io.sockets.on('connection', function (socket) {
     console.log("Broj trenutnih korisnika: ", brojacKorisnika);
     socket.leave(socket.room);
     io.emit('newconn', brojacKorisnika);
-    dbcon.end();
+    //dbcon.end();
   })
 });
 
