@@ -7,71 +7,62 @@
  * Written by Nikola Kujaca <nikola.kujaca@gmail.com>,  *
  * 14th Nov 1972                                        *
  ********************************************************/
+
+ /* ******************************************************
+ * Loading all required middleware
+ ********************************************************/
 var ver = 'owwServer v.0.0.10';
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var ioToProcessor = require('socket.io-client');
+var eventList;
+var personList;
+const net = require("net");
+
 console.log(new Date());
 console.log("loaded all required modules");
+// ******************************************************
 
-// Routing i landing page
+/* ******************************************************
+* Routing i landing page - still need to see if it is
+* necessary as angular will take over the routing...
+********************************************************/
+app.enable('trust proxy');
 app.use('/bootstrap', express.static('bootstrap'));
 app.use('/js', express.static('js'));
 app.use('/images', express.static('images'));
 app.use('/application', express.static('application'));
-
 app.use('/views', express.static('views'));
 app.get('/', function(req, res){
-  var ip = req.headers['x-forwarded-for'];
-  var ip1 = req.connection.remoteAddress;
-  var ip2 = req.headers['x-real-ip'];
-  var ip3 = req.ip;
-  console.log('User-Agent: ' + ip, ip1, ip2, ip3);
   res.sendFile(__dirname + '/views/index.html');
 });
 console.log("all routes are set");
-
-// Pravimo konekciju na bazu podataka
-var mysql = require('mysql')
-var dbcon = mysql.createPool({
-  connectionLimit : 10,
-  host: 'localhost',
-  user: 'owwuser',
-  password: 'myscrtW0rd',
-  database : 'oneword',
-  port     : 3306
-
-});
-// var dbcon  = require('./middleware/oowdb.js');
-
-var json;
+// ******************************************************
 
 
-dbcon.query('SELECT 1+0 AS selection', function (err, rows, fields) {
-  if (err) {
-    if(err.fatal){
-      console.log(new Date(), 'Doslo je do prekida komunikacije sa bazom podataka');
-      throw err;
-    }
-    console.error(new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+console.log("I guess we're all set.");
+console.log("*********************************************************************");
+console.log(ver, " is online and ready!");
 
-  }else{
-    console.log(new Date(), 'Connection successful', dbcon.threadId);
-    console.log("Database is set.");
-  }
-});
+console.log("*********************************************************************");
 
-  console.log("I guess we're all set.");
-  console.log("----------------------");
-  console.log(ver, " is online and ready!");
 
-// Brojac korisnika online:
-var brojacKorisnika = 0;
-var room = ['person', 'event']
 
+  // Brojac online korisnika
+  var brojacKorisnika = 0;
+  var room = ['person', 'event']
+
+  /* ******************************************************
+  * Kreiranje socketa prilikom konekcije klijenta na
+  * server. Kupimo IP adresu, povecavamo broj online
+  * korisnika i emitujemo svima osvjezenu informacije:
+  * broj korisnika, event, person.
+  ********************************************************/
 io.sockets.on('connection', function (socket) {
-
+  var fakeip = socket.handshake.address;
+  console.log("socket.handshake.address: ", fakeip);
   /////////////////////////////////////////////
   //                                         //
   //         FAZA  PRIJAVLJIVANJE            //
@@ -85,28 +76,31 @@ io.sockets.on('connection', function (socket) {
   console.log(new Date(), "Broj trenutnih korisnika: ", brojacKorisnika);
   io.emit('newconn', brojacKorisnika);
 
-  setTimeout(function(){}, 2000);
-  dbcon.query('SELECT eword a, COUNT(eword) c FROM tevent GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows, fields) {
-    if (err) {
-      throw err
-    }
-    json = JSON.stringify(rows);
-    // console.log(json);
-    setTimeout(function(){}, 2000);
-    io.emit('eventList', json);
-  });
-  dbcon.query('SELECT pword a, COUNT(pword) c FROM tperson GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 6', function (err, rows, fields) {
-    if (err) {
-      if(err.fatal){
-      throw err;
-      }
-      console.error(new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+// testni podaci. trebace ove podatke kreirati
+// iz neke funkcije i proslijediti ih u
+// socket.on.data
+  var data = {"data": "newconn",  "ip":fakeip};
+  jack = JSON.stringify(data);
 
-    }
-    json = JSON.stringify(rows);
-    // console.log(json);
-    io.emit('personList', json);
+  // Create a socket (client) that connects to the server
+  var socket = new net.Socket();
+  socket.connect(3001, "localhost", function () {
+      console.log("Client: Connected to server");
+      socket.write(jack);
   });
+
+// Ovdje treba upumpati podatke iz funkcija
+// ili na drugi nacin pripremiti podatke
+// objekat koji sadrzi elemente:
+// data, ip, word, type?, other
+  socket.on("data", function (data) {
+    console.log("Client: lists functional");
+    console.log("Client: Response from server: %s", data);
+    data = JSON.parse(data);
+
+});
+
+
 
   /////////////////////////////////////////////
   //                                         //
@@ -117,61 +111,63 @@ io.sockets.on('connection', function (socket) {
   //                                         //
   /////////////////////////////////////////////
   socket.on('event', function (newroom, eventWord) {
-    var word = eventWord;
-    console.log("Registrujem event socket ", word);
-    dbcon.query('INSERT INTO tevent (eword) VALUES(?);', word, function (err, rows, fields) {
-      if (err) {
-        if(err.fatal){
-        throw err;
-        }
-        console.error(new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
 
-      };
-      // console.log('result of insert is: ', rows)
+    console.log("Registrujem event socket ", eventWord);
+    // *********************************************************************
+    var data = {"ip":fakeip, "word":eventWord, "type":"event"};
+    jack = JSON.stringify(data);
+
+    // Create a socket (client) that connects to the server
+    var socket = new net.Socket();
+    socket.connect(3001, "localhost", function () {
+        console.log("Client: Connected to server");
+        socket.write(jack);
     });
     // Emitujemo klijentu izmjenu na event
-  	io.emit('eventWord', word);
-    dbcon.query('SELECT eword a, COUNT(eword) c FROM tevent GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows, fields) {
-      if (err) {
-        if(err.fatal){
-        throw err;
-        }
-        console.error(new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+    io.emit('eventWord', eventWord);
 
-      }
-      json = JSON.stringify(rows);
-      // console.log(json);
-      io.emit('eventList', json);
-    });
+    // Cekamo odgovor sa procesora i osvjezenu event listu
+    socket.on("data", function (data) {
+      console.log("data functional");
+      data = JSON.parse(data);
+      console.log("Response from server: %s", data);
+      // Respond back
+      // socket.write(JSON.stringify({ response: "Hey there server!" }));
+      // Close the connection
+      socket.end();
   });
+    // *********************************************************************
 
-  socket.on('person', function (newroom, personWord) {
-    var word = personWord;
-    console.log("Registrujem person socket ", word);
-    dbcon.query('INSERT INTO tperson (pword) VALUES(?);', word, function (err, rows, fields) {
-      if (err){
-        if(err.fatal){
-        throw err;
-        }
-        console.error(new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+});
 
-      };
-    });
-    // Emitujemo klijentu izmjenu na person
-  	io.emit('personWord', personWord);
-    dbcon.query('SELECT pword a, COUNT(pword) c FROM tperson GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 6', function (err, rows, fields) {
-      if (err) {
-        if(err.fatal){
-        throw err;
-        }
-        console.error(new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
 
-      }
-      json = JSON.stringify(rows);
-      // console.log(json);
-      io.emit('personList', json);
-    });
-  });
+  // socket.on('person', function (newroom, personWord) {
+  //   var word = personWord;
+  //   console.log("Registrujem person socket ", word);
+  //   dbcon.query('INSERT INTO tperson (pword) VALUES(?);', word, function (err, rows, fields) {
+  //     if (err){
+  //       if(err.fatal){
+  //       throw err;
+  //       }
+  //       console.error(new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+  //
+  //     };
+  //   });
+  //   // Emitujemo klijentu izmjenu na person
+  // 	io.emit('personWord', personWord);
+  //   dbcon.query('SELECT pword a, COUNT(pword) c FROM tperson GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 6', function (err, rows, fields) {
+  //     if (err) {
+  //       if(err.fatal){
+  //       throw err;
+  //       }
+  //       console.error(new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+  //
+  //     }
+  //     json = JSON.stringify(rows);
+  //     // console.log(json);
+  //     io.emit('personList', json);
+  //   });
+  // });
 
   /////////////////////////////////////////////
   //                                         //
