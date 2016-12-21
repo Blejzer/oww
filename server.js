@@ -96,10 +96,12 @@ io.sockets.on('connection', function (socket) {
   socket.on("data", function (data) {
     console.log("Client: lists functional");
     console.log("Client: Response from server: %s", data);
-    data = JSON.parse(data);
+    var lists = JSON.parse(data);
 
+    io.emit("eventList", JSON.stringify(lists.eventList));
+    io.emit("personList", JSON.stringify(lists.personList));
+    socket.end();
 });
-
 
 
   /////////////////////////////////////////////
@@ -131,15 +133,9 @@ io.sockets.on('connection', function (socket) {
       console.log("data functional");
       data = JSON.parse(data);
       console.log("Response from server: %s", data);
-      // Respond back
-      // socket.write(JSON.stringify({ response: "Hey there server!" }));
-      // Close the connection
       socket.end();
   });
-    // *********************************************************************
-
 });
-
 
   // socket.on('person', function (newroom, personWord) {
   //   var word = personWord;
