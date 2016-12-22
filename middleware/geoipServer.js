@@ -85,7 +85,7 @@ var server = net.createServer(function (conn) {
             case "personWord":
             {
               InsertPersonWord(data, function(rezultat){
-                console.log("DATA: end of ConnectMe - result: ", rezultat);
+                console.log("DATA: end of InsertPersonWord - result: ", rezultat);
                 conn.write(rezultat);
               });
 
