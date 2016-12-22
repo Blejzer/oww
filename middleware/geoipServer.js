@@ -27,6 +27,10 @@ var dbcon = mysql.createPool({
 
 // Create a simple server
 var server = net.createServer(function (conn) {
+  if(conn.address().address !="127.0.0.1"){
+    console.log("Address is not localhost!!! You are invaded!!!", conn.address().address);
+    conn.end();
+  }
     console.log("Processor: Client connected");
     // Let's response with a hello message
     // conn.write(
@@ -49,18 +53,43 @@ var server = net.createServer(function (conn) {
     conn.on("data", function(data) {
       console.log("DATA: should be json: %s", data);
       var conData = JSON.parse(data);
-      var jsonResponse;
       console.log("DATA: should be object atributes data and ip: %s", conData.data, conData.ip);
+
+      /* **************************************************************
+      * starting cases with data requests sent to the Processor       *
+      * First element (conData.data) represents navigation element    *
+      * so switch will call different function to respond to          *
+      * the call. Default should be unknown reqest so                 *
+      * it should redirect to a new page that provides more info      *
+      *************************************************************** */
       switch (conData.data) {
         case "newconn":
         {
           NewConnection(data, function(rezultat){
-            console.log("DATA: end of ConnectMe - result", rezultat);
+            console.log("DATA: end of NewConnection - result: ", rezultat);
             conn.write(rezultat);
           });
 
         }
           break;
+          case "eventWord":
+          {
+            InsertEventWord(data, function(rezultat){
+              console.log("DATA: end of InsertEventWord - result: ", rezultat);
+              conn.write(rezultat);
+            });
+
+          }
+            break;
+            case "personWord":
+            {
+              InsertPersonWord(data, function(rezultat){
+                console.log("DATA: end of ConnectMe - result: ", rezultat);
+                conn.write(rezultat);
+              });
+
+            }
+            break;
         default:
 
       }
@@ -75,8 +104,6 @@ server.listen(3001, "localhost", function () {
     console.log(ver, "Server: Listening");
 });
 
-
-
 /////////////////////////////////////////////
 //                                         //
 //          RAZLICITE FUNKCIJE             //
@@ -90,9 +117,10 @@ function NewConnection(data, callback) {
   data = JSON.parse(data);
   console.log("NEWCONNECTION: Response from client: %s", data.ip);
 
-  // working with database inserting new evet word
-  // and getting back
-  // new event list top 5
+  // getting back event list top 5 and person list top 5
+  // so it can be pumped in to the lists after client connects
+  // for the first time, on refresh, etc.
+
   dbcon.getConnection(function(err, connection) {
 
     // Use the connection
@@ -101,7 +129,7 @@ function NewConnection(data, callback) {
         if(err.fatal){
         throw err;
         }
-        console.error("Processor: Person: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+        console.error("Processor: NewConnection: Event: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
       }
       eventList = rows;
       connection.query('SELECT pword a, COUNT(pword) c FROM tperson GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
@@ -109,7 +137,7 @@ function NewConnection(data, callback) {
           if(err.fatal){
           throw err;
           }
-          console.error("Processor: Person: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+          console.error("Processor: NewConnection: Person: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
         }
         personList = rows;
         var ritrn = JSON.stringify({eventList, personList});
@@ -119,11 +147,12 @@ function NewConnection(data, callback) {
     });
 
   });
+
 }
 
-function InsertEventWord(data) {
+function InsertEventWord(data, callback) {
   data = JSON.parse(data);
-  console.log("DATA: Response from client: %s", data);
+  console.log("DATA: Event: Response from client: %s", data.ip, data.data, data.word);
 
   // working with database inserting new evet word
   // and getting back
@@ -135,30 +164,58 @@ function InsertEventWord(data) {
         if(err.fatal){
         throw err;
         }
-        console.error("Processor: Insert: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+        console.error("Processor: Insert: Event: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
       };
-      // console.log("rows: ", rows.insertId);
-      // Don't use the connection here, it has been returned to the pool.
       connection.query('SELECT eword a, COUNT(eword) c FROM tevent GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
         if (err) {
           if(err.fatal){
           throw err;
           }
-          console.error("Processor: Event: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+          console.error("Processor: List: Event: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
         }
-        test = JSON.stringify(rows);
-        //console.log("Processor: ","Sad da vidimo da li je uradjen json: ", test);
-        //var check =
-        conn.write(
-          JSON.stringify(test)
-        );
-        // console.log(check);
+        ritrn = JSON.stringify(rows);
+        callback(ritrn);
       });
     connection.release();
     });
 
   });
 }
+
+
+function InsertPersonWord(data, callback) {
+  data = JSON.parse(data);
+  console.log("DATA: Person: Response from client: %s", data);
+
+  // working with database inserting new evet word
+  // and getting back
+  // new event list top 5
+  dbcon.getConnection(function(err, connection) {
+    // Use the connection
+    connection.query( 'INSERT INTO tperson (pword) VALUES(?);', data.word, function(err, rows) {
+      if (err) {
+        if(err.fatal){
+        throw err;
+        }
+        console.error("Processor: Insert: Person: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+      };
+      connection.query('SELECT pword a, COUNT(pword) c FROM tperson GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
+        if (err) {
+          if(err.fatal){
+          throw err;
+          }
+          console.error("Processor: List: Person: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+        }
+        ritrn = JSON.stringify(rows);
+        callback(ritrn);
+      });
+    connection.release();
+    });
+
+  });
+}
+
+
 // Provjeravamo konekciju prema bazi:
 function testDataBaseConnection() {
   dbcon.query('SELECT 1+0 AS selection', function (err, rows, fields) {

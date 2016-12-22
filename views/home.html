@@ -101,8 +101,10 @@
 
     });
     socket.on('eventList', function(json){
+      console.log(json);
       // da bi dobili ponovo objekat iz stringa
       var evt = JSON.parse(json);
+      console.log(evt);
       $('#eventList').children().remove();
       var tr;
         for (var i = 0; i < evt.length; i++) {

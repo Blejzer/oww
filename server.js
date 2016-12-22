@@ -63,18 +63,10 @@ console.log("*******************************************************************
 io.sockets.on('connection', function (socket) {
   var fakeip = socket.handshake.address;
   console.log("socket.handshake.address: ", fakeip);
-  /////////////////////////////////////////////
-  //                                         //
-  //         FAZA  PRIJAVLJIVANJE            //
-  // Odmah nakon konekcije idemo sa prijavom //
-  // korisnika i povecanjem broja korisnika  //
-  // za jedan                                //
-  //                                         //
-  /////////////////////////////////////////////
 
   brojacKorisnika++;
-  console.log(new Date(), "Broj trenutnih korisnika: ", brojacKorisnika);
-  io.emit('newconn', brojacKorisnika);
+  console.log(new Date(), "Broj trenutnih korisnika: ", brojacKorisnika, io.engine.clientsCount);
+  io.sockets.emit('newconn', brojacKorisnika);
 
 // testni podaci. trebace ove podatke kreirati
 // iz neke funkcije i proslijediti ih u
@@ -83,25 +75,32 @@ io.sockets.on('connection', function (socket) {
   jack = JSON.stringify(data);
 
   // Create a socket (client) that connects to the server
-  var socket = new net.Socket();
-  socket.connect(3001, "localhost", function () {
+  var procSocket = new net.Socket();
+  procSocket.connect(3001, "localhost", function () {
       console.log("Client: Connected to server");
-      socket.write(jack);
+      procSocket.write(jack);
   });
 
-// Ovdje treba upumpati podatke iz funkcija
-// ili na drugi nacin pripremiti podatke
-// objekat koji sadrzi elemente:
-// data, ip, word, type?, other
-  socket.on("data", function (data) {
+  // Ovdje treba upumpati podatke iz funkcija
+  // ili na drugi nacin pripremiti podatke
+  // objekat koji sadrzi elemente:
+  // data, ip, word, type?, other
+  procSocket.on("data", function (data) {
     console.log("Client: lists functional");
     console.log("Client: Response from server: %s", data);
     var lists = JSON.parse(data);
 
     io.emit("eventList", JSON.stringify(lists.eventList));
     io.emit("personList", JSON.stringify(lists.personList));
-    socket.end();
-});
+    procSocket.end();
+  });
+
+  socket.on('disconnect', function () {
+    brojacKorisnika--;
+    console.log(new Date(), "Broj trenutnih korisnika: ", brojacKorisnika, io.engine.clientsCount);
+    // socket.leave(socket.room);
+    io.sockets.emit('newconn', brojacKorisnika);
+  });
 
 
   /////////////////////////////////////////////
@@ -116,54 +115,55 @@ io.sockets.on('connection', function (socket) {
 
     console.log("Registrujem event socket ", eventWord);
     // *********************************************************************
-    var data = {"ip":fakeip, "word":eventWord, "type":"event"};
+    var data = {"data": "eventWord", "ip":fakeip, "word":eventWord};
     jack = JSON.stringify(data);
 
     // Create a socket (client) that connects to the server
-    var socket = new net.Socket();
-    socket.connect(3001, "localhost", function () {
-        console.log("Client: Connected to server");
-        socket.write(jack);
+    var procSocket = new net.Socket();
+    procSocket.connect(3001, "localhost", function () {
+        console.log("Client: eventWord: Connected to server");
+        procSocket.write(jack);
     });
     // Emitujemo klijentu izmjenu na event
     io.emit('eventWord', eventWord);
 
     // Cekamo odgovor sa procesora i osvjezenu event listu
-    socket.on("data", function (data) {
-      console.log("data functional");
-      data = JSON.parse(data);
-      console.log("Response from server: %s", data);
-      socket.end();
+    procSocket.on("data", function (data) {
+      var list=JSON.parse(data);
+      io.emit('eventList', JSON.stringify(list));
+      procSocket.end();
+    });
   });
-});
 
-  // socket.on('person', function (newroom, personWord) {
-  //   var word = personWord;
-  //   console.log("Registrujem person socket ", word);
-  //   dbcon.query('INSERT INTO tperson (pword) VALUES(?);', word, function (err, rows, fields) {
-  //     if (err){
-  //       if(err.fatal){
-  //       throw err;
-  //       }
-  //       console.error(new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
-  //
-  //     };
-  //   });
-  //   // Emitujemo klijentu izmjenu na person
-  // 	io.emit('personWord', personWord);
-  //   dbcon.query('SELECT pword a, COUNT(pword) c FROM tperson GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 6', function (err, rows, fields) {
-  //     if (err) {
-  //       if(err.fatal){
-  //       throw err;
-  //       }
-  //       console.error(new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
-  //
-  //     }
-  //     json = JSON.stringify(rows);
-  //     // console.log(json);
-  //     io.emit('personList', json);
-  //   });
-  // });
+
+// *********************************************************************
+// Socket u slucaju kada korisnik unese rijec u Person polje
+// pakuje ga i proslijedjuje ga Processoru na obradu i ceka povratnu
+// informaciju o uspjesnosti i listi personList
+// *********************************************************************
+  socket.on('person', function (newroom, personWord) {
+
+    console.log("Registrujem person socket ", personWord);
+
+    var data = {"data": "personWord", "ip":fakeip, "word":personWord};
+    jack = JSON.stringify(data);
+
+    // Create a socket (client) that connects to the server
+    var procSocket = new net.Socket();
+    procSocket.connect(3001, "localhost", function () {
+        console.log("Client: personWord: Connected to server");
+        procSocket.write(jack);
+    });
+    // Emitujemo klijentu izmjenu na event
+    io.emit('personWord', personWord);
+
+    // Cekamo odgovor sa procesora i osvjezenu event listu
+    procSocket.on("data", function (data) {
+      var list=JSON.parse(data);
+      io.emit('personList', JSON.stringify(list));
+      procSocket.end();
+    });
+  });
 
   /////////////////////////////////////////////
   //                                         //
@@ -172,15 +172,7 @@ io.sockets.on('connection', function (socket) {
   //     prijavljujemo diskonektovanje       //
   //                                         //
   /////////////////////////////////////////////
-  socket.on('disconnect', function () {
-    if(brojacKorisnika>0){
-    brojacKorisnika = brojacKorisnika-1;
-    }
-    console.log(new Date(), "Broj trenutnih korisnika: ", brojacKorisnika);
-    socket.leave(socket.room);
-    io.emit('newconn', brojacKorisnika);
-    //dbcon.end();
-  })
+
 });
 
 http.listen(3000, function(){
