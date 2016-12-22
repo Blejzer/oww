@@ -22,7 +22,8 @@ var personList;
 const net = require("net");
 
 console.log(new Date());
-console.log("loaded all required modules");
+console.log(ver, "starting with initialization sequence: ");
+console.log("Loaded all required modules");
 // ******************************************************
 
 /* ******************************************************
@@ -38,20 +39,18 @@ app.use('/views', express.static('views'));
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/views/index.html');
 });
-console.log("all routes are set");
+console.log("All routes are set");
 // ******************************************************
 
 
 console.log("I guess we're all set.");
 console.log("*********************************************************************");
 console.log(ver, " is online and ready!");
-
 console.log("*********************************************************************");
 
 
 
   // Brojac online korisnika
-  var brojacKorisnika = 0;
   var room = ['person', 'event']
 
   /* ******************************************************
@@ -62,11 +61,10 @@ console.log("*******************************************************************
   ********************************************************/
 io.sockets.on('connection', function (socket) {
   var fakeip = socket.handshake.address;
-  console.log("socket.handshake.address: ", fakeip);
+  console.log("IP Adresa klijenta - pretpostavljam remote: socket.handshake.address: ", fakeip);
 
-  brojacKorisnika++;
-  console.log(new Date(), "Broj trenutnih korisnika: ", brojacKorisnika, io.engine.clientsCount);
-  io.sockets.emit('newconn', brojacKorisnika);
+  console.log(new Date(), "Broj trenutnih korisnika: ", io.engine.clientsCount);
+  io.sockets.emit('newconn', io.engine.clientsCount);
 
 // testni podaci. trebace ove podatke kreirati
 // iz neke funkcije i proslijediti ih u
@@ -76,8 +74,13 @@ io.sockets.on('connection', function (socket) {
 
   // Create a socket (client) that connects to the server
   var procSocket = new net.Socket();
+  procSocket.on('error', function(error) {
+    console.error("Greska u konekciji prema procesoru. gasim server...", error);
+    procSocket.end();
+    process.exit(0);
+  });
   procSocket.connect(3001, "localhost", function () {
-      console.log("Client: Connected to server");
+      console.log("Server: Connected to procesor");
       procSocket.write(jack);
   });
 
@@ -96,21 +99,17 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('disconnect', function () {
-    brojacKorisnika--;
-    console.log(new Date(), "Broj trenutnih korisnika: ", brojacKorisnika, io.engine.clientsCount);
-    // socket.leave(socket.room);
-    io.sockets.emit('newconn', brojacKorisnika);
+    console.log(new Date(), "Broj trenutnih korisnika: ", io.engine.clientsCount);
+    socket.leave(socket.room);
+    io.sockets.emit('newconn', io.engine.clientsCount);
   });
 
 
-  /////////////////////////////////////////////
-  //                                         //
-  //    FAZA DRUGA KONEKTOVANJE ELEMENATA    //
-  // Odmah nakon ucitavanja home stranice    //
-  // ucitava se person i event dio, te se    //
-  // oba moraju zasebno registrovati         //
-  //                                         //
-  /////////////////////////////////////////////
+  // *********************************************************************
+  // Socket u slucaju kada korisnik unese rijec u Event polje
+  // pakuje ga i proslijedjuje ga Processoru na obradu i ceka povratnu
+  // informaciju o uspjesnosti i listi eventList
+  // *********************************************************************
   socket.on('event', function (newroom, eventWord) {
 
     console.log("Registrujem event socket ", eventWord);
@@ -165,16 +164,14 @@ io.sockets.on('connection', function (socket) {
     });
   });
 
-  /////////////////////////////////////////////
-  //                                         //
-  //           FAZA N ODJAVLJIVANJE          //
-  //    Odmah nakon zatvaranja socketa,      //
-  //     prijavljujemo diskonektovanje       //
-  //                                         //
-  /////////////////////////////////////////////
-
 });
 
+/* ****************************************************************
+* Palimo server na portu 3000. Ovo je dev verzija. za produkciju  *
+* potrebno je unijeti i IP adresu na kojoj ce server slusati      *
+* http.listen(3000, xxx.xxx.xxx.xxx, function(){...               *
+*******************************************************************/
 http.listen(3000, function(){
+  console.log(ver, " Initialization sequence complete. ");
   console.log(new Date(), 'Started listening on port:3000');
 });
