@@ -7,13 +7,27 @@
 //  * Written by Nikola Kujaca <nikola.kujaca@gmail.com>,  *
 //  * 14th Nov 1972                                        *
 //  ********************************************************/
+
+// var ipInfoDB = 'a03bf41b7ef4583c8f2ce950ce24a48577649eabfe71f20bc3f4ceade99abea2';
 var ver = 'owwProcesor v.0.0.10';
 var json;
 var test;
+var ipJson; // for maxmind GeoLite2-City result
+
+
+// maxmind.open('data/maxmind/GeoLite2-City.mmdb', (err, cityLookup) => {
+//   if(err){
+//     console.log('Arrrgh! ', err);
+//   }
+//   ipJson = cityLookup.get('217.75.201.28'); // zamijeniti sa conData u produkciji
+//   // data.ipJson = ipJson;
+//   console.log("maxmind result: ", ipson);
+// });
 
 // middleware loading
 const net = require("net");
 var mysql = require('mysql');
+var maxmind = require('maxmind'); // GeoLite2-City.mmdb
 
 // Pravimo konekciju na bazu podataka
 var dbcon = mysql.createPool({
@@ -24,6 +38,9 @@ var dbcon = mysql.createPool({
   database : 'oneword',
   port     : 3306
 });
+
+// kreiramo konekciju na maxmind
+var cityLookup = maxmind.openSync('data/maxmind/GeoLite2-City.mmdb');
 
 
 // Create a simple server
@@ -151,22 +168,54 @@ function NewConnection(data, callback) {
 
 }
 
+/* **********************************************
+*         INSERT EVENT WORD function            *
+* Preparing all gathered information and add    *
+* geolocation of the IP address and save it     *
+* to the tevent and tlocation databases         *
+* = to add tlink information from row.insertId  *
+* from both previous inserts.                   *
+*************************************************/
 function InsertEventWord(data, callback) {
   data = JSON.parse(data);
-  console.log("DATA: Event: Response from client: %s", data.ip, data.data, data.word);
+  ipJson = cityLookup.get('217.75.201.28');
+  console.log("DATA: Event: Response from client: %s", ipJson.country.names.en, data.data, data.word);
 
   // working with database inserting new evet word
   // and getting back
   // new event list top 5
   dbcon.getConnection(function(err, connection) {
     // Use the connection
-    connection.query( 'INSERT INTO tevent (eword) VALUES(?);', data.word, function(err, rows) {
+    connection.query( 'INSERT INTO tevent (eword, ip) VALUES(?, ?);', [data.word, data.ip], function(err, rows) {
       if (err) {
         if(err.fatal){
         throw err;
         }
         console.error("Processor: Insert: Event: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
       };
+      if(!ipJson.city){
+        connection.query('INSERT INTO tlocation (city, country, continent) VALUES(?,?,?)', [null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+          if (err) {
+            if(err.fatal){
+            throw err;
+            }
+            console.error("Processor: List: Event: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+          }
+          console.log("Insert location ID: ", rows.insertId);
+        });
+      }else {
+        connection.query('INSERT INTO tlocation (city, country, continent) VALUES(?,?,?)', [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+          if (err) {
+            if(err.fatal){
+            throw err;
+            }
+            console.error("Processor: List: Event: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+          }
+
+          console.log("Insert location ID: ", rows.insertId);
+        });
+      }
+
       connection.query('SELECT eword a, COUNT(eword) c FROM tevent GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
         if (err) {
           if(err.fatal){
@@ -183,23 +232,51 @@ function InsertEventWord(data, callback) {
   });
 }
 
-
+/* **********************************************
+*       INSERT PERSON WORD function             *
+* Preparing all gathered information and add    *
+* geolocation of the IP address and save it     *
+* to the tperson and tlocation databases        *
+* = to add tlink information from row.insertId  *
+* from both previous inserts.                   *
+*************************************************/
 function InsertPersonWord(data, callback) {
   data = JSON.parse(data);
-  console.log("DATA: Person: Response from client: %s", data);
-
+  ipJson = cityLookup.get('217.75.201.28');
+  console.log("DATA: Person: Response from client: %s", ipJson.country.names.en, data.data, data.word);
   // working with database inserting new evet word
   // and getting back
   // new event list top 5
   dbcon.getConnection(function(err, connection) {
     // Use the connection
-    connection.query( 'INSERT INTO tperson (pword) VALUES(?);', data.word, function(err, rows) {
+    connection.query( 'INSERT INTO tperson (pword, ip) VALUES(?,?);', [data.word, data.ip], function(err, rows) {
       if (err) {
         if(err.fatal){
         throw err;
         }
         console.error("Processor: Insert: Person: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
       };
+      if(!ipJson.city){
+        connection.query('INSERT INTO tlocation (city, country, continent) VALUES(?,?,?)', [null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+          if (err) {
+            if(err.fatal){
+            throw err;
+            }
+            console.error("Processor: List: Person: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+          }
+          console.log("Insert location ID: ", rows.insertId);
+        });
+      }else {
+        connection.query('INSERT INTO tlocation (city, country, continent) VALUES(?,?,?)', [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+          if (err) {
+            if(err.fatal){
+            throw err;
+            }
+            console.error("Processor: List: Person: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+          }
+          console.log("Insert location ID: ", rows.insertId);
+        });
+      }
       connection.query('SELECT pword a, COUNT(pword) c FROM tperson GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
         if (err) {
           if(err.fatal){
