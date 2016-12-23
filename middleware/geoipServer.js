@@ -194,7 +194,7 @@ function InsertEventWord(data, callback) {
         console.error("Processor: Insert: Event: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
       };
       if(!ipJson.city){
-        connection.query('INSERT INTO tlocation (city, country, continent) VALUES(?,?,?)', [null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+        connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
@@ -204,7 +204,7 @@ function InsertEventWord(data, callback) {
           console.log("Insert location ID: ", rows.insertId);
         });
       }else {
-        connection.query('INSERT INTO tlocation (city, country, continent) VALUES(?,?,?)', [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+        connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
@@ -257,17 +257,17 @@ function InsertPersonWord(data, callback) {
         console.error("Processor: Insert: Person: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
       };
       if(!ipJson.city){
-        connection.query('INSERT INTO tlocation (city, country, continent) VALUES(?,?,?)', [null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+        connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', ['217.75.201.28', null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
             }
             console.error("Processor: List: Person: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
           }
-          console.log("Insert location ID: ", rows.insertId);
+          // console.log("Insert location ID: ", rows.insertId);
         });
       }else {
-        connection.query('INSERT INTO tlocation (city, country, continent) VALUES(?,?,?)', [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+        connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
