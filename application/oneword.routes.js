@@ -64,6 +64,24 @@ function config($urlRouterProvider, $stateProvider) {
           // }
       }
 
+    })
+    .state('newevent', {
+      url: '/newevent',
+      views: {
+
+          // the main template will be placed here (relatively named)
+          '': { templateUrl: 'views/newevent.html' }
+          // 'week@home': {
+          //     templateUrl: 'views/week.html'
+          // },
+          // 'oneWordInput@home': {
+          //     templateUrl: 'views/onewordinput.html'
+          // },
+          // 'results@home': {
+          //     templateUrl: 'views/results.html'
+          // }
+      }
+
     });
   };
 })();

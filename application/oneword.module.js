@@ -4,7 +4,7 @@
 /**
  * oneWordWorld module that includes the public module as a dependency
  */
-angular.module('oneWordWorld', ['ui.router'])
+angular.module('oneWordWorld', ['ui.router','ngFileUpload', 'ngImgCrop'])
 // .config(config);
 //
 // config.$inject = ['$urlRouterProvider', '$stateProvider'];
