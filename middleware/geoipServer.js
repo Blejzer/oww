@@ -293,8 +293,14 @@ function InsertPersonWord(data, callback) {
   });
 }
 
-
-// Provjeravamo konekciju prema bazi:
+/* **********************************************
+*      TEST DATABASE CONNECTION function        *
+* Incomplete function                           *
+* Main purpose is to check connection to        *
+* the database and return result of the         *
+* connection. NOT IMPLEMENTED is the option to  *
+* on fail try to reconnect to the database      *
+*************************************************/
 function testDataBaseConnection() {
   dbcon.query('SELECT 1+0 AS selection', function (err, rows, fields) {
     if (err) {
