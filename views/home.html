@@ -3,18 +3,18 @@
   <div class="row text-center">
     <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
     <div class="thumbnail">
-      <h3>Person of the week</h3>
+      <a ui-sref="person"><h3>Person of the week</h3></a>
     </div>
       <div class="thumbnail">
-        <img src="images/wowMarine.png" alt="WOW" width="200" height="200"/>
+        <a ui-sref="person"><img src="images/wowMarine.png" alt="WOW" width="200" height="200"/></a>
       </div>
     </div>
     <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
-    <div class="thumbnail">
-      <h3>Event of the week</h3>
-    </div>
       <div class="thumbnail">
-        <a href="http://time.com/4598168/donald-trump-hillary-clinton-electoral-college-russia/"><img src="images/wowMarine.png" alt="WOW" width="200" height="200"/></a>
+        <a ui-sref="event"><h3>Event of the week</h3></a>
+      </div>
+      <div class="thumbnail">
+        <a ui-sref="event"><img src="images/wowMarine.png" alt="WOW" width="200" height="200"/></a>
       </div>
     </div>
   </div>
@@ -50,20 +50,24 @@
   <!-- results part -->
   <div class="row thumbnail">
     <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+      <a ui-sref="person">
         <div class="thumbnail">
           <!-- <ul id="eventList"></ul> -->
           <label for="personList">Most popular words for person</label>
           <table id="personList">
         </table>
         </div>
+      </a>
     </div>
     <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
-      <div class="thumbnail">
+      <a ui-sref="event">
+        <div class="thumbnail">
         <!-- <ul id="eventList"></ul> -->
         <label for="eventList">Most popular words for event</label>
         <table id="eventList">
       </table>
       </div>
+    </a>
     </div>
   </div>
 
@@ -74,6 +78,7 @@
 
 
 </div>
+
 <!-- Socket.io script -->
 <script src="/socket.io/socket.io.js"></script>
   <script>

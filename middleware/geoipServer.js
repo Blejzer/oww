@@ -15,15 +15,6 @@ var test;
 var ipJson; // for maxmind GeoLite2-City result
 
 
-// maxmind.open('data/maxmind/GeoLite2-City.mmdb', (err, cityLookup) => {
-//   if(err){
-//     console.log('Arrrgh! ', err);
-//   }
-//   ipJson = cityLookup.get('217.75.201.28'); // zamijeniti sa conData u produkciji
-//   // data.ipJson = ipJson;
-//   console.log("maxmind result: ", ipson);
-// });
-
 // middleware loading
 const net = require("net");
 var mysql = require('mysql');
@@ -103,6 +94,24 @@ var server = net.createServer(function (conn) {
             {
               InsertPersonWord(data, function(rezultat){
                 console.log("DATA: end of InsertPersonWord - result: ", rezultat);
+                conn.write(rezultat);
+              });
+
+            }
+            break;
+            case "eventPageLoaded":
+            {
+              EventPageLoaded(data, function(rezultat){
+                console.log("DATA: end of EventPageLoaded - result: ", rezultat);
+                conn.write(rezultat);
+              });
+
+            }
+            break;
+            case "personPageLoaded":
+            {
+              PersonPageLoaded(data, function(rezultat){
+                console.log("DATA: end of PersonPageLoaded - result: ", rezultat);
                 conn.write(rezultat);
               });
 
@@ -289,6 +298,118 @@ function InsertPersonWord(data, callback) {
       });
     connection.release();
     });
+
+  });
+}
+
+
+/* **********************************************
+*         EVENT PAGE LOADED function            *
+* Running geolocation on the provided IP        *
+* address and saveing it in the tlocation       *
+* table. Returning list of 25 most used         *
+* words in the current event                    *
+*************************************************/
+function EventPageLoaded(data, callback) {
+  data = JSON.parse(data);
+  ipJson = cityLookup.get('217.75.201.28');
+  console.log("DATA: EventPageLoaded: Response from client: %s", ipJson.country.names.en, data.data);
+
+  // working with database inserting new evet word
+  // and getting back
+  // new event list top 5
+  dbcon.getConnection(function(err, connection) {
+    // Use the connection
+      if(!ipJson.city){
+        connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+          if (err) {
+            if(err.fatal){
+            throw err;
+            }
+            console.error("Processor: List: EventPageLoaded: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+          }
+          console.log("Insert location ID: ", rows.insertId);
+        });
+      }else {
+        connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+          if (err) {
+            if(err.fatal){
+            throw err;
+            }
+            console.error("Processor: List: EventPageLoaded: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+          }
+          console.log("Insert location ID: ", rows.insertId);
+        });
+      }
+
+      connection.query('SELECT eword a, COUNT(eword) c FROM tevent GROUP BY eword ORDER BY c DESC LIMIT 25', function (err, rows) {
+        if (err) {
+          if(err.fatal){
+          throw err;
+          }
+          console.error("Processor: List: EventPageLoaded: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+        }
+        ritrn = JSON.stringify(rows);
+        callback(ritrn);
+
+      connection.release();
+      });
+
+  });
+}
+
+
+/* **********************************************
+*        PERSON PAGE LOADED function            *
+* Running geolocation on the provided IP        *
+* address and saveing it in the tlocation       *
+* table. Returning list of 25 most used         *
+* words in the current person                   *
+*************************************************/
+function PersonPageLoaded(data, callback) {
+  data = JSON.parse(data);
+  ipJson = cityLookup.get('217.75.201.28');
+  console.log("DATA: PersonPageLoaded: Response from client: %s", ipJson.country.names.en, data.data);
+
+  // working with database inserting new evet word
+  // and getting back
+  // new event list top 5
+  dbcon.getConnection(function(err, connection) {
+    // Use the connection
+      if(!ipJson.city){
+        connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+          if (err) {
+            if(err.fatal){
+            throw err;
+            }
+            console.error("Processor: List: PersonPageLoaded: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+          }
+          console.log("Insert location ID: ", rows.insertId);
+        });
+      }else {
+        connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+          if (err) {
+            if(err.fatal){
+            throw err;
+            }
+            console.error("Processor: List: PersonPageLoaded: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+          }
+          console.log("Insert location ID: ", rows.insertId);
+        });
+      }
+
+      connection.query('SELECT pword a, COUNT(pword) c FROM tperson GROUP BY pword ORDER BY c DESC LIMIT 25', function (err, rows) {
+        if (err) {
+          if(err.fatal){
+          throw err;
+          }
+          console.error("Processor: List: PersonPageLoaded: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+        }
+        ritrn = JSON.stringify(rows);
+        callback(ritrn);
+
+      connection.release();
+      });
 
   });
 }

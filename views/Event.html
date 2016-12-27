@@ -1,32 +1,39 @@
 
-    <div class="col-xs-6">
-        Event week
-        <div class="box">
-          <form id="formEvent" action="">
-            <input id="e" autocomplete="off" /><button class="btn btn-primary" >Send</button>
-          </form>
+    <div class="container">
+      <div class="thumbnail">
+        <h3 class="text-center">Event of the week</h3>
+      </div>
+      <div class="thumbnail">
+        <img src="images/wowMarine.png" alt="WOW" width="200" height="200"/>
+      </div>
+      <div class="thumbnail">
+        <div class="thumbnail">
+          <!-- <ul id="eventList"></ul> -->
+          <label for="eventList">Most popular words for event</label>
+          <table id="eventList">
+        </table>
         </div>
-        <div class="box2">
-          <ul id="events"></ul>
-        </div>
-        <div class="box3">
-          <ul id="eventList"></ul>
-        </div>
-
+      </div>
     </div>
+
+
     <!-- Socket.io script -->
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      var socket = io();
-      $('#formEvent').submit(null, function(){
-        socket.emit('event', 'event', $('#e').val());
-        $('#e').val('');
-        return false;
-      });
-      socket.on('eventWord', function(evt){
-        $('#events').append($('<li>').text(evt));
-      });
-      socket.on('eventList', function(evt){
-        $('#eventList').append($('<li>').text(evt));
+      var socket = io.connect();
+      socket.emit('eventPageLoaded');
+      socket.on('eventPageSuccess', function(json){
+        // da bi dobili ponovo objekat iz stringa
+        var evt = JSON.parse(json);
+        console.log(evt);
+        $('#eventList').children().remove();
+        var tr;
+          for (var i = 0; i < evt.length; i++) {
+              tr = $('<tr/>');
+              tr.append("<td> " + evt[i].a + "</td>");
+              tr.append("<td>&nbsp</td>");
+              tr.append('<td class="text-right"> ' + ' ' +evt[i].c + "</td>");
+              $('#eventList').append(tr);
+          }
       });
     </script>

@@ -164,7 +164,68 @@ io.sockets.on('connection', function (socket) {
     });
   });
 
+  // *********************************************************************
+  // Socket u slucaju kada korisnik otvori stranicu Event
+  // pa je potrebno dostaviti duzi spisak rijeci po nekoj
+  // kvalifikaciji
+  // *********************************************************************
+  socket.on('eventPageLoaded', function () {
+
+    console.log("Registrujem eventPageLoaded socket ");
+    // *********************************************************************
+    var data = {"data": "eventPageLoaded", "ip":fakeip};
+    jack = JSON.stringify(data);
+
+    // Create a socket (client) that connects to the server
+    var procSocket = new net.Socket();
+    procSocket.connect(3001, "localhost", function () {
+        console.log("Client: eventPageLoaded: Connected to server");
+        procSocket.write(jack);
+    });
+    // Emitujemo klijentu izmjenu na event
+    // io.emit('eventWord', eventWord);
+
+    // Cekamo odgovor sa procesora i osvjezenu event listu
+    procSocket.on("data", function (data) {
+      var list=JSON.parse(data);
+      io.emit('eventPageSuccess', JSON.stringify(list));
+      procSocket.end();
+    });
+  });
+
+  // *********************************************************************
+  // Socket u slucaju kada korisnik otvori stranicu Person
+  // pa je potrebno dostaviti duzi spisak rijeci po nekoj
+  // kvalifikaciji
+  // *********************************************************************
+  socket.on('personPageLoaded', function () {
+
+    console.log("Registrujem personPageLoaded socket ");
+    // *********************************************************************
+    var data = {"data": "personPageLoaded", "ip":fakeip};
+    jack = JSON.stringify(data);
+
+    // Create a socket (client) that connects to the server
+    var procSocket = new net.Socket();
+    procSocket.connect(3001, "localhost", function () {
+        console.log("Client: personPageLoaded: Connected to server");
+        procSocket.write(jack);
+    });
+    // Emitujemo klijentu izmjenu na event
+    // io.emit('eventWord', eventWord);
+
+    // Cekamo odgovor sa procesora i osvjezenu event listu
+    procSocket.on("data", function (data) {
+      var list=JSON.parse(data);
+      io.emit('personPageSuccess', JSON.stringify(list));
+      procSocket.end();
+    });
+  });
+
 });
+
+
+
 
 /* ****************************************************************
 * Palimo server na portu 3000. Ovo je dev verzija. za produkciju  *

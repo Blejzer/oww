@@ -1,35 +1,69 @@
-// (function () {
-// 'use strict';
-//
-// angular.module('oneWordWorld')
-// .config(routeConfig);
-//
-// /**
-//  * Configures the routes and views
-//  */
-// routeConfig.$inject = ['$stateProvider'];
-// function routeConfig ($stateProvider) {
-//   // Routes
-// //   $stateProvider
-// //     .state('home', {
-// //       templateUrl: 'views/index.html'
-// //     })
-// //     .state('home.person', {
-// //       templateUrl: 'views/person.html'
-// //     })
-// //     .state('home.event', {
-// //       templateUrl: 'views/event.html'
-// //     });
-// // }
-//
-// // HOME STATES AND NESTED VIEWS ========================================
-//         .state('home', {
-//             url: '/home',
-//             templateUrl: 'views/event.html'
-//         })
-//
-//         // ABOUT PAGE AND MULTIPLE NAMED VIEWS =================================
-//         .state('about', {
-//             // we'll get to this in a bit
-//         });
-// })();
+(function () {
+'use strict';
+
+angular.module('oneWordWorld')
+.config(config);
+
+config.$inject = ['$urlRouterProvider', '$stateProvider'];
+function config($urlRouterProvider, $stateProvider) {
+
+    // If user goes to a path that doesn't exist, redirect to public root
+    $urlRouterProvider.otherwise('/');
+
+    $stateProvider
+        .state('home', {
+          url: '/',
+        views: {
+
+            // the main template will be placed here (relatively named)
+            '': { templateUrl: 'views/home.html' }
+            // 'week@home': {
+            //     templateUrl: 'views/week.html'
+            // },
+            // 'oneWordInput@home': {
+            //     templateUrl: 'views/onewordinput.html'
+            // },
+            // 'results@home': {
+            //     templateUrl: 'views/results.html'
+            // }
+        }
+
+    })
+    .state('event', {
+      url: '/event',
+      views: {
+
+          // the main template will be placed here (relatively named)
+          '': { templateUrl: 'views/event.html' }
+          // 'week@home': {
+          //     templateUrl: 'views/week.html'
+          // },
+          // 'oneWordInput@home': {
+          //     templateUrl: 'views/onewordinput.html'
+          // },
+          // 'results@home': {
+          //     templateUrl: 'views/results.html'
+          // }
+      }
+
+    })
+    .state('person', {
+      url: '/person',
+      views: {
+
+          // the main template will be placed here (relatively named)
+          '': { templateUrl: 'views/person.html' }
+          // 'week@home': {
+          //     templateUrl: 'views/week.html'
+          // },
+          // 'oneWordInput@home': {
+          //     templateUrl: 'views/onewordinput.html'
+          // },
+          // 'results@home': {
+          //     templateUrl: 'views/results.html'
+          // }
+      }
+
+    });
+  };
+})();
