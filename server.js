@@ -20,6 +20,8 @@ var ioToProcessor = require('socket.io-client');
 var eventList;
 var personList;
 const net = require("net");
+var multer  = require('multer')
+var upload = multer({ dest: 'images/upload/' })
 
 console.log(new Date());
 console.log(ver, "starting with initialization sequence: ");
@@ -39,6 +41,15 @@ app.use('/views', express.static('views'));
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/views/index.html');
 });
+
+multipart = require('connect-multiparty'),
+multipartyMiddleware = multipart({ uploadDir: 'images/upload' });
+
+// Requires controller
+UserController = require('./application/controllers/user.controller.js');
+
+// Example endpoint
+app.post('/newevent', multipartyMiddleware, UserController.uploadFile);
 console.log("All routes are set");
 // ******************************************************
 
