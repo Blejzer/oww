@@ -42,14 +42,14 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/views/index.html');
 });
 
-multipart = require('connect-multiparty'),
-multipartyMiddleware = multipart({ uploadDir: 'images/upload' });
 
 // Requires controller
 UserController = require('./application/controllers/user.controller.js');
 
 // Example endpoint
-app.post('/newevent', multipartyMiddleware, UserController.uploadFile);
+app.post('/newevent', ImageUpload(), UserController.uploadFile);
+
+
 console.log("All routes are set");
 // ******************************************************
 
@@ -60,7 +60,11 @@ console.log(ver, " is online and ready!");
 console.log("*********************************************************************");
 
 
-
+function ImageUpload() {
+  multipart = require('connect-multiparty'),
+  multipartyMiddleware = multipart({ uploadDir: 'images/upload' });
+  return multipartyMiddleware;
+}
   // Brojac online korisnika
   var room = ['person', 'event']
 
