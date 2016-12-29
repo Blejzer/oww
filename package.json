@@ -9,11 +9,11 @@
   "version": "0.0.1",
   "description": "one word world app",
   "dependencies": {
-    "body-parser": "~1.0.0",
-    "connect-multiparty": "^2.0.0",
+    "body-parser": "^1.0.2",
     "cookie-parser": "~1.0.1",
     "debug": "~0.7.4",
     "express": "^4.14.0",
+    "fs": "0.0.1-security",
     "jade": "~1.3.0",
     "maxmind": "^2.1.0",
     "morgan": "~1.0.0",

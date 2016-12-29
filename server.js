@@ -11,17 +11,18 @@
  /* ******************************************************
  * Loading all required middleware
  ********************************************************/
-var ver = 'owwServer v.0.0.10';
+var ver = 'owwServer v.0.1-alpha.20f';
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var ioToProcessor = require('socket.io-client');
+// var ioToProcessor = require('socket.io-client');
 var eventList;
 var personList;
 const net = require("net");
 var multer  = require('multer')
-var upload = multer({ dest: 'images/upload/' })
+// var upload = multer({ dest: 'images/upload/' })
+var bodyParser = require('body-parser');
 
 console.log(new Date());
 console.log(ver, "starting with initialization sequence: ");
@@ -38,33 +39,54 @@ app.use('/js', express.static('js'));
 app.use('/images', express.static('images'));
 app.use('/application', express.static('application'));
 app.use('/views', express.static('views'));
+app.use(function(req, res, next) { //allow cross origin requests
+  res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
+  res.header("Access-Control-Allow-Origin", "http://localhost");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+app.use(bodyParser.json());
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/views/index.html');
 });
 
-
-// Requires controller
-UserController = require('./application/controllers/user.controller.js');
-
-// Example endpoint
-app.post('/newevent', ImageUpload(), UserController.uploadFile);
-
-
 console.log("All routes are set");
-// ******************************************************
+console.log("*********************************************************************\n");
+console.log("Setting file upload destination to: /images/upload");
+var storage = multer.diskStorage({ //multers disk storage settings
+    destination: function (req, file, cb) {
+        console.log("setting up destination");
+        cb(null, 'images/upload');
+    },
+    filename: function (req, file, cb) {
+        console.log("setting up filename");
+        var datetimestamp = Date.now();
+        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]);
+    }
+});
 
-
+var upload = multer({ //multer settings
+   storage: storage
+  }).single('file');
+/** API path that will upload the files */
+app.post('/newevent', function(req, res) {
+    upload(req,res,function(err){
+        if(err){
+             res.json({error_code:1,err_desc:err});
+             return;
+        }
+         res.json({error_code:0,err_desc:null});
+    });
+});
+console.log("*********************************************************************\n");
+console.log("*********************************************************************");
 console.log("I guess we're all set.");
-console.log("*********************************************************************");
+console.log("*********************************************************************\n");
 console.log(ver, " is online and ready!");
-console.log("*********************************************************************");
+console.log("*********************************************************************\n");
 
 
-function ImageUpload() {
-  multipart = require('connect-multiparty'),
-  multipartyMiddleware = multipart({ uploadDir: 'images/upload' });
-  return multipartyMiddleware;
-}
   // Brojac online korisnika
   var room = ['person', 'event']
 
