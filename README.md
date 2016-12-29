@@ -1,4 +1,4 @@
 # oneWordWorld
 One Word World website development repository
 
-Made with jHipster
+Made with node, express socket.io and angularjs
