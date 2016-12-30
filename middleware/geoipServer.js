@@ -9,9 +9,9 @@
 //  ********************************************************/
 
 // var ipInfoDB = 'a03bf41b7ef4583c8f2ce950ce24a48577649eabfe71f20bc3f4ceade99abea2';
-var ver = 'owwProcesor v.0.0.10';
+var ver = 'owwProcesor v.0.1-alpha.10';
 var json;
-var test;
+// var test;
 var ipJson; // for maxmind GeoLite2-City result
 
 
@@ -26,7 +26,7 @@ var dbcon = mysql.createPool({
   host: 'localhost',
   user: 'owwuser',
   password: 'myscrtW0rd',
-  database : 'oneword',
+  database : 'OneWordEngine',
   port     : 3306
 });
 
@@ -151,7 +151,7 @@ function NewConnection(data, callback) {
   dbcon.getConnection(function(err, connection) {
 
     // Use the connection
-    connection.query('SELECT eword a, COUNT(eword) c FROM tevent GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
+    connection.query('SELECT eword a, COUNT(eword) c FROM teword GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
       if (err) {
         if(err.fatal){
         throw err;
@@ -159,7 +159,7 @@ function NewConnection(data, callback) {
         console.error("Processor: NewConnection: Event: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
       }
       eventList = rows;
-      connection.query('SELECT pword a, COUNT(pword) c FROM tperson GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
+      connection.query('SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
         if (err) {
           if(err.fatal){
           throw err;
@@ -188,22 +188,25 @@ function NewConnection(data, callback) {
 function InsertEventWord(data, callback) {
   data = JSON.parse(data);
   ipJson = cityLookup.get('217.75.201.28');
-  console.log("DATA: Event: Response from client: %s", ipJson.country.names.en, data.data, data.word);
+  console.log("DATA: Event: Response from client: %s", ipJson.country.names.en, data.data, data.word, data.event_id);
 
   // working with database inserting new evet word
   // and getting back
   // new event list top 5
   dbcon.getConnection(function(err, connection) {
     // Use the connection
-    connection.query( 'INSERT INTO tevent (eword, ip) VALUES(?, ?);', [data.word, data.ip], function(err, rows) {
+      var teword_id;
+    connection.query( 'INSERT INTO teword (eword, ip, event_id) VALUES(?, ?, ?);', [data.word, data.ip, data.event_id], function(err, rows) {
       if (err) {
         if(err.fatal){
         throw err;
         }
         console.error("Processor: Insert: Event: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
       };
+        console.log("Insert teword ID: ", rows.insertId);
+        teword_id = rows.insertId;
       if(!ipJson.city){
-        connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+        connection.query('INSERT INTO tlocation (ip, city, country, continent, word_id) VALUES(?,?,?,?,?)', [data.ip, null, ipJson.country.names.en, ipJson.continent.names.en, teword_id.valueOf()], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
@@ -213,7 +216,7 @@ function InsertEventWord(data, callback) {
           console.log("Insert location ID: ", rows.insertId);
         });
       }else {
-        connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+        connection.query('INSERT INTO tlocation (ip, city, country, continent, word_id) VALUES(?,?,?,?,?)', [data.ip, ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, teword_id], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
@@ -225,7 +228,7 @@ function InsertEventWord(data, callback) {
         });
       }
 
-      connection.query('SELECT eword a, COUNT(eword) c FROM tevent GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
+      connection.query('SELECT eword a, COUNT(eword) c FROM teword GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
         if (err) {
           if(err.fatal){
           throw err;
@@ -258,7 +261,7 @@ function InsertPersonWord(data, callback) {
   // new event list top 5
   dbcon.getConnection(function(err, connection) {
     // Use the connection
-    connection.query( 'INSERT INTO tperson (pword, ip) VALUES(?,?);', [data.word, data.ip], function(err, rows) {
+    connection.query( 'INSERT INTO tperson (pword, ip, person_id) VALUES(?,?,?);', [data.word, data.ip, data.person_id], function(err, rows) {
       if (err) {
         if(err.fatal){
         throw err;
