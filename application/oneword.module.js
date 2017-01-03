@@ -2,9 +2,16 @@
 "use strict";
 
 /**
- * oneWordWorld module that includes the public module as a dependency
+ * oneWordWorld module that includes router, file upload
+ * ngCookies
+ * Look for the included files in their respective folders.
  */
-angular.module('oneWordWorld', ['ui.router', 'fileUpload'])
+angular.module('oneWordWorld', ['ui.router', 'fileUpload', 'ngCookies'])
+
+})();
+
+
+
 // .config(config);
 //
 // config.$inject = ['$urlRouterProvider', '$stateProvider'];
@@ -69,5 +76,3 @@ angular.module('oneWordWorld', ['ui.router', 'fileUpload'])
 //
 //     });
 //   };
-
-})();

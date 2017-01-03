@@ -9,7 +9,7 @@
 //  ********************************************************/
 
 // var ipInfoDB = 'a03bf41b7ef4583c8f2ce950ce24a48577649eabfe71f20bc3f4ceade99abea2';
-var ver = 'owwProcesor v.0.1-alpha.10';
+var ver = 'owwProcesor v.0.1-alpha.20';
 var json;
 // var test;
 var ipJson; // for maxmind GeoLite2-City result
@@ -23,11 +23,11 @@ var maxmind = require('maxmind'); // GeoLite2-City.mmdb
 // Pravimo konekciju na bazu podataka
 var dbcon = mysql.createPool({
   connectionLimit : 10,
-  host: 'localhost',
+  host: 'mysql8.db4free.net',
   user: 'owwuser',
   password: 'myscrtW0rd',
-  database : 'OneWordEngine',
-  port     : 3306
+  database : 'onewordengine',
+  port     : 3307
 });
 
 // kreiramo konekciju na maxmind
@@ -206,7 +206,7 @@ function InsertEventWord(data, callback) {
         console.log("Insert teword ID: ", rows.insertId);
         teword_id = rows.insertId;
       if(!ipJson.city){
-        connection.query('INSERT INTO tlocation (ip, city, country, continent, word_id) VALUES(?,?,?,?,?)', [data.ip, null, ipJson.country.names.en, ipJson.continent.names.en, teword_id.valueOf()], function (err, rows) {
+        connection.query('INSERT INTO `tlocation`(`country`, `continent`, `eword_id`) VALUES (?,?,?)', [ipJson.country.names.en, ipJson.continent.names.en, teword_id.valueOf()], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
@@ -216,7 +216,7 @@ function InsertEventWord(data, callback) {
           console.log("Insert location ID: ", rows.insertId);
         });
       }else {
-        connection.query('INSERT INTO tlocation (ip, city, country, continent, word_id) VALUES(?,?,?,?,?)', [data.ip, ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, teword_id], function (err, rows) {
+        connection.query('INSERT INTO tlocation (city, country, continent, eword_id) VALUES(?,?,?,?)', [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, teword_id], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
@@ -260,6 +260,7 @@ function InsertPersonWord(data, callback) {
   // and getting back
   // new event list top 5
   dbcon.getConnection(function(err, connection) {
+      var tpword_id;
     // Use the connection
     connection.query( 'INSERT INTO tperson (pword, ip, person_id) VALUES(?,?,?);', [data.word, data.ip, data.person_id], function(err, rows) {
       if (err) {
@@ -268,18 +269,20 @@ function InsertPersonWord(data, callback) {
         }
         console.error("Processor: Insert: Person: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
       };
+      tpword_id = rows.insertId;
+
       if(!ipJson.city){
-        connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', ['217.75.201.28', null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+        connection.query('INSERT INTO tlocation (`country`, `continent`, `pword_id`) VALUES (?,?,?)', [ipJson.country.names.en, ipJson.continent.names.en, tpword_id], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
             }
             console.error("Processor: List: Person: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
           }
-          // console.log("Insert location ID: ", rows.insertId);
+          console.log("Insert location ID: ", rows.insertId);
         });
       }else {
-        connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+        connection.query('INSERT INTO tlocation (city, country, continent, pword_id) VALUES(?,?,?,?)', [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, tpword_id], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;

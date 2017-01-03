@@ -1,0 +1,26 @@
+(function () {
+    'use strict';
+
+    angular.module('oneWordWorld')
+    .factory("userPersistenceService", OwwUserPersistenceService);
+
+    OwwUserPersistenceService.$inject['$cookies']
+    function OwwUserPersistenceService($cookies) {
+        var userName = "";
+
+        return {
+            setCookieData: function(username) {
+                userName = username;
+                $cookies.put("userName", username);
+            },
+            getCookieData: function() {
+                userName = $cookies.get("userName");
+                return userName;
+            },
+            clearCookieData: function() {
+                userName = "";
+                $cookies.remove("userName");
+            }
+        }
+    }
+})();
