@@ -55,7 +55,7 @@ angular.module('ngCookies', ['ng']).
      *
      * ```js
      * angular.module('cookiesProviderExample', ['ngCookies'])
-     *   .config(['$cookiesProvider', function($cookiesProvider) {
+     *   .config.js(['$cookiesProvider', function($cookiesProvider) {
      *     // Setting default options
      *     $cookiesProvider.defaults.domain = 'foo.com';
      *     $cookiesProvider.defaults.secure = true;

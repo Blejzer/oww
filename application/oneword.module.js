@@ -12,10 +12,10 @@ angular.module('oneWordWorld', ['ui.router', 'fileUpload', 'ngCookies'])
 
 
 
-// .config(config);
+// .config.js(config.js);
 //
-// config.$inject = ['$urlRouterProvider', '$stateProvider'];
-// function config($urlRouterProvider, $stateProvider) {
+// config.js.$inject = ['$urlRouterProvider', '$stateProvider'];
+// function config.js($urlRouterProvider, $stateProvider) {
 //
 //     // If user goes to a path that doesn't exist, redirect to public root
 //     $urlRouterProvider.otherwise('/');

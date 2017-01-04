@@ -19,12 +19,12 @@
 //               url: '/newevent',
 //               data: {file: file, 'username': $scope.username}
 //           }).then(function (resp) {
-//               console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+//               console.log('Success ' + resp.config.js.data.file.name + 'uploaded. Response: ' + resp.data);
 //           }, function (resp) {
 //               console.log('Error status: ' + resp.status, file.name);
 //           }, function (evt) {
 //               var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-//               console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+//               console.log('progress: ' + progressPercentage + '% ' + evt.config.js.data.file.name);
 //           });
 //       };
 //

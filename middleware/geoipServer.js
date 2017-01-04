@@ -9,7 +9,7 @@
 //  ********************************************************/
 
 // var ipInfoDB = 'a03bf41b7ef4583c8f2ce950ce24a48577649eabfe71f20bc3f4ceade99abea2';
-var ver = 'owwProcesor v.0.1-alpha.20';
+// var ver = 'owwProcesor v.0.1-alpha.20';
 var json;
 // var test;
 var ipJson; // for maxmind GeoLite2-City result
@@ -17,17 +17,19 @@ var ipJson; // for maxmind GeoLite2-City result
 
 // middleware loading
 const net = require("net");
-var mysql = require('mysql');
-var maxmind = require('maxmind'); // GeoLite2-City.mmdb
+var mysql = require("mysql");
+var maxmind = require("maxmind"); // GeoLite2-City.mmdb
+var Config = require("config-js");
+var config = new Config("application/config/config.js");
 
 // Pravimo konekciju na bazu podataka
 var dbcon = mysql.createPool({
-  connectionLimit : 10,
-  host: 'mysql8.db4free.net',
-  user: 'owwuser',
-  password: 'myscrtW0rd',
-  database : 'onewordengine',
-  port     : 3307
+  connectionLimit : config.get('sequel.conlimt'),
+  host: config.get('sequel.link'),
+  user: config.get('sequel.juzer'),
+  password: config.get('sequel.lozinka'),
+  database : config.get('sequel.baza'),
+  port     : config.get('sequel.prt')
 });
 
 // kreiramo konekciju na maxmind
@@ -35,12 +37,12 @@ var cityLookup = maxmind.openSync('data/maxmind/GeoLite2-City.mmdb');
 
 
 // Create a simple server
-var server = net.createServer(function (conn) {
+var processor = net.createServer(function (conn) {
   if(conn.address().address !="127.0.0.1"){
-    console.log("Address is not localhost!!! You are invaded!!!", conn.address().address);
+    console.error("Address is not localhost!!! You are invaded!!!", conn.address().address);
     conn.end();
   }
-    console.log("Processor: Client connected");
+    console.log("Processor: Server connected");
     // Let's response with a hello message
     // conn.write(
     //     JSON.stringify(
@@ -50,10 +52,10 @@ var server = net.createServer(function (conn) {
 
     // If connection is closed
     conn.on("end", function() {
-        console.log('Server: Client disconnected');
+        console.log('Processor: Server disconnected');
         conn.end();
-        // Close the server
-        // server.close();
+        // Close the server connection
+        // conn.close();
         // End the process
         // process.exit(0);
     });
@@ -126,9 +128,9 @@ var server = net.createServer(function (conn) {
 
 
 // Listen for connections
-server.listen(3001, "localhost", function () {
+processor.listen(3001, "localhost", function () {
     testDataBaseConnection();
-    console.log(ver, "Server: Listening");
+    console.log(config.get('ver.proc'), "Processor is listening");
 });
 
 /////////////////////////////////////////////
@@ -150,23 +152,30 @@ function NewConnection(data, callback) {
 
   dbcon.getConnection(function(err, connection) {
 
+      connection.query(config.get('que.evntWeek'), function (err, rows) {
+          if(err)
+              throw err;
+          console.log('testing queries: \n', rows);
+
+      })
+
     // Use the connection
-    connection.query('SELECT eword a, COUNT(eword) c FROM teword GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
+    connection.query(config.get('que.eventList'), function (err, rows) {
       if (err) {
         if(err.fatal){
         throw err;
         }
-        console.error("Processor: NewConnection: Event: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+        console.error("Processor: NewConnection: Event: ",new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
       }
-      eventList = rows;
-      connection.query('SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
+      var eventList = rows;
+      connection.query(config.get('que.personList'), function (err, rows) {
         if (err) {
           if(err.fatal){
           throw err;
           }
-          console.error("Processor: NewConnection: Person: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+          console.error("Processor: NewConnection: Person: ",new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
         }
-        personList = rows;
+        var personList = rows;
         var ritrn = JSON.stringify({eventList, personList});
         callback(ritrn);
       });
@@ -196,44 +205,44 @@ function InsertEventWord(data, callback) {
   dbcon.getConnection(function(err, connection) {
     // Use the connection
       var teword_id;
-    connection.query( 'INSERT INTO teword (eword, ip, event_id) VALUES(?, ?, ?);', [data.word, data.ip, data.event_id], function(err, rows) {
+    connection.query( config.get('que.insEword'), [data.word, data.ip, data.event_id], function(err, rows) {
       if (err) {
         if(err.fatal){
         throw err;
         }
-        console.error("Processor: Insert: Event: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+        console.error("Processor: Insert: Event: ",new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
       };
         console.log("Insert teword ID: ", rows.insertId);
         teword_id = rows.insertId;
       if(!ipJson.city){
-        connection.query('INSERT INTO `tlocation`(`country`, `continent`, `eword_id`) VALUES (?,?,?)', [ipJson.country.names.en, ipJson.continent.names.en, teword_id.valueOf()], function (err, rows) {
+        connection.query(config.get('que.insLoce'), [ipJson.country.names.en, ipJson.continent.names.en, teword_id.valueOf()], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
             }
-            console.error("Processor: List: Event: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+            console.error("Processor: List: Event: ",new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
           }
           console.log("Insert location ID: ", rows.insertId);
         });
       }else {
-        connection.query('INSERT INTO tlocation (city, country, continent, eword_id) VALUES(?,?,?,?)', [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, teword_id], function (err, rows) {
+        connection.query(config.get('que.insLocLe'), [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, teword_id], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
             }
-            console.error("Processor: List: Event: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+            console.error("Processor: List: Event: ",new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
           }
 
           console.log("Insert location ID: ", rows.insertId);
         });
       }
 
-      connection.query('SELECT eword a, COUNT(eword) c FROM teword GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
+      connection.query(config.get('que.eventList'), function (err, rows) {
         if (err) {
           if(err.fatal){
           throw err;
           }
-          console.error("Processor: List: Event: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+          console.error("Processor: List: Event: ",new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
         }
         ritrn = JSON.stringify(rows);
         callback(ritrn);
@@ -262,42 +271,42 @@ function InsertPersonWord(data, callback) {
   dbcon.getConnection(function(err, connection) {
       var tpword_id;
     // Use the connection
-    connection.query( 'INSERT INTO tperson (pword, ip, person_id) VALUES(?,?,?);', [data.word, data.ip, data.person_id], function(err, rows) {
+    connection.query( config.get('que.insPword'), [data.word, data.ip, data.person_id], function(err, rows) {
       if (err) {
         if(err.fatal){
         throw err;
         }
-        console.error("Processor: Insert: Person: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+        console.error("Processor: Insert: Person: tpword ",new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
       };
       tpword_id = rows.insertId;
 
       if(!ipJson.city){
-        connection.query('INSERT INTO tlocation (`country`, `continent`, `pword_id`) VALUES (?,?,?)', [ipJson.country.names.en, ipJson.continent.names.en, tpword_id], function (err, rows) {
+        connection.query(config.get('que.insLocp'), [ipJson.country.names.en, ipJson.continent.names.en, tpword_id], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
             }
-            console.error("Processor: List: Person: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+            console.error("Processor: List: Person: tlocation ",new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
           }
           console.log("Insert location ID: ", rows.insertId);
         });
       }else {
-        connection.query('INSERT INTO tlocation (city, country, continent, pword_id) VALUES(?,?,?,?)', [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, tpword_id], function (err, rows) {
+        connection.query(config.get('que.insLocLp'), [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, tpword_id], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
             }
-            console.error("Processor: List: Person: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+            console.error("Processor: List: Person: ",new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
           }
           console.log("Insert location ID: ", rows.insertId);
         });
       }
-      connection.query('SELECT pword a, COUNT(pword) c FROM tperson GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5', function (err, rows) {
+      connection.query(config.get('que.personList'), function (err, rows) {
         if (err) {
           if(err.fatal){
           throw err;
           }
-          console.error("Processor: List: Person: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+          console.error("Processor: List: Person: ",new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
         }
         ritrn = JSON.stringify(rows);
         callback(ritrn);
@@ -332,7 +341,7 @@ function EventPageLoaded(data, callback) {
             if(err.fatal){
             throw err;
             }
-            console.error("Processor: List: EventPageLoaded: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+            console.error("Processor: List: EventPageLoaded: ",new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
           }
           console.log("Insert location ID: ", rows.insertId);
         });
@@ -342,7 +351,7 @@ function EventPageLoaded(data, callback) {
             if(err.fatal){
             throw err;
             }
-            console.error("Processor: List: EventPageLoaded: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+            console.error("Processor: List: EventPageLoaded: ",new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
           }
           console.log("Insert location ID: ", rows.insertId);
         });
@@ -353,7 +362,7 @@ function EventPageLoaded(data, callback) {
           if(err.fatal){
           throw err;
           }
-          console.error("Processor: List: EventPageLoaded: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+          console.error("Processor: List: EventPageLoaded: ",new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
         }
         ritrn = JSON.stringify(rows);
         callback(ritrn);
@@ -388,7 +397,7 @@ function PersonPageLoaded(data, callback) {
             if(err.fatal){
             throw err;
             }
-            console.error("Processor: List: PersonPageLoaded: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+            console.error("Processor: List: PersonPageLoaded: ",new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
           }
           console.log("Insert location ID: ", rows.insertId);
         });
@@ -398,7 +407,7 @@ function PersonPageLoaded(data, callback) {
             if(err.fatal){
             throw err;
             }
-            console.error("Processor: List: PersonPageLoaded: ",new Date(), 'Error executing code on the db. Check if the DB is running?', err.code, err.fatal);
+            console.error("Processor: List: PersonPageLoaded: ",new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
           }
           console.log("Insert location ID: ", rows.insertId);
         });
@@ -409,7 +418,7 @@ function PersonPageLoaded(data, callback) {
           if(err.fatal){
           throw err;
           }
-          console.error("Processor: List: PersonPageLoaded: ",new Date(), 'Could not connect to the db. Check if the DB is running?', err.code, err.fatal);
+          console.error("Processor: List: PersonPageLoaded: ",new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
         }
         ritrn = JSON.stringify(rows);
         callback(ritrn);

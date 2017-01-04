@@ -34,6 +34,7 @@
     <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
         <div class="thumbnail">
           <form id="formPerson" action="">
+            <input type="hidden" id="person_id" value="9999"/>
             <input id="p" class="form-control" autocomplete="off" pattern="^([\Sa-zA-Z]){1,25}$" oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
     onchange="try{setCustomValidity('')}catch(e){}" />
             <button class="form-control btn pull-right" style="background-color:yellow"><strong>Send</strong></button>
@@ -108,7 +109,7 @@
     });
     $('#formPerson').submit(null, function(){
       console.log("Person");
-      socket.emit('person', 'person', $('#p').val());
+      socket.emit('person', 'person', $('#p').val(), $('#person_id').val());
       $('#p').val('');
       return false;
     });

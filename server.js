@@ -178,11 +178,11 @@ io.sockets.on('connection', function (socket) {
 // pakuje ga i proslijedjuje ga Processoru na obradu i ceka povratnu
 // informaciju o uspjesnosti i listi personList
 // *********************************************************************
-  socket.on('person', function (newroom, personWord) {
+  socket.on('person', function (newroom, personWord, person_id) {
 
     console.log("Registrujem person socket ", personWord);
 
-    var data = {"data": "personWord", "ip":fakeip, "word":personWord};
+    var data = {"data": "personWord", "ip":fakeip, "word":personWord, "person_id": person_id};
     jack = JSON.stringify(data);
 
     // Create a socket (client) that connects to the server
