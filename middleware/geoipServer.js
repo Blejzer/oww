@@ -154,6 +154,7 @@ processor.listen(3001, "localhost", function () {
 function NewConnection(data, callback) {
   data = JSON.parse(data);
   console.log("NEWCONNECTION: Response from client: %s", data.ip);
+  ipJson = cityLookup.get('217.75.201.28');
 
   // getting back event list top 5 and person list top 5
   // so it can be pumped in to the lists after client connects
@@ -280,7 +281,7 @@ function InsertPersonWord(data, callback) {
   dbcon.getConnection(function(err, connection) {
       var tpword_id;
     // Use the connection
-    connection.query( config.get('que.insPword'), [data.word, data.ip, data.person_id], function(err, rows) {
+    connection.query( config.get('pwrd.ins'), [data.word, data.ip, data.person_id], function(err, rows) {
       if (err) {
         if(err.fatal){
         throw err;
@@ -290,7 +291,7 @@ function InsertPersonWord(data, callback) {
       tpword_id = rows.insertId;
 
       if(!ipJson.city){
-        connection.query(config.get('que.insLocp'), [ipJson.country.names.en, ipJson.continent.names.en, tpword_id], function (err, rows) {
+        connection.query(config.get('lctn.ins1'), [ipJson.country.names.en, ipJson.continent.names.en, tpword_id], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
@@ -300,7 +301,7 @@ function InsertPersonWord(data, callback) {
           console.log("Insert location ID: ", rows.insertId);
         });
       }else {
-        connection.query(config.get('que.insLocLp'), [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, tpword_id], function (err, rows) {
+        connection.query(config.get('lctn.ins2'), [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, tpword_id], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
@@ -310,7 +311,7 @@ function InsertPersonWord(data, callback) {
           console.log("Insert location ID: ", rows.insertId);
         });
       }
-      connection.query(config.get('que.personList'), function (err, rows) {
+      connection.query(config.get('prsn.lst'), function (err, rows) {
         if (err) {
           if(err.fatal){
           throw err;

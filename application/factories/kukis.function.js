@@ -1,10 +1,10 @@
 (function () {
     'use strict';
 
-    angular.module('oneWordWorld')
-    .factory("userPersistenceService", OwwUserPersistenceService);
+    angular.module('kukis')
+    .factory('OwwUserPersistenceService', OwwUserPersistenceService);
 
-    OwwUserPersistenceService.$inject['$cookies']
+    OwwUserPersistenceService.$inject['$cookies'];
     function OwwUserPersistenceService($cookies) {
         var userName = "";
 

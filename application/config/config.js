@@ -17,18 +17,13 @@ module.exports = {
         prt: 3307
     },
 
-    vstr: {
-        ins: 'INSERT INTO tvisitor (ip_address, eword_id, pword_id) VALUES (?, ?, ?);',
-        upd: 'UPDATE tvisitor SET eword_id = ?, pword_id = ?;',
-        del: 'DELETE FROM tvisitor WHERE visitor_id=?;',
-        sel: ''
-    },
-    lctn: {
-        ins1: 'INSERT INTO tlocation (city, country, continent, visitor_id) VALUES (?, ?, ?, ?);',
-        ins2: 'INSERT INTO tlocation (country, continent, visitor_id) VALUES (?, ?, ?);',
-        upd: 'UPDATE tlocation SET city = ?, country = ?, continent = ?, visitor_id = ?;',
-        del: 'DELETE FROM tlocation WHERE location_id=?',
-        sel: ''
+
+    evnt: {
+        ins: 'INSERT INTO tperson (title, image, week_id) VALUES (?, ?, ?);',
+        upd: 'UPDATE tperson SET title=?, image=?, week_id=?;',
+        del: 'DELETE FROM tperson WHERE person_id=?;',
+        sel: '',
+        lst: 'SELECT * FROM tevent ORDER BY event_id DESC LIMIT 5;'
     },
     ewrd: {
         ins: 'INSERT INTO teword (eword, ip, event_id) VALUES(?, ?, ?);',
@@ -37,12 +32,12 @@ module.exports = {
         sel: '',
         lst: 'SELECT eword a, COUNT(eword) c FROM teword GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5;'
     },
-    evnt: {
-        ins: 'INSERT INTO tperson (title, image, week_id) VALUES (?, ?, ?);',
-        upd: 'UPDATE tperson SET title=?, image=?, week_id=?;',
-        del: 'DELETE FROM tperson WHERE person_id=?;',
-        sel: '',
-        lst: 'SELECT * FROM tevent ORDER BY event_id DESC LIMIT 5;'
+    lctn: {
+        ins1: 'INSERT INTO tlocation (city, country, continent, visitor_id) VALUES (?, ?, ?, ?);',
+        ins2: 'INSERT INTO tlocation (country, continent, visitor_id) VALUES (?, ?, ?);',
+        upd: 'UPDATE tlocation SET city = ?, country = ?, continent = ?, visitor_id = ?;',
+        del: 'DELETE FROM tlocation WHERE location_id=?',
+        sel: ''
     },
     pwrd: {
         ins: 'INSERT INTO tpword (pword, ip, person_id) VALUES(?, ?, ?);',
@@ -58,7 +53,12 @@ module.exports = {
         sel: '',
         lst: 'SELECT * FROM tperson ORDER BY person_id DESC LIMIT 5;'
     },
-
+    vstr: {
+        ins: 'INSERT INTO tvisitor (ip_address, eword_id, pword_id) VALUES (?, ?, ?);',
+        upd: 'UPDATE tvisitor SET eword_id = ?, pword_id = ?;',
+        del: 'DELETE FROM tvisitor WHERE visitor_id=?;',
+        sel: ''
+    },
     week: {
         ins: 'INSERT INTO tweek (week, od_date, do_date) VALUES (?, ?, ?);',
         upd: 'UPDATE tweek SET week=?, od_date=?, do_date=?;',

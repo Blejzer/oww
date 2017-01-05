@@ -4,14 +4,6 @@
 angular.module('oneWordWorld')
 .controller('OwwController', OwwController);
 
-// function MyCtrl($scope, $location, $window) {
-//   $scope.$on('$viewContentLoaded', function(event) {
-//     $window.ga('send', 'pageview', { page: $location.url() });
-//   });
-// }
-/**
- * Configures the routes and views
- */
 OwwController.$inject = ['$rootScope', '$scope', '$location', '$window'];
 function OwwController ($rootScope, $scope, $location, $window) {
   $scope.$on('$viewContentLoaded', function(event) {
