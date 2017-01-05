@@ -142,6 +142,15 @@ processor.listen(3001, "localhost", function () {
 //                                         //
 /////////////////////////////////////////////
 
+
+/* ************************************************
+ *           NEW CONNECTION function              *
+ * What happens when the user first gets to       *
+ * the website. We collect his information and    *
+ * save it in the cookie, and send it here so     *
+ * it can be processed at appropriate time        *
+ * data is saved in tvisitor table                *
+ *************************************************/
 function NewConnection(data, callback) {
   data = JSON.parse(data);
   console.log("NEWCONNECTION: Response from client: %s", data.ip);
@@ -152,15 +161,15 @@ function NewConnection(data, callback) {
 
   dbcon.getConnection(function(err, connection) {
 
-      connection.query(config.get('que.evntWeek'), function (err, rows) {
-          if(err)
-              throw err;
-          console.log('testing queries: \n', rows);
-
-      })
+      // connection.query(config.get('que.evntWeek'), function (err, rows) {
+      //     if(err)
+      //         throw err;
+      //     console.log('testing queries: \n', rows);
+      //
+      // })
 
     // Use the connection
-    connection.query(config.get('que.eventList'), function (err, rows) {
+    connection.query(config.get('ewrd.lst'), function (err, rows) {
       if (err) {
         if(err.fatal){
         throw err;
@@ -168,7 +177,7 @@ function NewConnection(data, callback) {
         console.error("Processor: NewConnection: Event: ",new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
       }
       var eventList = rows;
-      connection.query(config.get('que.personList'), function (err, rows) {
+      connection.query(config.get('pwrd.lst'), function (err, rows) {
         if (err) {
           if(err.fatal){
           throw err;
@@ -205,7 +214,7 @@ function InsertEventWord(data, callback) {
   dbcon.getConnection(function(err, connection) {
     // Use the connection
       var teword_id;
-    connection.query( config.get('que.insEword'), [data.word, data.ip, data.event_id], function(err, rows) {
+    connection.query( config.get('ewrd.ins'), [data.word, data.ip, data.event_id], function(err, rows) {
       if (err) {
         if(err.fatal){
         throw err;
@@ -215,7 +224,7 @@ function InsertEventWord(data, callback) {
         console.log("Insert teword ID: ", rows.insertId);
         teword_id = rows.insertId;
       if(!ipJson.city){
-        connection.query(config.get('que.insLoce'), [ipJson.country.names.en, ipJson.continent.names.en, teword_id.valueOf()], function (err, rows) {
+        connection.query(config.get('lctn.ins1'), [ipJson.country.names.en, ipJson.continent.names.en, teword_id.valueOf()], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
@@ -225,7 +234,7 @@ function InsertEventWord(data, callback) {
           console.log("Insert location ID: ", rows.insertId);
         });
       }else {
-        connection.query(config.get('que.insLocLe'), [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, teword_id], function (err, rows) {
+        connection.query(config.get('lctn.ins2'), [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, teword_id], function (err, rows) {
           if (err) {
             if(err.fatal){
             throw err;
@@ -237,7 +246,7 @@ function InsertEventWord(data, callback) {
         });
       }
 
-      connection.query(config.get('que.eventList'), function (err, rows) {
+      connection.query(config.get('evnt.lst'), function (err, rows) {
         if (err) {
           if(err.fatal){
           throw err;

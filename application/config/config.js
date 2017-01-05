@@ -17,21 +17,53 @@ module.exports = {
         prt: 3307
     },
 
-    que: {
-        insEvnt: 'INSERT INTO tevent (title, image, week_id) VALUES(?, ?, ?);',
-        insPrsn: 'INSERT INTO tperson (title, image, week_id) VALUES(?, ?, ?);',
-        insEword: 'INSERT INTO teword (eword, ip, event_id) VALUES(?, ?, ?);',
-        insPword: 'INSERT INTO tpword (pword, ip, person_id) VALUES(?, ?, ?);',
-        insLocLe: 'INSERT INTO tlocation (city, country, continent, eword_id) VALUES(?,?,?,?)',
-        insLoce: 'INSERT INTO `tlocation`(`country`, `continent`, `eword_id`) VALUES (?,?,?)',
-        insLocLp: 'INSERT INTO tlocation (city, country, continent, pword_id) VALUES(?,?,?,?)',
-        insLocp: 'INSERT INTO `tlocation`(`country`, `continent`, `pword_id`) VALUES (?,?,?)',
-        eventList: 'SELECT eword a, COUNT(eword) c FROM teword GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5',
-        personList: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5',
-        evntLst: 'SELECT * FROM tevent ORDER BY event_id DESC LIMIT 5;',
-        prsnLst: 'SELECT * FROM tperson ORDER BY person_id DESC LIMIT 5;',
-        evntWeek: 'SELECT te.event_id, tw.week FROM tevent te LEFT JOIN tweek tw ON (te.week_id = tw.week_id) ORDER BY event_id DESC LIMIT 5;',
-        prsnWeek: 'SELECT tp.person_id, tw.week FROM tperson tp LEFT JOIN tweek tw ON (tp.week_id = tw.week_id) ORDER BY person_id DESC LIMIT 5;'
+    vstr: {
+        ins: 'INSERT INTO tvisitor (ip_address, eword_id, pword_id) VALUES (?, ?, ?);',
+        upd: 'UPDATE tvisitor SET eword_id = ?, pword_id = ?;',
+        del: 'DELETE FROM tvisitor WHERE visitor_id=?;',
+        sel: ''
+    },
+    lctn: {
+        ins1: 'INSERT INTO tlocation (city, country, continent, visitor_id) VALUES (?, ?, ?, ?);',
+        ins2: 'INSERT INTO tlocation (country, continent, visitor_id) VALUES (?, ?, ?);',
+        upd: 'UPDATE tlocation SET city = ?, country = ?, continent = ?, visitor_id = ?;',
+        del: 'DELETE FROM tlocation WHERE location_id=?',
+        sel: ''
+    },
+    ewrd: {
+        ins: 'INSERT INTO teword (eword, ip, event_id) VALUES(?, ?, ?);',
+        upd: 'UPDATE teword SET eword = ?, ip = ?, event_id = ?;',
+        del: 'DELETE FROM teword WHERE eword_id=?;',
+        sel: '',
+        lst: 'SELECT eword a, COUNT(eword) c FROM teword GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5;'
+    },
+    evnt: {
+        ins: 'INSERT INTO tperson (title, image, week_id) VALUES (?, ?, ?);',
+        upd: 'UPDATE tperson SET title=?, image=?, week_id=?;',
+        del: 'DELETE FROM tperson WHERE person_id=?;',
+        sel: '',
+        lst: 'SELECT * FROM tevent ORDER BY event_id DESC LIMIT 5;'
+    },
+    pwrd: {
+        ins: 'INSERT INTO tpword (pword, ip, person_id) VALUES(?, ?, ?);',
+        upd: 'UPDATE tpword SET pword=?, ip=?, person_id=?;',
+        del: 'DELETE FROM tpword WHERE pword_id=?;',
+        sel: '',
+        lst: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5;'
+    },
+    prsn: {
+        ins: 'INSERT INTO tperson (title, image, week_id) VALUES (?, ?, ?);',
+        upd: 'UPDATE tperson SET title=?, image=?, week_id=?;',
+        del: 'DELETE FROM tperson WHERE person_id=?;',
+        sel: '',
+        lst: 'SELECT * FROM tperson ORDER BY person_id DESC LIMIT 5;'
+    },
+
+    week: {
+        ins: 'INSERT INTO tweek (week, od_date, do_date) VALUES (?, ?, ?);',
+        upd: 'UPDATE tweek SET week=?, od_date=?, do_date=?;',
+        del: 'DELETE FROM tweek WHERE week_id=?;',
+        sel: ''
     },
 
     poruke: {
