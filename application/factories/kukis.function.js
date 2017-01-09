@@ -1,26 +1,41 @@
 (function () {
     'use strict';
 
-    angular.module('kukis')
-    .factory('OwwUserPersistenceService', OwwUserPersistenceService);
-
-    OwwUserPersistenceService.$inject['$cookies'];
-    function OwwUserPersistenceService($cookies) {
-        var userName = "";
+    /*
+    * OwwUserPersistenceService - OwwUPS
+    */
+    angular.module('oneWordWorld')
+    // .factory('OwwUPS', function ($cookies) {
+    //     var kukiz = this;
+    //     var userName = "";
+    //
+    //     return {
+    //         setCookieData: function(username) {
+    //             kukiz.userName = username;
+    //             $cookies.put("userName", username);
+    //             return true;
+    //         },
+    //         getCookieData: function() {
+    //             kukiz.userName = $cookies.get("userName");
+    //             return kukiz.userName;
+    //         },
+    //         clearCookieData: function() {
+    //             kukiz.userName = "";
+    //             $cookies.remove("userName");
+    //             return true;
+    //         }
+    //     }
+    // });
+    app.factory('OwwUPS', ['$rootScope', function($rootScope) {
+        var socket = io.connect();
 
         return {
-            setCookieData: function(username) {
-                userName = username;
-                $cookies.put("userName", username);
+            on: function(eventName, callback){
+                socket.on(eventName, callback);
             },
-            getCookieData: function() {
-                userName = $cookies.get("userName");
-                return userName;
-            },
-            clearCookieData: function() {
-                userName = "";
-                $cookies.remove("userName");
+            emit: function(eventName, data) {
+                socket.emit(eventName, data);
             }
-        }
-    }
+        };
+    }]);
 })();

@@ -6,7 +6,7 @@
  * ngCookies
  * Look for the included files in their respective folders.
  */
-angular.module('oneWordWorld', ['ui.router', 'fileUpload', 'kukis'])
+angular.module('oneWordWorld', ['ui.router', 'fileUpload', 'ngCookies'])
 
 })();
 

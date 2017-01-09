@@ -9,7 +9,10 @@
 <link rel="stylesheet" href="bootstrap/css/ng-img-crop.css">
 
   </head>
-  <body ng-app="oneWordWorld" style="background-color:yellow">
+  <body ng-app="oneWordWorld">
+  <div ng-controller="KukizController as kuki">
+      <label>{{customer.name}}</label>
+  </div>
     <div class="container">
       <div class="row">
         <div class="col-xs-3 ">
@@ -28,6 +31,8 @@
 
 
     <!-- Libs -->
+    <!--Socket.io Library-->
+    <script src="/socket.io/socket.io.js"></script>
     <!-- jQuery library -->
     <script src="js/jquery-2.1.4.min.js"></script>
     <!-- Bootstrap Library -->
@@ -43,7 +48,6 @@
     <!-- Main OneWordWorld Module -->
     <script src="application/oneword.module.js"></script>
     <script src="application/modules/fileupload.module.js"></script>
-    <script src="application/modules/kukis.module.js"></script>
     <script src="application/oneword.routes.js"></script>
     <script src="application/controllers/oneword.controller.js"></script>
     <script src="application/controllers/event.controller.js"></script>

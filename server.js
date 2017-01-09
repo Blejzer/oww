@@ -104,6 +104,16 @@ io.sockets.on('connection', function (socket) {
   console.log(new Date(), "Broj trenutnih korisnika: ", io.engine.clientsCount);
   io.sockets.emit('newconn', io.engine.clientsCount);
 
+  socket.on('add-customer', function(customer) {
+
+      customer.name = fakeip;
+
+      io.emit('notification', {
+          message: 'new customer',
+          customer: customer
+      });
+  });
+
 // testni podaci. trebace ove podatke kreirati
 // iz neke funkcije i proslijediti ih u
 // socket.on.data

@@ -16,6 +16,14 @@ module.exports = {
         lozinka: 'myscrtW0rd',
         prt: 3307
     },
+    // sequel : {
+    //     conlimt: '10',
+    //     link : 'localhost',
+    //     baza: 'onewordengine',
+    //     juzer: 'root',
+    //     lozinka: 'ou812id10t',
+    //     prt: 3306
+    // },
 
 
     evnt: {
