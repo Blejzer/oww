@@ -107,6 +107,7 @@ io.sockets.on('connection', function (socket) {
   socket.on('add-customer', function(customer) {
 
       customer.name = fakeip;
+      console.log("customer.name = fakeip: ", customer)
 
       io.emit('notification', {
           message: 'new customer',

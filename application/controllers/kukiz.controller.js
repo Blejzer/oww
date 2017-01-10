@@ -1,21 +1,23 @@
 (function () {
     'use strict';
-    angular.module('OneWordWorld')
+    angular.module('oneWordWorld')
         .controller('KukizController', KukizController);
 
 
-    KukizController.$inject['$scope', 'OwwUPS'];
+    KukizController.$inject = ['$scope', 'OwwUPS'];
     function KukizController($scope, OwwUPS) {
-        $scope.newCustomers = [];
+        $scope.customer = '';
         $scope.currentCustomer = {};
 
-        $scope.join = function() {
+
+        $scope.init = function() {
             OwwUPS.emit('add-customer', $scope.currentCustomer);
         };
 
         OwwUPS.on('notification', function(data) {
             $scope.$apply(function () {
-                $scope.newCustomers.push(data.customer);
+                console.log("notification data: ", data.customer);
+                $scope.customer = data.customer;
             });
         });
 
