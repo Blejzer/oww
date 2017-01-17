@@ -8,9 +8,9 @@ module.exports = {
         srvr: 'v0.1-alpha.20'
     },
 
-    sequel : {
+    sequel: {
         conlimt: '10',
-        link : 'mysql8.db4free.net',
+        link: 'mysql8.db4free.net',
         baza: 'onewordengine',
         juzer: 'owwuser',
         lozinka: 'myscrtW0rd',

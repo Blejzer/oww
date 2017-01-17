@@ -21,20 +21,22 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tevent` (
-  `event_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `image` varchar(255) NOT NULL DEFAULT '',
-  `week_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `event_id` INT(11)      NOT NULL,
+  `title`    VARCHAR(255) NOT NULL DEFAULT '',
+  `image`    VARCHAR(255) NOT NULL DEFAULT '',
+  `week_id`  INT(11)      NOT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 --
 -- Dumping data for table `tevent`
 --
 
 INSERT INTO `tevent` (`event_id`, `title`, `image`, `week_id`) VALUES
-(9997, 'testEvent3', 'images/upload/test.jpg', 9999),
-(9998, 'testEvent2', 'images/upload/test.jpg', 9999),
-(9999, 'testEvent', 'images/upload/test.jpg', 9999);
+  (9997, 'testEvent3', 'images/upload/test.jpg', 9999),
+  (9998, 'testEvent2', 'images/upload/test.jpg', 9999),
+  (9999, 'testEvent', 'images/upload/test.jpg', 9999);
 
 -- --------------------------------------------------------
 
@@ -43,11 +45,13 @@ INSERT INTO `tevent` (`event_id`, `title`, `image`, `week_id`) VALUES
 --
 
 CREATE TABLE `teword` (
-  `eword_id` int(11) NOT NULL,
-  `eword` char(30) NOT NULL DEFAULT '',
-  `ip` varchar(45) DEFAULT '',
-  `event_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `eword_id` INT(11)  NOT NULL,
+  `eword`    CHAR(30) NOT NULL DEFAULT '',
+  `ip`       VARCHAR(45)       DEFAULT '',
+  `event_id` INT(11)  NOT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 -- --------------------------------------------------------
 
@@ -56,12 +60,14 @@ CREATE TABLE `teword` (
 --
 
 CREATE TABLE `tlocation` (
-  `location_id` int(11) NOT NULL,
-  `city` varchar(75) DEFAULT NULL,
-  `country` varchar(255) DEFAULT NULL,
-  `continent` varchar(255) DEFAULT NULL,
-  `visitor_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `location_id` INT(11) NOT NULL,
+  `city`        VARCHAR(75)  DEFAULT NULL,
+  `country`     VARCHAR(255) DEFAULT NULL,
+  `continent`   VARCHAR(255) DEFAULT NULL,
+  `visitor_id`  INT(11)      DEFAULT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 -- --------------------------------------------------------
 
@@ -70,18 +76,20 @@ CREATE TABLE `tlocation` (
 --
 
 CREATE TABLE `tperson` (
-  `person_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `image` varchar(255) NOT NULL DEFAULT '',
-  `week_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `person_id` INT(11)      NOT NULL,
+  `title`     VARCHAR(255) NOT NULL DEFAULT '',
+  `image`     VARCHAR(255) NOT NULL DEFAULT '',
+  `week_id`   INT(11)      NOT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 --
 -- Dumping data for table `tperson`
 --
 
 INSERT INTO `tperson` (`person_id`, `title`, `image`, `week_id`) VALUES
-(9999, 'testPerson', 'images/upload/test.jpg', 9999);
+  (9999, 'testPerson', 'images/upload/test.jpg', 9999);
 
 -- --------------------------------------------------------
 
@@ -90,18 +98,20 @@ INSERT INTO `tperson` (`person_id`, `title`, `image`, `week_id`) VALUES
 --
 
 CREATE TABLE `tpword` (
-  `pword_id` int(11) NOT NULL,
-  `pword` char(30) NOT NULL DEFAULT '',
-  `ip` varchar(45) DEFAULT NULL,
-  `person_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `pword_id`  INT(11)  NOT NULL,
+  `pword`     CHAR(30) NOT NULL DEFAULT '',
+  `ip`        VARCHAR(45)       DEFAULT NULL,
+  `person_id` INT(11)           DEFAULT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 --
 -- Dumping data for table `tpword`
 --
 
 INSERT INTO `tpword` (`pword_id`, `pword`, `ip`, `person_id`) VALUES
-(9, 'test', '::1', 9999);
+  (9, 'test', '::1', 9999);
 
 -- --------------------------------------------------------
 
@@ -110,11 +120,13 @@ INSERT INTO `tpword` (`pword_id`, `pword`, `ip`, `person_id`) VALUES
 --
 
 CREATE TABLE `tvisitor` (
-  `visitor_id` int(11) NOT NULL,
-  `ip_address` varchar(45) DEFAULT NULL,
-  `eword_id` int(11) DEFAULT NULL,
-  `pword_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `visitor_id` INT(11) NOT NULL,
+  `ip_address` VARCHAR(45) DEFAULT NULL,
+  `eword_id`   INT(11)     DEFAULT NULL,
+  `pword_id`   INT(11)     DEFAULT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 -- --------------------------------------------------------
 
@@ -123,29 +135,31 @@ CREATE TABLE `tvisitor` (
 --
 
 CREATE TABLE `tweek` (
-  `week_id` int(11) NOT NULL,
-  `week` int(2) NOT NULL,
-  `od_date` datetime NOT NULL,
-  `do_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `week_id` INT(11)  NOT NULL,
+  `week`    INT(2)   NOT NULL,
+  `od_date` DATETIME NOT NULL,
+  `do_date` DATETIME NOT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 --
 -- Dumping data for table `tweek`
 --
 
 INSERT INTO `tweek` (`week_id`, `week`, `od_date`, `do_date`) VALUES
-(1, 1, '2017-01-02 00:00:00', '2017-01-08 23:59:59'),
-(2, 2, '2017-01-09 00:00:00', '2017-01-15 23:59:59'),
-(3, 3, '2017-01-16 00:00:00', '2017-01-22 23:59:59'),
-(4, 4, '2017-01-23 00:00:00', '2017-01-29 23:59:59'),
-(5, 5, '2017-01-30 00:00:00', '2017-02-05 23:59:59'),
-(6, 6, '2017-02-06 00:00:00', '2017-02-12 23:59:59'),
-(7, 7, '2017-02-13 00:00:00', '2017-02-19 23:59:59'),
-(8, 8, '2017-02-20 00:00:00', '2017-02-26 23:59:59'),
-(9, 9, '2017-02-27 00:00:00', '2017-03-05 23:59:59'),
-(10, 10, '2017-03-06 00:00:00', '2017-03-12 23:59:59'),
-(11, 11, '2017-03-13 00:00:00', '2017-03-19 23:59:59'),
-(9999, 0, '2016-12-26 00:00:00', '2017-03-19 23:59:59');
+  (1, 1, '2017-01-02 00:00:00', '2017-01-08 23:59:59'),
+  (2, 2, '2017-01-09 00:00:00', '2017-01-15 23:59:59'),
+  (3, 3, '2017-01-16 00:00:00', '2017-01-22 23:59:59'),
+  (4, 4, '2017-01-23 00:00:00', '2017-01-29 23:59:59'),
+  (5, 5, '2017-01-30 00:00:00', '2017-02-05 23:59:59'),
+  (6, 6, '2017-02-06 00:00:00', '2017-02-12 23:59:59'),
+  (7, 7, '2017-02-13 00:00:00', '2017-02-19 23:59:59'),
+  (8, 8, '2017-02-20 00:00:00', '2017-02-26 23:59:59'),
+  (9, 9, '2017-02-27 00:00:00', '2017-03-05 23:59:59'),
+  (10, 10, '2017-03-06 00:00:00', '2017-03-12 23:59:59'),
+  (11, 11, '2017-03-13 00:00:00', '2017-03-19 23:59:59'),
+  (9999, 0, '2016-12-26 00:00:00', '2017-03-19 23:59:59');
 
 --
 -- Indexes for dumped tables
@@ -211,37 +225,42 @@ ALTER TABLE `tweek`
 -- AUTO_INCREMENT for table `tevent`
 --
 ALTER TABLE `tevent`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000;
+  MODIFY `event_id` INT(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 10000;
 --
 -- AUTO_INCREMENT for table `teword`
 --
 ALTER TABLE `teword`
-  MODIFY `eword_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `eword_id` INT(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 17;
 --
 -- AUTO_INCREMENT for table `tlocation`
 --
 ALTER TABLE `tlocation`
-  MODIFY `location_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `location_id` INT(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tperson`
 --
 ALTER TABLE `tperson`
-  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000;
+  MODIFY `person_id` INT(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 10000;
 --
 -- AUTO_INCREMENT for table `tpword`
 --
 ALTER TABLE `tpword`
-  MODIFY `pword_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `pword_id` INT(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 10;
 --
 -- AUTO_INCREMENT for table `tvisitor`
 --
 ALTER TABLE `tvisitor`
-  MODIFY `visitor_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `visitor_id` INT(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tweek`
 --
 ALTER TABLE `tweek`
-  MODIFY `week_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000;
+  MODIFY `week_id` INT(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 10000;
 --
 -- Constraints for dumped tables
 --
@@ -250,25 +269,33 @@ ALTER TABLE `tweek`
 -- Constraints for table `tevent`
 --
 ALTER TABLE `tevent`
-  ADD CONSTRAINT `tevent_ibfk_1` FOREIGN KEY (`week_id`) REFERENCES `tweek` (`week_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tevent_ibfk_1` FOREIGN KEY (`week_id`) REFERENCES `tweek` (`week_id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
 
 --
 -- Constraints for table `teword`
 --
 ALTER TABLE `teword`
-  ADD CONSTRAINT `teword_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `tevent` (`event_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `teword_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `tevent` (`event_id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tlocation`
 --
 ALTER TABLE `tlocation`
-  ADD CONSTRAINT `tlocation_ibfk_1` FOREIGN KEY (`visitor_id`) REFERENCES `tvisitor` (`visitor_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `tlocation_ibfk_1` FOREIGN KEY (`visitor_id`) REFERENCES `tvisitor` (`visitor_id`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tperson`
 --
 ALTER TABLE `tperson`
-  ADD CONSTRAINT `tperson_ibfk_1` FOREIGN KEY (`week_id`) REFERENCES `tweek` (`week_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tperson_ibfk_1` FOREIGN KEY (`week_id`) REFERENCES `tweek` (`week_id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tpword`
@@ -280,5 +307,9 @@ ALTER TABLE `tpword`
 -- Constraints for table `tvisitor`
 --
 ALTER TABLE `tvisitor`
-  ADD CONSTRAINT `tvisitor_ibfk_1` FOREIGN KEY (`eword_id`) REFERENCES `teword` (`eword_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `tvisitor_ibfk_2` FOREIGN KEY (`pword_id`) REFERENCES `tpword` (`pword_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `tvisitor_ibfk_1` FOREIGN KEY (`eword_id`) REFERENCES `teword` (`eword_id`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE,
+  ADD CONSTRAINT `tvisitor_ibfk_2` FOREIGN KEY (`pword_id`) REFERENCES `tpword` (`pword_id`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;

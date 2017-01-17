@@ -10,11 +10,11 @@
         $scope.currentCustomer = {};
 
 
-        $scope.init = function() {
+        $scope.init = function () {
             OwwUPS.emit('add-customer', $scope.currentCustomer);
         };
 
-        OwwUPS.on('notification', function(data) {
+        OwwUPS.on('notification', function (data) {
             $scope.$apply(function () {
                 console.log("notification data: ", data.customer);
                 $scope.customer = data.customer;
@@ -23,4 +23,4 @@
 
     }
 
-    })();
+})();

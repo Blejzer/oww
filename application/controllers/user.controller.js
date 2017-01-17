@@ -1,6 +1,7 @@
-UserController = function() {};
+UserController = function () {
+};
 
-UserController.prototype.uploadFile = function(req, res) {
+UserController.prototype.uploadFile = function (req, res) {
     // We are able to access req.files.file thanks to
     // the multiparty middleware
     console.log('req.body: ', req.body);

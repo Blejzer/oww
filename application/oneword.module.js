@@ -1,15 +1,14 @@
-(function() {
-"use strict";
+(function () {
+    "use strict";
 
-/**
- * oneWordWorld module that includes router, file upload
- * ngCookies
- * Look for the included files in their respective folders.
- */
-angular.module('oneWordWorld', ['ui.router', 'fileUpload', 'ngCookies'])
+    /**
+     * oneWordWorld module that includes router, file upload
+     * ngCookies
+     * Look for the included files in their respective folders.
+     */
+    angular.module('oneWordWorld', ['ui.router', 'fileUpload', 'ngCookies'])
 
 })();
-
 
 
 // .config.js(config.js);

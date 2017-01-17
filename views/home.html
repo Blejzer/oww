@@ -1,153 +1,158 @@
 <div class="navigation">
-  <ul>
-    <li>Event</li>
-    <li>Person</li>
-  </ul>
-  <ul>
-    <li><a ui-sref="newevent">New Event</a></li>
-    <li>New Person</li>
-  </ul>
+    <ul>
+        <li>Event</li>
+        <li>Person</li>
+    </ul>
+    <ul>
+        <li><a ui-sref="newevent">New Event</a></li>
+        <li>New Person</li>
+    </ul>
 </div>
 <div class="container-fluid">
-  <!-- theme divs (person & event) -->
-  <div class="row text-center">
-    <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
-    <div class="thumbnail">
-      <a ui-sref="person"><h3>Person of the week</h3></a>
-    </div>
-      <div class="thumbnail">
-        <a ui-sref="person"><img src="images/wowMarine.png" alt="WOW" width="200" height="200"/></a>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
-      <div class="thumbnail">
-        <a ui-sref="event"><h3>Event of the week</h3></a>
-      </div>
-      <div class="thumbnail">
-        <a ui-sref="event"><img src="images/wowMarine.png" alt="WOW" width="200" height="200"/></a>
-      </div>
-    </div>
-  </div>
-
-<!-- oneWordInput part -->
-  <div class="row center">
-    <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
-        <div class="thumbnail">
-          <form id="formPerson" action="">
-            <input type="hidden" id="person_id" value="9999"/>
-            <input id="p" class="form-control" autocomplete="off" pattern="^([\Sa-zA-Z]){1,25}$" oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
-    onchange="try{setCustomValidity('')}catch(e){}" />
-            <button class="form-control btn pull-right" style="background-color:yellow"><strong>Send</strong></button>
-          </form>
+    <!-- theme divs (person & event) -->
+    <div class="row text-center">
+        <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
+            <div class="thumbnail">
+                <a ui-sref="person"><h3>Person of the week</h3></a>
+            </div>
+            <div class="thumbnail">
+                <a ui-sref="person"><img src="images/wowMarine.png" alt="WOW" width="200" height="200"/></a>
+            </div>
         </div>
-        <div class="thumbnail" style="overflow:hidden; height: 150px">
-          <ul id="persons"></ul>
+        <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
+            <div class="thumbnail">
+                <a ui-sref="event"><h3>Event of the week</h3></a>
+            </div>
+            <div class="thumbnail">
+                <a ui-sref="event"><img src="images/wowMarine.png" alt="WOW" width="200" height="200"/></a>
+            </div>
         </div>
     </div>
-    <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
-      <div class="center thumbnail">
-        <form id="formEvent" action="">
-          <input type="hidden" id="event_id" value="9999"/>
-          <input id="e" class="form-control" autocomplete="off" pattern="^([\Sa-zA-Z]){1,25}$" oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
-                                                                onchange="try{setCustomValidity('')}catch(e){}" />
-          <button class="form-control btn pull-right" style="background-color:yellow; color:navyblue"><strong>Send</strong></button>
-        </form>
-      </div>
-      <div class="content thumbnail" style="overflow:hidden; height: 150px">
-        <ul id="events"></ul>
-      </div>
-    </div>
-  </div>
 
-  <!-- results part -->
-  <div class="row thumbnail">
-    <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
-      <a ui-sref="person">
-        <div class="thumbnail">
-          <!-- <ul id="eventList"></ul> -->
-          <label for="personList">Most popular words for person</label>
-          <table id="personList">
-        </table>
+    <!-- oneWordInput part -->
+    <div class="row center">
+        <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+            <div class="thumbnail">
+                <form id="formPerson" action="">
+                    <input type="hidden" id="person_id" value="9999"/>
+                    <input id="p" class="form-control" autocomplete="off" pattern="^([\Sa-zA-Z]){1,25}$"
+                           oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
+                           onchange="try{setCustomValidity('')}catch(e){}"/>
+                    <button class="form-control btn pull-right" style="background-color:yellow"><strong>Send</strong>
+                    </button>
+                </form>
+            </div>
+            <div class="thumbnail" style="overflow:hidden; height: 150px">
+                <ul id="persons"></ul>
+            </div>
         </div>
-      </a>
+        <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+            <div class="center thumbnail">
+                <form id="formEvent" action="">
+                    <input type="hidden" id="event_id" value="9999"/>
+                    <input id="e" class="form-control" autocomplete="off" pattern="^([\Sa-zA-Z]){1,25}$"
+                           oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
+                           onchange="try{setCustomValidity('')}catch(e){}"/>
+                    <button class="form-control btn pull-right" style="background-color:yellow; color:navyblue"><strong>Send</strong>
+                    </button>
+                </form>
+            </div>
+            <div class="content thumbnail" style="overflow:hidden; height: 150px">
+                <ul id="events"></ul>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
-      <a ui-sref="event">
-        <div class="thumbnail">
-        <!-- <ul id="eventList"></ul> -->
-        <label for="eventList">Most popular words for event</label>
-        <table id="eventList">
-      </table>
-      </div>
-    </a>
-    </div>
-  </div>
 
-  <div class="row thumbnail" >
-    <label for="number">Number of users online</label>
-    <label id="users"></label>
-  </div>
+    <!-- results part -->
+    <div class="row thumbnail">
+        <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+            <a ui-sref="person">
+                <div class="thumbnail">
+                    <!-- <ul id="eventList"></ul> -->
+                    <label for="personList">Most popular words for person</label>
+                    <table id="personList">
+                    </table>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+            <a ui-sref="event">
+                <div class="thumbnail">
+                    <!-- <ul id="eventList"></ul> -->
+                    <label for="eventList">Most popular words for event</label>
+                    <table id="eventList">
+                    </table>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row thumbnail">
+        <label for="number">Number of users online</label>
+        <label id="users"></label>
+    </div>
 
 
 </div>
 
 <!-- Socket.io script -->
 <!--<script src="/socket.io/socket.io.js"></script>-->
-  <script>
+<script>
     var socket = io.connect();
     function ChangeChannel(newroom) {
-      socket.on('changeChannel', newroom);
-    };
-    socket.on('newconn', function(num){
-      $('#users').text(num);
+        socket.on('changeChannel', newroom);
+    }
+    ;
+    socket.on('newconn', function (num) {
+        $('#users').text(num);
     });
 
-    $('#formEvent').submit(null, function(){
-      socket.emit('event', 'event', $('#e').val(), $('#event_id').val());
-      $('#e').val('');
-      return false;
+    $('#formEvent').submit(null, function () {
+        socket.emit('event', 'event', $('#e').val(), $('#event_id').val());
+        $('#e').val('');
+        return false;
     });
-    $('#formPerson').submit(null, function(){
-      console.log("Person");
-      socket.emit('person', 'person', $('#p').val(), $('#person_id').val());
-      $('#p').val('');
-      return false;
+    $('#formPerson').submit(null, function () {
+        console.log("Person");
+        socket.emit('person', 'person', $('#p').val(), $('#person_id').val());
+        $('#p').val('');
+        return false;
     });
-    socket.on('eventWord', function(evt){
+    socket.on('eventWord', function (evt) {
         $('#events').prepend($('<li>').text(evt));
 
     });
-    socket.on('eventList', function(json){
-      console.log(json);
-      // da bi dobili ponovo objekat iz stringa
-      var evt = JSON.parse(json);
-      console.log(evt);
-      $('#eventList').children().remove();
-      var tr;
+    socket.on('eventList', function (json) {
+        console.log(json);
+        // da bi dobili ponovo objekat iz stringa
+        var evt = JSON.parse(json);
+        console.log(evt);
+        $('#eventList').children().remove();
+        var tr;
         for (var i = 0; i < evt.length; i++) {
             tr = $('<tr/>');
             tr.append("<td> " + evt[i].a + "</td>");
             tr.append("<td>&nbsp</td>");
-            tr.append('<td class="text-right"> ' + ' ' +evt[i].c + "</td>");
+            tr.append('<td class="text-right"> ' + ' ' + evt[i].c + "</td>");
             $('#eventList').append(tr);
         }
     });
 
-    socket.on('personWord', function(prs){
-      $('#persons').prepend($('<li>').text(prs));
+    socket.on('personWord', function (prs) {
+        $('#persons').prepend($('<li>').text(prs));
     });
-    socket.on('personList', function(json){
-      // da bi dobili ponovo objekat iz stringa
-      var evt = JSON.parse(json);
-      $('#personList').children().remove();
-      var tr;
+    socket.on('personList', function (json) {
+        // da bi dobili ponovo objekat iz stringa
+        var evt = JSON.parse(json);
+        $('#personList').children().remove();
+        var tr;
         for (var i = 0; i < evt.length; i++) {
             tr = $('<tr/>');
             tr.append("<td> " + evt[i].a + "</td>");
             tr.append("<td>&nbsp</td>");
-            tr.append('<td class="text-right"> ' + ' ' +evt[i].c + "</td>");
+            tr.append('<td class="text-right"> ' + ' ' + evt[i].c + "</td>");
             $('#personList').append(tr);
         }
     });
 
-  </script>
+</script>

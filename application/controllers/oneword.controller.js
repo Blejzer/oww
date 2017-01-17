@@ -1,15 +1,15 @@
 (function () {
-'use strict';
+    'use strict';
 
-angular.module('oneWordWorld')
-.controller('OwwController', OwwController);
+    angular.module('oneWordWorld')
+        .controller('OwwController', OwwController);
 
-OwwController.$inject = ['$rootScope', '$scope', '$location', '$window'];
-function OwwController ($rootScope, $scope, $location, $window) {
-    $rootScope.$on('$viewContentLoaded', function(event) {
-    $window.ga('send', 'pageview', { page: $location.url() });
-  });
-}
+    OwwController.$inject = ['$rootScope', '$scope', '$location', '$window'];
+    function OwwController($rootScope, $scope, $location, $window) {
+        $rootScope.$on('$viewContentLoaded', function (event) {
+            $window.ga('send', 'pageview', {page: $location.url()});
+        });
+    }
 })();
 
 // var socket = io.connect();
