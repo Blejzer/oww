@@ -34,22 +34,22 @@ module.exports = {
         lst: 'SELECT * FROM tevent ORDER BY event_id DESC LIMIT 5;'
     },
     ewrd: {
-        ins: 'INSERT INTO teword (eword, ip, event_id) VALUES(?, ?, ?);',
-        upd: 'UPDATE teword SET eword = ?, ip = ?, event_id = ?;',
+        ins: 'INSERT INTO teword (eword, visitor_id, event_id) VALUES(?, ?, ?);',
+        upd: 'UPDATE teword SET eword = ?, visitor_id = ?, event_id = ?;',
         del: 'DELETE FROM teword WHERE eword_id=?;',
         sel: '',
         lst: 'SELECT eword a, COUNT(eword) c FROM teword GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5;'
     },
     lctn: {
         ins1: 'INSERT INTO tlocation (city, country, continent, visitor_id) VALUES (?, ?, ?, ?);',
-        ins2: 'INSERT INTO tlocation (country, continent, visitor_id) VALUES (?, ?, ?);',
+        ins2: 'INSERT INTO `tlocation`(`country`, `continent`, `visitor_id`) VALUES (?,?,?);',
         upd: 'UPDATE tlocation SET city = ?, country = ?, continent = ?, visitor_id = ?;',
         del: 'DELETE FROM tlocation WHERE location_id=?',
         sel: ''
     },
     pwrd: {
-        ins: 'INSERT INTO tpword (pword, ip, person_id) VALUES(?, ?, ?);',
-        upd: 'UPDATE tpword SET pword=?, ip=?, person_id=?;',
+        ins: 'INSERT INTO tpword (pword, visitor_id, person_id) VALUES(?, ?, ?);',
+        upd: 'UPDATE tpword SET pword=?, visitor_id=?, person_id=?;',
         del: 'DELETE FROM tpword WHERE pword_id=?;',
         sel: '',
         lst: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5;'
@@ -62,8 +62,9 @@ module.exports = {
         lst: 'SELECT * FROM tperson ORDER BY person_id DESC LIMIT 5;'
     },
     vstr: {
-        ins: 'INSERT INTO tvisitor (ip_address, eword_id, pword_id) VALUES (?, ?, ?);',
-        upd: 'UPDATE tvisitor SET eword_id = ?, pword_id = ?;',
+        ins: 'INSERT INTO `tvisitor`(`ip_address`, `eword_id`, `pword_id`) VALUES (?,?,?);',
+        upde: 'UPDATE tvisitor SET eword_id = ? WHERE visitor_id=?;',
+        updp: 'UPDATE tvisitor SET pword_id = ?;',
         del: 'DELETE FROM tvisitor WHERE visitor_id=?;',
         sel: ''
     },

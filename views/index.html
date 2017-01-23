@@ -10,8 +10,8 @@
 
 </head>
 <body ng-app="oneWordWorld">
-<div ng-controller="KukizController" ng-init="init()">
-    <label ng-if({{customer}})>{{customer.name}}</label>
+<div ng-controller="VisitorController" ng-init="init()">
+    <label ng-if({{visitor}})>{{visitor}}</label>
 </div>
 <div class="container">
     <div class="row">
@@ -52,8 +52,8 @@
 <script src="application/controllers/oneword.controller.js"></script>
 <script src="application/controllers/event.controller.js"></script>
 <script src="application/controllers/newevent.controller.js"></script>
-<script src="application/controllers/kukiz.controller.js"></script>
-<script src="application/factories/kukiz.function.js"></script>
+<script src="application/controllers/visitor.controller.js"></script>
+<script src="application/factories/visitor.factory.js"></script>
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
