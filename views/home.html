@@ -48,9 +48,9 @@
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
             <div class="center thumbnail">
-                <form id="formEvent" action="">
+                <form id="formEvent" action="" ng-submit="submitEword()">
                     <input type="hidden" id="event_id" value="9999"/>
-                    <input id="e" class="form-control" autocomplete="off" pattern="^([\Sa-zA-Z]){1,25}$"
+                    <input ng-model="e" id="e" class="form-control" autocomplete="off" pattern="^([\Sa-zA-Z]){1,25}$"
                            oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
                            onchange="try{setCustomValidity('')}catch(e){}"/>
                     <button class="form-control btn pull-right" style="background-color:yellow; color:navyblue"><strong>Send</strong>
@@ -58,7 +58,10 @@
                 </form>
             </div>
             <div class="content thumbnail" style="overflow:hidden; height: 150px">
-                <ul id="events"></ul>
+                <!--<ul id="events"></ul>-->
+                <ul>
+                    <li ng-repeat="eword in ewords track by $index">{{eword}}</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -89,7 +92,7 @@
 
     <div class="row thumbnail">
         <label for="number">Number of users online</label>
-        <label id="users"></label>
+        <label>{{users}}</label>
     </div>
 
 
@@ -103,25 +106,25 @@
         socket.on('changeChannel', newroom);
     }
     ;
-    socket.on('newconn', function (num) {
-        $('#users').text(num);
-    });
+//    socket.on('newconn', function (num) {
+//        $('#users').text(num);
+//    });
 
-    $('#formEvent').submit(null, function () {
-        socket.emit('event', 'event', $('#e').val(), $('#event_id').val());
-        $('#e').val('');
-        return false;
-    });
+//    $('#formEvent').submit(null, function () {
+//        socket.emit('event', 'event', $('#e').val(), $('#event_id').val());
+//        $('#e').val('');
+//        return false;
+//    });
     $('#formPerson').submit(null, function () {
         console.log("Person");
         socket.emit('person', 'person', $('#p').val(), $('#person_id').val());
         $('#p').val('');
         return false;
     });
-    socket.on('eventWord', function (evt) {
-        $('#events').prepend($('<li>').text(evt));
-
-    });
+//    socket.on('eventWord', function (evt) {
+//        $('#events').prepend($('<li>').text(evt));
+//
+//    });
     socket.on('eventList', function (json) {
         console.log(json);
         // da bi dobili ponovo objekat iz stringa
