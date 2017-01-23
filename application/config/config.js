@@ -52,7 +52,8 @@ module.exports = {
         upd: 'UPDATE tpword SET pword=?, visitor_id=?, person_id=?;',
         del: 'DELETE FROM tpword WHERE pword_id=?;',
         sel: '',
-        lst: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5;'
+        lst: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5;',
+        flst: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC;'
     },
     prsn: {
         ins: 'INSERT INTO tperson (title, image, week_id) VALUES (?, ?, ?);',

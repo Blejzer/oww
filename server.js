@@ -185,7 +185,7 @@ io.sockets.on('connection', function (socket) {
         // Cekamo odgovor sa procesora i osvjezenu event listu
         procSocket.on("data", function (data) {
             var list = JSON.parse(data);
-            console.log('data: ', data);
+            console.log('data: ', list);
             io.emit('eventList', JSON.stringify(list));
             procSocket.end();
         });

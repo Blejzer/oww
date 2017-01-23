@@ -228,8 +228,8 @@ function NewConnection(data, callback) {
  *************************************************/
 function InsertEventWord(data, callback) {
     data = JSON.parse(data);
-    ipJson = cityLookup.get('217.75.201.28');
-    console.log("DATA: Event: Response from client: %s", ipJson.country.names.en, data.data, data.word, data.event_id, data.visitor);
+    // ipJson = cityLookup.get('217.75.201.28');
+    console.log("DATA: EventWord: Incoming message from client: %s", data.data, data.word, data.event_id, data.visitor);
 
     // working with database inserting new evet word
     // and getting back
@@ -237,70 +237,25 @@ function InsertEventWord(data, callback) {
     dbcon.getConnection(function (err, connection) {
         // Use the connection
         var teword_id;
-        connection.query(config.get('ewrd.ins'), [data.word, data.visitor, data.event_id], function (err, erows) {
+        connection.query(config.get('ewrd.ins'), [data.word, data.visitor.id, data.event_id], function (err, erows) {
             if (err) {
                 if (err.fatal) {
                     throw err;
                 }
-                console.error("Processor: Insert: Event: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+                console.error("Processor: Insert: EventWord: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
             }
             console.log("Insert teword ID: ", erows.insertId);
             teword_id = erows.insertId;
-
-            connection.query(config.get('vstr.upde'), [teword_id], function (err, vrows) {
+            connection.query(config.get('ewrd.lst'), function (err, rows) {
                 if (err) {
                     if (err.fatal) {
                         throw err;
                     }
-                    console.error("Processor: NewConnection: Visitor: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
+                    console.error("Processor: List: EventWord: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
                 }
-                connection.query(config.get('evnt.lst'), function (err, rows) {
-                    if (err) {
-                        if (err.fatal) {
-                            throw err;
-                        }
-                        console.error("Processor: List: Event: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
-                    }
-                    ritrn = JSON.stringify(rows);
-                    callback(ritrn);
-                });
-
+                ritrn = JSON.stringify(rows);
+                callback(ritrn);
             });
-
-
-            // if (!ipJson.city) {
-            //     connection.query(config.get('lctn.ins2'), [ipJson.country.names.en, ipJson.continent.names.en, erows.insertId], function (err, rows) {
-            //         if (err) {
-            //             if (err.fatal) {
-            //                 throw err;
-            //             }
-            //             console.error("Processor: List: Event: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
-            //         }
-            //         console.log("Insert location ID: ", rows.insertId);
-            //     });
-            // } else {
-            //     connection.query(config.get('lctn.ins1'), [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, teword_id], function (err, rows) {
-            //         if (err) {
-            //             if (err.fatal) {
-            //                 throw err;
-            //             }
-            //             console.error("Processor: List: Event: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
-            //         }
-            //
-            //         console.log("Insert location ID: ", rows.insertId);
-            //     });
-            // }
-            //
-            // connection.query(config.get('evnt.lst'), function (err, rows) {
-            //     if (err) {
-            //         if (err.fatal) {
-            //             throw err;
-            //         }
-            //         console.error("Processor: List: Event: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
-            //     }
-            //     ritrn = JSON.stringify(rows);
-            //     callback(ritrn);
-            // });
             connection.release();
         });
 
@@ -425,39 +380,37 @@ function PersonPageLoaded(data, callback) {
     // new event list top 5
     dbcon.getConnection(function (err, connection) {
         // Use the connection
-        if (!ipJson.city) {
-            connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
-                if (err) {
-                    if (err.fatal) {
-                        throw err;
-                    }
-                    console.error("Processor: List: PersonPageLoaded: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
-                }
-                console.log("Insert location ID: ", rows.insertId);
-            });
-        } else {
-            connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
-                if (err) {
-                    if (err.fatal) {
-                        throw err;
-                    }
-                    console.error("Processor: List: PersonPageLoaded: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
-                }
-                console.log("Insert location ID: ", rows.insertId);
-            });
-        }
+        // if (!ipJson.city) {
+        //     connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+        //         if (err) {
+        //             if (err.fatal) {
+        //                 throw err;
+        //             }
+        //             console.error("Processor: List: PersonPageLoaded: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+        //         }
+        //         console.log("Insert location ID: ", rows.insertId);
+        //     });
+        // } else {
+        //     connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
+        //         if (err) {
+        //             if (err.fatal) {
+        //                 throw err;
+        //             }
+        //             console.error("Processor: List: PersonPageLoaded: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+        //         }
+        //         console.log("Insert location ID: ", rows.insertId);
+        //     });
+        // }
 
-        connection.query('SELECT pword a, COUNT(pword) c FROM tperson GROUP BY pword ORDER BY c DESC LIMIT 25', function (err, rows) {
+        connection.query(config.get('pwrd.flst'), function (err, rows) {
             if (err) {
                 if (err.fatal) {
                     throw err;
                 }
-                console.error("Processor: List: PersonPageLoaded: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
+                console.error("Processor: List: PersonWord: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
             }
             ritrn = JSON.stringify(rows);
             callback(ritrn);
-
-            connection.release();
         });
 
     });
