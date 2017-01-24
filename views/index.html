@@ -21,17 +21,18 @@
         </div>
     </div>
     <div ng-controller="VisitorController" ng-init="init()">
-        <label ng-if({{visitor}})>{{visitor}}</label>
+        <label ng-if({{visitor}})>Your IP address is recorded: {{visitor.address}}</label>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">WebSiteName</a>
+                    <a class="navbar-brand" ui-sref="home" href="#">Home</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Page 1</a></li>
-                    <li><a href="#">Page 2</a></li>
-                    <li><a href="#">Page 3</a></li>
+                    <li class="active"><a ui-sref="home" href="#">Home</a></li>
+                    <li><a ui-sref="newevent" href="#">New Event</a></li>
+                    <li><a ui-sref="newperson" href="#">New Person</a></li>
+                    <li><a ui-sref="event" href="#">Event of the week</a></li>
+                    <li><a ui-sref="person" href="#">Person of the week</a></li>
                 </ul>
             </div>
         </nav>
