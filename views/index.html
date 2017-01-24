@@ -10,10 +10,8 @@
 
 </head>
 <body ng-app="oneWordWorld">
-<div ng-controller="VisitorController" ng-init="init()">
-    <label ng-if({{visitor}})>{{visitor}}</label>
-</div>
-<div class="container" ng-controller="OwwController">
+
+<div class="container">
     <div class="row">
         <div class="col-xs-3 ">
             <img src="images/wowMarine.png" class="img-responsive img-circle" alt="WOW" width="80" height="80"/>
@@ -21,6 +19,22 @@
         <div class="col-xs-9">
             <h1 class="text-center">This is One Word World!</h1>
         </div>
+    </div>
+    <div ng-controller="VisitorController" ng-init="init()">
+        <label ng-if({{visitor}})>{{visitor}}</label>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">WebSiteName</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Page 1</a></li>
+                    <li><a href="#">Page 2</a></li>
+                    <li><a href="#">Page 3</a></li>
+                </ul>
+            </div>
+        </nav>
     </div>
     <div class="row">
         <div ui-view></div>
@@ -44,16 +58,18 @@
 <script src="js/ng-file-upload.js"></script>
 <script src="js/ng-img-crop.js"></script>
 <script src="js/angular-cookies.js"></script>
+<script src="js/socket.js"></script>
 
 <!-- Main OneWordWorld Module -->
 <script src="application/oneword.module.js"></script>
 <script src="application/modules/fileupload.module.js"></script>
 <script src="application/oneword.routes.js"></script>
+<script src="application/factories/socket.factory.js"></script>
 <script src="application/controllers/oneword.controller.js"></script>
 <script src="application/controllers/event.controller.js"></script>
 <script src="application/controllers/newevent.controller.js"></script>
 <script src="application/controllers/visitor.controller.js"></script>
-<script src="application/factories/visitor.factory.js"></script>
+<script src="application/factories/visitor.factory.js"></script>>
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;

@@ -3,10 +3,12 @@
 
     /**
      * oneWordWorld module that includes router, file upload
-     * ngCookies
+     * ngCookies and btford.socket-io modules
      * Look for the included files in their respective folders.
      */
-    angular.module('oneWordWorld', ['ui.router', 'fileUpload', 'ngCookies'])
+    angular.module('oneWordWorld', ['ui.router', 'fileUpload', 'ngCookies', 'btford.socket-io'])
+
+    // https://github.com/btford/angular-socket-io-seed to get more info on 'btford.socket-io'
 
 })();
 

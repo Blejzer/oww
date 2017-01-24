@@ -40,6 +40,7 @@ app.use('/js', express.static('js'));
 app.use('/images', express.static('images'));
 app.use('/application', express.static('application'));
 app.use('/views', express.static('views'));
+app.use('/views', express.static('node_modules'));
 //allow cross origin requests - required for image upload!
 app.use(function (req, res, next) {
     res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
