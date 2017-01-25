@@ -89,8 +89,7 @@ console.log(ver, " is online and ready!");
 console.log("*********************************************************************\n");
 
 
-// Brojac online korisnika
-var room = ['person', 'event']
+// var room = ['person', 'event']
 
 /* ******************************************************
  * Kreiranje socketa prilikom konekcije klijenta na
@@ -105,20 +104,7 @@ io.sockets.on('connection', function (socket) {
     console.log(new Date(), "Broj trenutnih korisnika: ", io.engine.clientsCount);
     io.sockets.emit('newconn', io.engine.clientsCount);
 
-    // socket.on('add-customer', function (customer) {
-    //
-    //     customer.name = fakeip;
-    //     console.log("customer.name = fakeip: ", customer)
-    //
-    //     io.emit('notification', {
-    //         message: 'new customer',
-    //         customer: customer
-    //     });
-    // });
 
-// testni podaci. trebace ove podatke kreirati
-// iz neke funkcije i proslijediti ih u
-// socket.on.data
     var visitor = {};
     visitor.address = fakeip;
     var data = {"data": "newconn", "visitor": visitor};
@@ -148,7 +134,7 @@ io.sockets.on('connection', function (socket) {
 
         io.emit("eventList", JSON.stringify(lists.eventList));
         io.emit("personList", JSON.stringify(lists.personList));
-        io.emit('notification', {
+        socket.emit('notification', {
             message: 'new visitor',
             visitor: visitor
         });
@@ -157,7 +143,10 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
         console.log(new Date(), "Broj trenutnih korisnika: ", io.engine.clientsCount);
-        socket.leave(socket.room);
+        // console.log(socket.list());
+        socket.removeAllListeners();
+        socket.leaveAll();
+        // socket.leave(socket.room);
         io.sockets.emit('newconn', io.engine.clientsCount);
     });
 
@@ -288,7 +277,7 @@ io.sockets.on('connection', function (socket) {
  * potrebno je unijeti i IP adresu na kojoj ce server slusati      *
  * http.listen(3000, xxx.xxx.xxx.xxx, function(){...               *
  *******************************************************************/
-http.listen(3000, function () {
+http.listen(80, function () {
     console.log(ver, " Initialization sequence complete. ");
-    console.log(new Date(), 'Started listening on port:3000');
+    console.log(new Date(), 'Started listening on port:80');
 });

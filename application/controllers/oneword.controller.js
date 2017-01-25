@@ -14,9 +14,9 @@
 
         //var socket = io.connect();
 
-        function ChangeChannel(newroom) {
-            socket.on('changeChannel', newroom);
-        }
+        // function ChangeChannel(newroom) {
+        //     socket.on('changeChannel', newroom);
+        // }
 
         socket.on('newconn', function (num) {
             $scope.users = num;
@@ -36,7 +36,6 @@
         }
 
         $scope.submitPword = function () {
-            // $scope.pwords.unshift(this.p);
             socket.emit('person', 'person', this.p);
             this.p = '';
             return false;
