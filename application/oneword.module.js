@@ -1,14 +1,22 @@
-(function() {
-"use strict";
+(function () {
+    "use strict";
 
-/**
- * oneWordWorld module that includes the public module as a dependency
- */
-angular.module('oneWordWorld', ['ui.router','ngFileUpload', 'ngImgCrop'])
-// .config(config);
+    /**
+     * oneWordWorld module that includes router, file upload
+     * ngCookies and btford.socket-io modules
+     * Look for the included files in their respective folders.
+     */
+    angular.module('oneWordWorld', ['ui.router', 'fileUpload', 'ngCookies', 'btford.socket-io'])
+
+    // https://github.com/btford/angular-socket-io-seed to get more info on 'btford.socket-io'
+
+})();
+
+
+// .config.js(config.js);
 //
-// config.$inject = ['$urlRouterProvider', '$stateProvider'];
-// function config($urlRouterProvider, $stateProvider) {
+// config.js.$inject = ['$urlRouterProvider', '$stateProvider'];
+// function config.js($urlRouterProvider, $stateProvider) {
 //
 //     // If user goes to a path that doesn't exist, redirect to public root
 //     $urlRouterProvider.otherwise('/');
@@ -69,5 +77,3 @@ angular.module('oneWordWorld', ['ui.router','ngFileUpload', 'ngImgCrop'])
 //
 //     });
 //   };
-
-})();

@@ -1,87 +1,87 @@
 (function () {
-'use strict';
+    'use strict';
 
-angular.module('oneWordWorld')
-.config(config);
+    angular.module('oneWordWorld')
+        .config(config);
 
-config.$inject = ['$urlRouterProvider', '$stateProvider'];
-function config($urlRouterProvider, $stateProvider) {
+    config.$inject = ['$urlRouterProvider', '$stateProvider'];
+    function config($urlRouterProvider, $stateProvider) {
 
-    // If user goes to a path that doesn't exist, redirect to public root
-    $urlRouterProvider.otherwise('/');
+        // If user goes to a path that doesn't exist, redirect to public root
+        $urlRouterProvider.otherwise('/');
 
-    $stateProvider
-        .state('home', {
-          url: '/',
-        views: {
+        $stateProvider
+            .state('home', {
+                url: '/',
+                views: {
 
-            // the main template will be placed here (relatively named)
-            '': { templateUrl: 'views/home.html' }
-            // 'week@home': {
-            //     templateUrl: 'views/week.html'
-            // },
-            // 'oneWordInput@home': {
-            //     templateUrl: 'views/onewordinput.html'
-            // },
-            // 'results@home': {
-            //     templateUrl: 'views/results.html'
-            // }
-        }
+                    // the main template will be placed here (relatively named)
+                    '': {templateUrl: 'views/home.html'}
+                    // 'week@home': {
+                    //     templateUrl: 'views/week.html'
+                    // },
+                    // 'oneWordInput@home': {
+                    //     templateUrl: 'views/onewordinput.html'
+                    // },
+                    // 'results@home': {
+                    //     templateUrl: 'views/results.html'
+                    // }
+                }
 
-    })
-    .state('event', {
-      url: '/event',
-      views: {
+            })
+            .state('event', {
+                url: '/event',
+                views: {
 
-          // the main template will be placed here (relatively named)
-          '': { templateUrl: 'views/event.html' }
-          // 'week@home': {
-          //     templateUrl: 'views/week.html'
-          // },
-          // 'oneWordInput@home': {
-          //     templateUrl: 'views/onewordinput.html'
-          // },
-          // 'results@home': {
-          //     templateUrl: 'views/results.html'
-          // }
-      }
+                    // the main template will be placed here (relatively named)
+                    '': {templateUrl: 'views/event.html'}
+                    // 'week@home': {
+                    //     templateUrl: 'views/week.html'
+                    // },
+                    // 'oneWordInput@home': {
+                    //     templateUrl: 'views/onewordinput.html'
+                    // },
+                    // 'results@home': {
+                    //     templateUrl: 'views/results.html'
+                    // }
+                }
 
-    })
-    .state('person', {
-      url: '/person',
-      views: {
+            })
+            .state('person', {
+                url: '/person',
+                views: {
 
-          // the main template will be placed here (relatively named)
-          '': { templateUrl: 'views/person.html' }
-          // 'week@home': {
-          //     templateUrl: 'views/week.html'
-          // },
-          // 'oneWordInput@home': {
-          //     templateUrl: 'views/onewordinput.html'
-          // },
-          // 'results@home': {
-          //     templateUrl: 'views/results.html'
-          // }
-      }
+                    // the main template will be placed here (relatively named)
+                    '': {templateUrl: 'views/person.html'}
+                    // 'week@home': {
+                    //     templateUrl: 'views/week.html'
+                    // },
+                    // 'oneWordInput@home': {
+                    //     templateUrl: 'views/onewordinput.html'
+                    // },
+                    // 'results@home': {
+                    //     templateUrl: 'views/results.html'
+                    // }
+                }
 
-    })
-    .state('newevent', {
-      url: '/newevent',
-      views: {
+            })
+            .state('newevent', {
+                url: '/newevent',
+                views: {
 
-          // the main template will be placed here (relatively named)
-          '': { templateUrl: 'views/newevent.html' }
-          // 'week@home': {
-          //     templateUrl: 'views/week.html'
-          // },
-          // 'oneWordInput@home': {
-          //     templateUrl: 'views/onewordinput.html'
-          // },
-          // 'results@home': {
-          //     templateUrl: 'views/results.html'
-          // }
-      }
+                    // the main template will be placed here (relatively named)
+                    '': {templateUrl: 'views/newevent.html'}
+                    // 'week@home': {
+                    //     templateUrl: 'views/week.html'
+                    // },
+                    // 'oneWordInput@home': {
+                    //     templateUrl: 'views/onewordinput.html'
+                    // },
+                    // 'results@home': {
+                    //     templateUrl: 'views/results.html'
+                    // }
+                }
 
-    });
-  };
+            });
+    }
 })();

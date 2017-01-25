@@ -1,18 +1,18 @@
 (function () {
-'use strict';
+    'use strict';
 
-angular.module('oneWordWorld')
-.controller('EventController', EventController);
+    angular.module('oneWordWorld')
+        .controller('EventController', EventController);
 
 
-/**
- * Configures the routes and views
- */
-EventController.$inject = ['$scope'];
-function EventController ($scope) {
-  var ectrl = this;
+    /**
+     * Configures the routes and views
+     */
+    EventController.$inject = ['$scope'];
+    function EventController($scope) {
+        var ectrl = this;
 
-}
+    }
 
 //Service with catch block at the bottom
 // EventService.$inject = ['$http', 'ApiBasePath']
