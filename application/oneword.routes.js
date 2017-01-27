@@ -8,7 +8,7 @@
     function config($urlRouterProvider, $stateProvider, $locationProvider) {
 
         // If user goes to a path that doesn't exist, redirect to public root
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/');
 
         $stateProvider
             .state('home', {
