@@ -13,23 +13,26 @@
         //     $scope.users = num;
         // });
 
-        console.log('$scope.socket in HomeController: ', $scope.socket);
 
         socket.on('eventWord', function (evt) {
             $scope.ewords.unshift(evt);
+            console.log('ewords.unshift: ', evt);
         });
         socket.on('personWord', function (evt) {
             $scope.pwords.unshift(evt);
+            console.log('pwords.unshift: ', evt);
         });
 
         $scope.submitEword = function () {
             socket.emit('event', 'event', this.e);
+            console.log('eword: ', this.e);
             this.e = '';
             return false;
         }
 
         $scope.submitPword = function () {
             socket.emit('person', 'person', this.p);
+            console.log('pword: ', this.p);
             this.p = '';
             return false;
         }

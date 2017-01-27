@@ -12,9 +12,11 @@
             $window.ga('send', 'pageview', {page: $location.url()});
         });
 
-        $scope.socket = socket;
+        $scope.socket = socket.connect();
 
         console.log('$scope.socket in OwwController: ', $scope.socket);
+
+
         socket.on('newconn', function (num) {
             $scope.users = num;
         });

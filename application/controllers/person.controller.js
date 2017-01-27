@@ -14,7 +14,7 @@
     function PersonController($scope, socket) {
         var pctrl = this;
 
-        console.log('$scope.socket in PersonController: ', $scope.socket);
+        console.log('$scope.socket in PersonController: ', $scope.socket.id);
 
         socket.emit('personPageLoaded');
         // socket.on('personPageSuccess', function (json) {
