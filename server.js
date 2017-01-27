@@ -1,11 +1,11 @@
-/* ******************************************************
+/********************************************************
  *                ONE WORD WORLD SERVER
  * ******************************************************
  * Copyright (C) Nikola Kujaca - All Rights Reserved    *
  * Unauthorized copying of this file, via any medium    *
  * is strictly prohibited proprietary and confidential  *
  * Written by Nikola Kujaca <nikola.kujaca@gmail.com>,  *
- * 14th Nov 1972                                        *
+ * 1411972                                              *
  ********************************************************/
 
 /* ******************************************************
@@ -25,14 +25,18 @@ var multer = require('multer')
 var bodyParser = require('body-parser');
 var filename;
 
+// ******************************************************
 console.log(new Date());
 console.log(ver, "starting with initialization sequence: ");
 console.log("Loaded all required modules");
 // ******************************************************
 
 /* ******************************************************
- * Routing i landing page - still need to see if it is
- * necessary as angular will take over the routing...
+ * Routing and landing page
+ * static content required
+ *
+ * Also, permiting cross origin requests that are
+ * required for image upload
  ********************************************************/
 app.enable('trust proxy');
 app.use('/bootstrap', express.static('bootstrap'));
@@ -40,22 +44,17 @@ app.use('/js', express.static('js'));
 app.use('/images', express.static('images'));
 app.use('/application', express.static('application'));
 app.use('/views', express.static('views'));
-app.use('/views', express.static('node_modules'));
-//allow cross origin requests - required for image upload!
-app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
-    res.header("Access-Control-Allow-Origin", "http://localhost");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-app.use(bodyParser.json());
+console.log("All static routes are set");
+console.log("*********************************************************************\n");
+
+// serving index page on connection
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/views/index.html');
 });
 
-console.log("All routes are set");
+console.log("index.html page prepped to be served");
 console.log("*********************************************************************\n");
-console.log("Setting file upload destination to: /images/upload");
+
 var storage = multer.diskStorage({ //multers disk storage settings
     destination: function (req, file, cb) {
         console.log("setting up destination");
@@ -67,6 +66,8 @@ var storage = multer.diskStorage({ //multers disk storage settings
         cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1]);
     }
 });
+console.log("File upload destination set to: /images/upload");
+console.log("*********************************************************************\n");
 
 var upload = multer({ //multer settings
     storage: storage
@@ -81,8 +82,21 @@ app.post('/newevent', function (req, res) {
         res.json({error_code: 0, err_desc: null});
     });
 });
+console.log("multer settings set!");
 console.log("*********************************************************************\n");
-console.log("*********************************************************************");
+
+// cross origin requests - required for image upload!
+app.use(function (req, res, next) {
+    res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
+    res.header("Access-Control-Allow-Origin", "http://localhost");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+app.use(bodyParser.json());
+console.log("cross origin request permited");
+console.log("*********************************************************************\n");
+
+console.log("*********************************************************************\n");
 console.log("I guess we're all set.");
 console.log("*********************************************************************\n");
 console.log(ver, " is online and ready!");
@@ -98,6 +112,7 @@ console.log("*******************************************************************
  * broj korisnika, event, person.
  ********************************************************/
 io.sockets.on('connection', function (socket) {
+    socket.removeAllListeners();
     var fakeip = socket.handshake.address;
     console.log("IP Adresa klijenta - pretpostavljam remote: socket.handshake.address: ", fakeip);
 
@@ -146,7 +161,6 @@ io.sockets.on('connection', function (socket) {
         // console.log(socket.list());
         socket.removeAllListeners();
         socket.leaveAll();
-        // socket.leave(socket.room);
         io.sockets.emit('newconn', io.engine.clientsCount);
     });
 
@@ -182,11 +196,11 @@ io.sockets.on('connection', function (socket) {
     });
 
 
-// *********************************************************************
-// Socket u slucaju kada korisnik unese rijec u Person polje
-// pakuje ga i proslijedjuje ga Processoru na obradu i ceka povratnu
-// informaciju o uspjesnosti i listi personList
-// *********************************************************************
+    // *********************************************************************
+    // Socket u slucaju kada korisnik unese rijec u Person polje
+    // pakuje ga i proslijedjuje ga Processoru na obradu i ceka povratnu
+    // informaciju o uspjesnosti i listi personList
+    // *********************************************************************
     socket.on('person', function (newroom, personWord, person_id) {
 
         console.log("Registrujem person socket ", personWord);
@@ -264,7 +278,7 @@ io.sockets.on('connection', function (socket) {
         // Cekamo odgovor sa procesora i osvjezenu event listu
         procSocket.on("data", function (data) {
             var list = JSON.parse(data);
-            io.emit('personPageSuccess', JSON.stringify(list));
+            socket.emit('personPageSuccess', JSON.stringify(list));
             procSocket.end();
         });
     });

@@ -7,7 +7,7 @@
     <!-- Bootstrap import -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="bootstrap/css/ng-img-crop.css">
-
+    <base href="/">
 </head>
 <body ng-app="oneWordWorld">
 
@@ -21,18 +21,17 @@
         </div>
     </div>
     <div ng-controller="VisitorController" ng-init="init()">
-        <label ng-if({{visitor}})>Your IP address is recorded: {{visitor.address}}</label>
+        <label ng-if({{visitor}})>{{visitor}}</label>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" ui-sref="home" href="#">Home</a>
+                    <a class="navbar-brand" ui-sref="home">OWW</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a ui-sref="home" href="#">Home</a></li>
-                    <li><a ui-sref="newevent" href="#">New Event</a></li>
-                    <li><a ui-sref="newperson" href="#">New Person</a></li>
-                    <li><a ui-sref="event" href="#">Event of the week</a></li>
-                    <li><a ui-sref="person" href="#">Person of the week</a></li>
+                    <li class="active"><a ui-sref="home">Home</a></li>
+                    <li><a ui-sref="person">Person</a></li>
+                    <li><a ui-sref="event">Event</a></li>
+                    <li><a href="#">Page 3</a></li>
                 </ul>
             </div>
         </nav>

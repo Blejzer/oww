@@ -4,11 +4,11 @@
     angular.module('oneWordWorld')
         .config(config);
 
-    config.$inject = ['$urlRouterProvider', '$stateProvider'];
-    function config($urlRouterProvider, $stateProvider) {
+    config.$inject = ['$urlRouterProvider', '$stateProvider','$locationProvider'];
+    function config($urlRouterProvider, $stateProvider, $locationProvider) {
 
         // If user goes to a path that doesn't exist, redirect to public root
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/home');
 
         $stateProvider
             .state('home', {
@@ -83,5 +83,7 @@
                 }
 
             });
+        $locationProvider.html5Mode(true);
+
     }
 })();

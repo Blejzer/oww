@@ -1,17 +1,15 @@
-// /* ******************************************************
-//  *                ONE WORD WORLD PROCESOR               *
-//  * ******************************************************
-//  * Copyright (C) Nikola Kujaca - All Rights Reserved    *
-//  * Unauthorized copying of this file, via any medium    *
-//  * is strictly prohibited proprietary and confidential  *
-//  * Written by Nikola Kujaca <nikola.kujaca@gmail.com>,  *
-//  * 14th Nov 1972                                        *
-//  ********************************************************/
+/********************************************************
+ *                ONE WORD WORLD PROCESOR               *
+ * ******************************************************
+ * Copyright (C) Nikola Kujaca - All Rights Reserved    *
+ * Unauthorized copying of this file, via any medium    *
+ * is strictly prohibited proprietary and confidential  *
+ * Written by Nikola Kujaca <nikola.kujaca@gmail.com>,  *
+ * 1411972                                              *
+ ********************************************************/
 
-// var ipInfoDB = 'a03bf41b7ef4583c8f2ce950ce24a48577649eabfe71f20bc3f4ceade99abea2';
-// var ver = 'owwProcesor v.0.1-alpha.20';
+
 var json;
-// var test;
 var ipJson; // for maxmind GeoLite2-City result
 
 
@@ -19,10 +17,10 @@ var ipJson; // for maxmind GeoLite2-City result
 const net = require("net");
 var mysql = require("mysql");
 var maxmind = require("maxmind"); // GeoLite2-City.mmdb
-var Config = require("config-js");
+var Config = require("config-js"); // Da bi ucitali config.js file, moramo imati ovaj modul ???
 var config = new Config("application/config/config.js");
 
-// Pravimo konekciju na bazu podataka
+// Pravimo konekciju na bazu podataka koristeci podatke iz config.js file
 var dbcon = mysql.createPool({
     connectionLimit: config.get('sequel.conlimt'),
     host: config.get('sequel.link'),
@@ -36,31 +34,31 @@ var dbcon = mysql.createPool({
 var cityLookup = maxmind.openSync('data/maxmind/GeoLite2-City.mmdb');
 
 
-// Create a simple server
+// Kreiramo jednostavan server
 var processor = net.createServer(function (conn) {
+
+    // Provjeravamo da li su konekcije lokalne
+    // Ukoliko nisu, gasimo konekciju
+
     if (conn.address().address != "127.0.0.1") {
         console.error("Address is not localhost!!! You are invaded!!!", conn.address().address);
         conn.end();
     }
     console.log("Processor: Server connected");
-    // Let's response with a hello message
-    // conn.write(
-    //     JSON.stringify(
-    //         { response: "Hey there client!" }
-    //     )
-    // );
 
-    // If connection is closed
+
+    // Kada se konekcija zatvori
     conn.on("end", function () {
         console.log('Processor: Server disconnected');
         conn.end();
-        // Close the server connection
+
+        // ovako izgleda opcija da se procesor ubije ako postoji potreba za tim
         // conn.close();
         // End the process
         // process.exit(0);
     });
 
-    // Handle data from client
+    // Rad sa podacima sa web servera
     conn.on("data", function (data) {
         console.log("DATA: should be json: %s", data);
         var conData = JSON.parse(data);
@@ -375,32 +373,8 @@ function PersonPageLoaded(data, callback) {
     ipJson = cityLookup.get('217.75.201.28');
     console.log("DATA: PersonPageLoaded: Response from client: %s", ipJson.country.names.en, data.data);
 
-    // working with database inserting new evet word
-    // and getting back
-    // new event list top 5
+    // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
-        // Use the connection
-        // if (!ipJson.city) {
-        //     connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
-        //         if (err) {
-        //             if (err.fatal) {
-        //                 throw err;
-        //             }
-        //             console.error("Processor: List: PersonPageLoaded: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
-        //         }
-        //         console.log("Insert location ID: ", rows.insertId);
-        //     });
-        // } else {
-        //     connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
-        //         if (err) {
-        //             if (err.fatal) {
-        //                 throw err;
-        //             }
-        //             console.error("Processor: List: PersonPageLoaded: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
-        //         }
-        //         console.log("Insert location ID: ", rows.insertId);
-        //     });
-        // }
 
         connection.query(config.get('pwrd.flst'), function (err, rows) {
             if (err) {
