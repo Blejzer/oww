@@ -13,6 +13,7 @@
     "angular-cookies": "^1.6.1",
     "angular-nvd3": "^1.0.9",
     "angular-socket.io": "^0.1.6",
+    "angular-ui-router": "^0.4.2",
     "body-parser": "^1.0.2",
     "bootstrap": "^3.3.7",
     "config-js": "^1.1.9",
