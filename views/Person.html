@@ -6,10 +6,9 @@
         <img src="images/wowMarine.png" alt="WOW" width="200" height="200"/>
     </div>
     <div class="thumbnail">
-        <label for="personList">Most popular words for person</label>
-        <table id="personList">
-        </table>
-        <label >Most popular words for person</label>
+        <label>Most popular words for person</label>
+        <nvd3 options="options" data="data"></nvd3>
+
         <table >
             <tr ng-repeat="t in personList">
                 <td>{{ t.a }}</td>

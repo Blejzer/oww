@@ -40,7 +40,8 @@ console.log("Loaded all required modules");
  ********************************************************/
 app.enable('trust proxy');
 app.use('/bootstrap', express.static('bootstrap'));
-app.use('/js', express.static('js'));
+app.use('/scripts', express.static('node_modules/'));
+app.use('/custom', express.static('custom'));
 app.use('/images', express.static('images'));
 app.use('/application', express.static('application'));
 app.use('/views', express.static('views'));
@@ -93,6 +94,8 @@ app.use(function (req, res, next) {
     next();
 });
 app.use(bodyParser.json());
+
+
 console.log("cross origin request permited");
 console.log("*********************************************************************\n");
 

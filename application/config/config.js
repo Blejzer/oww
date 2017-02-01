@@ -74,7 +74,9 @@ module.exports = {
         ins2: 'INSERT INTO `tlocation`(`country`, `continent`, `visitor_id`) VALUES (?,?,?);',
         upd: 'UPDATE tlocation SET city = ?, country = ?, continent = ?, visitor_id = ?;',
         del: 'DELETE FROM tlocation WHERE location_id=?',
-        sel: ''
+        cont: 'select count(*) from tlocation where continent LIKE ?;',
+        coun: 'SELECT count(*) FROM tlocation WHERE country LIKE ?;',
+        city: 'SELECT count(*) FROM tlocation WHERE tlocation.city LIKE ?;'
     },
     /*  ======================
      *   person word queries

@@ -317,44 +317,19 @@ function EventPageLoaded(data, callback) {
     ipJson = cityLookup.get('217.75.201.28');
     console.log("DATA: EventPageLoaded: Response from client: %s", ipJson.country.names.en, data.data);
 
-    // working with database inserting new evet word
-    // and getting back
-    // new event list top 5
+    // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
-        // Use the connection
-        if (!ipJson.city) {
-            connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, null, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
-                if (err) {
-                    if (err.fatal) {
-                        throw err;
-                    }
-                    console.error("Processor: List: EventPageLoaded: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
-                }
-                console.log("Insert location ID: ", rows.insertId);
-            });
-        } else {
-            connection.query('INSERT INTO tlocation (ip, city, country, continent) VALUES(?,?,?,?)', [data.ip, ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en], function (err, rows) {
-                if (err) {
-                    if (err.fatal) {
-                        throw err;
-                    }
-                    console.error("Processor: List: EventPageLoaded: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
-                }
-                console.log("Insert location ID: ", rows.insertId);
-            });
-        }
 
-        connection.query('SELECT eword a, COUNT(eword) c FROM tevent GROUP BY eword ORDER BY c DESC LIMIT 25', function (err, rows) {
+        connection.query(config.get('ewrd.lst'), function (err, rows) {
             if (err) {
                 if (err.fatal) {
                     throw err;
                 }
-                console.error("Processor: List: EventPageLoaded: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
+                console.error("Processor: List: EventWord: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
             }
+
             ritrn = JSON.stringify(rows);
             callback(ritrn);
-
-            connection.release();
         });
 
     });
@@ -376,13 +351,14 @@ function PersonPageLoaded(data, callback) {
     // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
 
-        connection.query(config.get('pwrd.flst'), function (err, rows) {
+        connection.query(config.get('pwrd.lst'), function (err, rows) {
             if (err) {
                 if (err.fatal) {
                     throw err;
                 }
                 console.error("Processor: List: PersonWord: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
             }
+            
             ritrn = JSON.stringify(rows);
             callback(ritrn);
         });

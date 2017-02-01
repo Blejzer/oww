@@ -22,7 +22,7 @@
         // });
 
         socket.on('conn', function (num) {
-            console.log('socket.on newconn fired');
+            console.log('socket.on conn fired');
             $scope.users = num;
         });
 

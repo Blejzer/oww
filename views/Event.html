@@ -6,11 +6,15 @@
         <img src="images/wowMarine.png" alt="WOW" width="200" height="200"/>
     </div>
     <div class="thumbnail">
-        <div class="thumbnail">
-            <!-- <ul id="eventList"></ul> -->
-            <label for="eventList">Most popular words for event</label>
-            <table id="eventList">
-            </table>
-        </div>
+        <label>Most popular words for event</label>
+        <nvd3 options="options" data="edata"></nvd3>
+
+        <table >
+            <tr ng-repeat="t in eventList">
+                <td>{{ t.a }}</td>
+                <td>{{ t.c }}</td>
+            </tr>
+        </table>
+
     </div>
 </div>
