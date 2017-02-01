@@ -4,15 +4,16 @@
     angular.module('oneWordWorld')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', '$location', '$window', 'socket'];
-    function HomeController($scope, $location, $window, socket) {
+    HomeController.$inject = ['$scope', '$location', '$window', 'socket', 'OwwUPS'];
+    function HomeController($scope, $location, $window, socket, OwwUPS) {
         $scope.ewords = [];
         $scope.pwords = [];
 
-        // socket.on('newconn', function (num) {
-        //     $scope.users = num;
-        // });
 
+        function LoadEventList() {
+            // socket.emit('getLists', 'getLists', '');
+
+        }
 
         socket.on('eventWord', function (evt) {
             $scope.ewords.unshift(evt);
@@ -47,10 +48,7 @@
             $scope.personList = evt;
         });
 
-        socket.on('disconnect', function(){
-            console.log('Home page socket disconnected');
-            socket.removeAllListeners();
-        });
+
 
 
     }

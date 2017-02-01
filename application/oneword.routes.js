@@ -16,7 +16,8 @@
                 views: {
 
                     // the main template will be placed here (relatively named)
-                    '': {templateUrl: 'views/home.html'}
+                    '': {   templateUrl: 'views/home.html',
+                            controller: 'HomeController'}
                     // 'week@home': {
                     //     templateUrl: 'views/week.html'
                     // },
@@ -34,7 +35,8 @@
                 views: {
 
                     // the main template will be placed here (relatively named)
-                    '': {templateUrl: 'views/event.html'}
+                    '': {templateUrl: 'views/event.html',
+                        controller: 'EventController'}
                     // 'week@home': {
                     //     templateUrl: 'views/week.html'
                     // },
@@ -52,7 +54,8 @@
                 views: {
 
                     // the main template will be placed here (relatively named)
-                    '': {templateUrl: 'views/person.html'}
+                    '': {templateUrl: 'views/person.html',
+                        controller: "PersonController"}
                     // 'week@home': {
                     //     templateUrl: 'views/week.html'
                     // },
@@ -83,6 +86,7 @@
                 }
 
             });
+
         $locationProvider.html5Mode(true);
 
     }

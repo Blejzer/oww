@@ -116,8 +116,8 @@ io.sockets.on('connection', function (socket) {
     var fakeip = socket.handshake.address;
     console.log("IP Adresa klijenta - pretpostavljam remote: socket.handshake.address: ", fakeip);
 
-    console.log(new Date(), "Broj trenutnih korisnika: ", io.engine.clientsCount);
-    io.sockets.emit('newconn', io.engine.clientsCount);
+    // console.log(new Date(), "Konektovanje: Broj trenutnih korisnika: ", io.engine.clientsCount);
+    // io.sockets.emit('conn', io.engine.clientsCount);
 
 
     var visitor = {};
@@ -153,15 +153,16 @@ io.sockets.on('connection', function (socket) {
             message: 'new visitor',
             visitor: visitor
         });
+        io.sockets.emit('conn', io.engine.clientsCount);
         procSocket.end();
     });
 
     socket.on('disconnect', function () {
-        console.log(new Date(), "Broj trenutnih korisnika: ", io.engine.clientsCount);
+        console.log(new Date(), "Diskonekcija: Broj trenutnih korisnika: ", io.engine.clientsCount);
         // console.log(socket.list());
+        io.sockets.emit('conn', io.engine.clientsCount);
         socket.removeAllListeners();
         socket.leaveAll();
-        io.sockets.emit('newconn', io.engine.clientsCount);
     });
 
 

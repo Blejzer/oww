@@ -20,8 +20,9 @@
             <h1 class="text-center">This is One Word World!</h1>
         </div>
     </div>
-    <div ng-controller="VisitorController" ng-init="init()">
-        <label ng-if({{visitor}})>{{visitor}}</label>
+    <div>
+        <!--<div ng-controller="VisitorController" ng-init="init()">-->
+        <label ng-show="visitor" >{{visitor}}</label>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -40,7 +41,10 @@
         <div ui-view></div>
     </div>
 
-
+    <div class="row thumbnail">
+        <label>Number of users online</label>
+        <label>{{users}}</label>
+    </div>
 </div>
 
 
@@ -70,7 +74,7 @@
 <script src="application/controllers/event.controller.js"></script>
 <script src="application/controllers/person.controller.js"></script>
 <script src="application/controllers/newevent.controller.js"></script>
-<script src="application/controllers/visitor.controller.js"></script>
+<!--<script src="application/controllers/visitor.controller.js"></script>-->
 <script src="application/factories/kukiz.function.js"></script>
 <script src="application/factories/visitor.factory.js"></script>
 <script>

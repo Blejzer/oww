@@ -4,52 +4,38 @@
     angular.module('oneWordWorld')
         .controller('OwwController', OwwController);
 
-    OwwController.$inject = ['$rootScope', '$scope', '$location', '$window', 'socket'];
-    function OwwController($rootScope, $scope, $location, $window, socket) {
+    OwwController.$inject = ['$rootScope', '$scope', '$location', '$window', 'socket', 'OwwUPS'];
+    function OwwController($rootScope, $scope, $location, $window, socket, OwwUPS) {
         // $scope.ewords = [];
         // $scope.pwords = [];
         $rootScope.$on('$viewContentLoaded', function (event) {
             $window.ga('send', 'pageview', {page: $location.url()});
         });
 
-        $scope.socket = socket.connect();
 
-        console.log('$scope.socket in OwwController: ', $scope.socket);
+        // $scope.$on('$viewContentLoaded', function() {
+        //     console.log('Index page $viewContentLoaded fired');
+        // });
+        //
+        // $scope.$on('$stateChangeSuccess', function () {
+        //     console.log('Index page $stateChangeSuccess fired');
+        // });
 
-
-        socket.on('newconn', function (num) {
+        socket.on('conn', function (num) {
+            console.log('socket.on newconn fired');
             $scope.users = num;
         });
-        //
-        // socket.on('eventWord', function (evt) {
-        //      $scope.ewords.unshift(evt);
-        // });
-        // socket.on('personWord', function (evt) {
-        //     $scope.pwords.unshift(evt);
-        // });
-        //
-        // $scope.submitEword = function () {
-        //     socket.emit('event', 'event', this.e);
-        //     this.e = '';
-        //     return false;
-        // }
-        //
-        // $scope.submitPword = function () {
-        //     socket.emit('person', 'person', this.p);
-        //     this.p = '';
-        //     return false;
-        // }
-        //
-        // socket.on('eventList', function(json){
-        //     var evt = JSON.parse(json);
-        //     $scope.eventList = evt;
-        // });
-        //
-        // socket.on('personList', function(json){
-        //     var evt = JSON.parse(json);
-        //     $scope.personList = evt;
-        // });
 
+        $scope.changeState = function () {
+            //$state.go('contact.detail');
+            console.log('index controller: change state invoked');
+        };
+        socket.on('notification', function (data) {
+            // console.log("notification data: ", data.visitor);
+            OwwUPS.setCookieData(data.visitor.id);
+            $scope.visitor = data.visitor;
+            // console.log('OwwUPS.getCookieData(): ', OwwUPS.getCookieData());
+        });
 
     }
 })();

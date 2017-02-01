@@ -1,4 +1,4 @@
-<div ng-controller="HomeController">
+<div>
     <div class="container-fluid">
     <!-- theme divs (person & event) -->
         <div class="row text-center">
@@ -9,20 +9,7 @@
                 <div class="thumbnail">
                     <a ui-sref="person"><img src="images/wowMarine.png" alt="WOW" width="200" height="200"/></a>
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
-                <div class="thumbnail">
-                    <a ui-sref="event"><h3>Event of the week</h3></a>
-                </div>
-                <div class="thumbnail">
-                    <a ui-sref="event"><img src="images/wowMarine.png" alt="WOW" width="200" height="200"/></a>
-                </div>
-            </div>
-        </div>
-
-    <!-- oneWordInput part -->
-        <div class="row center">
-            <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+                <!-- person input part -->
                 <div class="thumbnail">
                     <form id="formPerson" ng-submit="submitPword()">
                         <input type="hidden" id="person_id" value="9999"/>
@@ -42,8 +29,15 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
-                <div class="center thumbnail">
+            <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
+                <div class="thumbnail">
+                    <a ui-sref="event"><h3>Event of the week</h3></a>
+                </div>
+                <div class="thumbnail">
+                    <a ui-sref="event"><img src="images/wowMarine.png" alt="WOW" width="200" height="200"/></a>
+                </div>
+                <!-- event input part -->
+                <div class="thumbnail">
                     <form id="formEvent" ng-submit="submitEword()">
                         <input type="hidden" id="event_id" value="9999"/>
                         <input ng-model="e" id="e" class="form-control" autocomplete="off"
@@ -56,11 +50,21 @@
                     </form>
                 </div>
                 <div class="content thumbnail" style="overflow:hidden; height: 150px">
-                    <!--<ul id="events"></ul>-->
                     <ul>
                         <li ng-repeat="eword in ewords track by $index">{{eword}}</li>
                     </ul>
                 </div>
+            </div>
+        </div>
+
+    <!-- oneWordInput part -->
+        <div class="row center">
+            <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+
+
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+
             </div>
         </div>
 
@@ -95,11 +99,6 @@
                     </div>
                 </a>
             </div>
-        </div>
-
-        <div class="row thumbnail">
-            <label>Number of users online</label>
-            <label>{{users}}</label>
         </div>
     </div>
 

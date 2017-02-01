@@ -2,6 +2,7 @@
     'use strict';
     angular.module('oneWordWorld')
         .factory('socket', ['socketFactory', function (socketFactory) {
-                return socketFactory();
+            console.log('inside socketFactory:');
+            return socketFactory();
         }]);
 })();
