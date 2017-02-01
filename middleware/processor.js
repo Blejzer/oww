@@ -148,7 +148,7 @@ function NewConnection(data, callback) {
     var visitor = {};
     data = JSON.parse(data);
     console.log("NEWCONNECTION: Incomming message from client: %s", data.visitor.address);
-    ipJson = cityLookup.get('217.75.201.28'); // data.visitor.address
+    ipJson = cityLookup.get('46.188.121.120'); // data.visitor.address
     visitor = data.visitor;
 
     // getting back event list top 5 and person list top 5

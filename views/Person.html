@@ -9,29 +9,13 @@
         <label for="personList">Most popular words for person</label>
         <table id="personList">
         </table>
+        <label >Most popular words for person</label>
+        <table >
+            <tr ng-repeat="t in personList">
+                <td>{{ t.a }}</td>
+                <td>{{ t.c }}</td>
+            </tr>
+        </table>
+
     </div>
 </div>
-<!-- Socket.io script -->
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    var socket = io.connect();
-    socket.emit('personPageLoaded');
-    socket.on('personPageSuccess', function (json) {
-        console.log(json);
-        // da bi dobili ponovo objekat iz stringa
-        var evt = JSON.parse(json);
-        $('#personList').children().remove();
-        var tr;
-        for (var i = 0; i < evt.length; i++) {
-            tr = $('<tr/>');
-            tr.append("<td> " + evt[i].a + "</td>");
-            tr.append("<td>&nbsp</td>");
-            tr.append('<td class="text-right"> ' + ' ' + evt[i].c + "</td>");
-            $('#personList').append(tr);
-        }
-    });
-    socket.on('disconnect', function(){
-        console.log('Person page socket disconnected');
-        socket.removeAllListeners();
-    });
-</script>
