@@ -49,9 +49,10 @@ console.log("All static routes are set");
 console.log("*********************************************************************\n");
 
 // serving index page on connection
-app.get('/', function (req, res) {
+app.get('*', function (req, res) {
     res.sendFile(__dirname + '/views/index.html');
 });
+
 
 console.log("index.html page prepped to be served");
 console.log("*********************************************************************\n");

@@ -7,8 +7,8 @@
     <!-- Bootstrap import -->
     <link rel="stylesheet" href="scripts/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="custom/css/ng-img-crop.css">
-    <base href="/">
-    <script src="scripts/angular/angular.min.js"></script>
+    <link rel="stylesheet" href="scripts/nvd3/build/nv.d3.min.css">
+    <!--<base href="/">-->
 </head>
 <body ng-app="oneWordWorld">
 
@@ -30,10 +30,10 @@
                     <a class="navbar-brand" ui-sref="home">OWW</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a ui-sref="home">Home</a></li>
-                    <li><a ui-sref="person">Person</a></li>
-                    <li><a ui-sref="event">Event</a></li>
-                    <li><a href="#">Page 3</a></li>
+                    <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
+                    <li ui-sref-active="active"><a ui-sref="person">Person</a></li>
+                    <li ui-sref-active="active"><a ui-sref="event">Event</a></li>
+                    <li ui-sref-active="active"><a href="#">Page 3</a></li>
                 </ul>
             </div>
         </nav>
@@ -50,22 +50,22 @@
 
 
 <!-- Libs -->
-<!--Socket.io client Library-->
-<script src="scripts/socket.io-client/dist/socket.io.slim.js"></script>
 <!-- jQuery library -->
 <script src="scripts/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap Library -->
 <script src="scripts/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AngularJS Libraries -->
+<script src="scripts/angular/angular.min.js"></script>
 <script src="scripts/ng-file-upload/dist/ng-file-upload-shim.js"></script>
 <script src="scripts/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="scripts/angular-cookies/angular-cookies.js"></script>
+<!--Socket.io client Library-->
+<script src="scripts/socket.io-client/dist/socket.io.slim.js"></script>
 
 <!-- AngularJS Charts using charts.js-->
 <script src="scripts/d3/d3.min.js"></script>
 <script src="scripts/nvd3/build/nv.d3.min.js"></script> <!-- or use another assembly -->
 <script src="scripts/angular-nvd3/dist/angular-nvd3.min.js"></script>
-<link rel="stylesheet" href="scripts/nvd3/build/nv.d3.min.css">
 
 <!--AngularJS briant f socket purifier-->
 <script src="custom/js/socket.js"></script>
