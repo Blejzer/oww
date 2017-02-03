@@ -15,6 +15,8 @@
                 url: '/',
                 views: {
 
+                    'navbar@': { templateUrl: 'views/navbar.html'},
+
                     // the main template will be placed here (relatively named)
                     '': {   templateUrl: 'views/home.html',
                             controller: 'HomeController'}
@@ -24,24 +26,21 @@
             .state('event', {
                 url: '/event',
                 views: {
-
+                    'navbar@': { templateUrl: 'views/navbar.html'},
                     // the main template will be placed here (relatively named)
                     '': {templateUrl: 'views/event.html',
                         controller: 'EventController'}
                 }
-
             })
             .state('person', {
                 url: '/person',
-                templateUrl: 'views/person.html',
-                controller: "PersonController"
-                // views: {
-                //
-                //     // the main template will be placed here (relatively named)
-                //     '': {templateUrl: 'views/person.html',
-                //         controller: "PersonController"}
-                // }
-
+                views: {
+                    'navbar@': { templateUrl: 'views/navbar.html'},
+                    '': {
+                        templateUrl: 'views/person.html',
+                        controller: "PersonController"
+                    }
+                }
             })
             .state('newevent', {
                 url: '/newevent',
@@ -53,11 +52,11 @@
 
             });
 
-        $locationProvider.html5Mode({
-            enabled: true,
-            requireBase: false
-        });
-        // $locationProvider.html5Mode(true);
+        // $locationProvider.html5Mode({
+        //     enabled: true,
+        //     requireBase: false
+        // });
+        $locationProvider.html5Mode(true);
 
     }
 })();

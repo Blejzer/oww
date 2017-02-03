@@ -331,6 +331,7 @@ function EventPageLoaded(data, callback) {
             ritrn = JSON.stringify(rows);
             callback(ritrn);
         });
+        connection.release();
 
     });
 }
@@ -362,6 +363,7 @@ function PersonPageLoaded(data, callback) {
             ritrn = JSON.stringify(rows);
             callback(ritrn);
         });
+        connection.release();
 
     });
 }

@@ -8,11 +8,12 @@
     <link rel="stylesheet" href="scripts/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="custom/css/ng-img-crop.css">
     <link rel="stylesheet" href="scripts/nvd3/build/nv.d3.min.css">
-    <!--<base href="/">-->
+    <link rel="stylesheet" href="custom/css/colors.css">
+    <base href="/">
 </head>
-<body ng-app="oneWordWorld">
+<body id="customized" ng-app="oneWordWorld" class="paper">
 
-<div class="container" ng-controller="OwwController">
+<div class="container dusty" ng-controller="OwwController">
     <div class="row">
         <div class="col-xs-3 ">
             <img src="images/wowMarine.png" class="img-responsive img-circle" alt="WOW" width="80" height="80"/>
@@ -21,31 +22,19 @@
             <h1 class="text-center">This is One Word World!</h1>
         </div>
     </div>
-    <div>
-        <!--<div ng-controller="VisitorController" ng-init="init()">-->
-        <label ng-show="visitor" >{{visitor}}</label>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" ui-sref="home">OWW</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
-                    <li ui-sref-active="active"><a ui-sref="person">Person</a></li>
-                    <li ui-sref-active="active"><a ui-sref="event">Event</a></li>
-                    <li ui-sref-active="active"><a href="#">Page 3</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+    <!--<div ng-controller="VisitorController" ng-init="init()">-->
+    <label ng-show="visitor" >{{visitor}}</label>
+    <div ui-view="navbar"></div>
+
     <div class="row">
-        <div ui-view></div>
+        <div class="overcast" ui-view></div>
     </div>
 
-    <div class="row thumbnail">
+    <div class="row thumbnail overcast">
         <label>Number of users online</label>
         <label>{{users}}</label>
     </div>
+
 </div>
 
 

@@ -5,16 +5,19 @@
     <div class="thumbnail">
         <img src="images/wowMarine.png" alt="WOW" width="200" height="200"/>
     </div>
-    <div class="thumbnail">
-        <label>Most popular words for event</label>
-        <nvd3 options="options" data="edata"></nvd3>
+    <div class="paper">
+        <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
+            <label>Most popular words for event</label>
 
-        <table >
-            <tr ng-repeat="t in eventList">
-                <td>{{ t.a }}</td>
-                <td>{{ t.c }}</td>
-            </tr>
-        </table>
-
+            <table >
+                <tr ng-repeat="t in eventList">
+                    <td>{{ t.a }}</td>
+                    <td>{{ t.c }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
+            <nvd3 class="paper" options="options" data="edata"></nvd3>
+        </div>
     </div>
 </div>
