@@ -12,32 +12,32 @@
     <base href="/">
 </head>
 <body id="customized" ng-app="oneWordWorld" class="paper">
-
-<div class="container dusty" ng-controller="OwwController">
-    <div class="row">
-        <div class="col-xs-3 ">
-            <img src="images/wowMarine.png" class="img-responsive img-circle" alt="WOW" width="80" height="80"/>
+<div class="container-fluid dusty">
+    <div class="container dusty" ng-controller="OwwController">
+        <div id="one"></div>
+        <div class="row">
+            <div class="col-xs-3 ">
+                <img src="images/wowMarine.png" class="img-responsive img-circle" alt="WOW" width="80" height="80"/>
+            </div>
+            <div class="col-xs-9">
+                <h1 class="text-center">This is One Word World!</h1>
+            </div>
         </div>
-        <div class="col-xs-9">
-            <h1 class="text-center">This is One Word World!</h1>
+        <label ng-show="visitor">{{visitor}}</label>
+        <div ui-view="navbar"></div>
+
+        <div class="row">
+            <div class="overcast" ui-view></div>
         </div>
-    </div>
-    <!--<div ng-controller="VisitorController" ng-init="init()">-->
-    <label ng-show="visitor" >{{visitor}}</label>
-    <div ui-view="navbar"></div>
 
-    <div class="row">
-        <div class="overcast" ui-view></div>
-    </div>
+        <div class="row thumbnail overcast">
+            <label>Number of users online</label>
+            <label>{{users}}</label>
+        </div>
 
-    <div class="row thumbnail overcast">
-        <label>Number of users online</label>
-        <label>{{users}}</label>
     </div>
 
 </div>
-
-
 <!-- Libs -->
 <!-- jQuery library -->
 <script src="scripts/jquery/dist/jquery.min.js"></script>

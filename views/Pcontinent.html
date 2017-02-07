@@ -1,15 +1,17 @@
 <div class="container">
     <div class="thumbnail">
-        <h2 class="text-center">Event of the week</h2>
+        <h2 class="text-center">Person of the week</h2>
     </div>
     <div class="thumbnail">
         <img src="images/wowMarine.png" alt="WOW" width="400" height="400"/>
 
     </div>
-    <div>
-        <h2>Global popularity</h2>
-                <nvd3 options="options" data="globalList"></nvd3>
+
+    <div ng-repeat="kont in contList">
+        <h3>{{ kont.cont }}</h3>
+        <nvd3 options="options" data="kont.pwords"></nvd3>
     </div>
+
 
 
 </div>

@@ -107,8 +107,6 @@ console.log(ver, " is online and ready!");
 console.log("*********************************************************************\n");
 
 
-// var room = ['person', 'event']
-
 /* ******************************************************
  * Kreiranje socketa prilikom konekcije klijenta na
  * server. Kupimo IP adresu, povecavamo broj online
@@ -119,10 +117,6 @@ io.sockets.on('connection', function (socket) {
     socket.removeAllListeners();
     var fakeip = socket.handshake.address;
     console.log("IP Adresa klijenta - pretpostavljam remote: socket.handshake.address: ", fakeip);
-
-    // console.log(new Date(), "Konektovanje: Broj trenutnih korisnika: ", io.engine.clientsCount);
-    // io.sockets.emit('conn', io.engine.clientsCount);
-
 
     var visitor = {};
     visitor.address = fakeip;
@@ -254,7 +248,36 @@ io.sockets.on('connection', function (socket) {
         // Cekamo odgovor sa procesora i osvjezenu event listu
         procSocket.on("data", function (data) {
             var list = JSON.parse(data);
-            io.emit('eventPageSuccess', JSON.stringify(list));
+            socket.emit('eventPageSuccess', JSON.stringify(list));
+            procSocket.end();
+        });
+    });
+
+
+    // *********************************************************************
+    // Socket u slucaju kada korisnik otvori stranicu Event by continent
+    // pa je potrebno dostaviti duzi spisak rijeci po nekoj
+    // kvalifikaciji
+    // *********************************************************************
+    socket.on('eventCtnPageLoaded', function () {
+
+        console.log("Registrujem eventCtnPageLoaded socket ");
+        // *********************************************************************
+        var data = {"data": "eventCtnPageLoaded", "ip": fakeip};
+        jack = JSON.stringify(data);
+
+        // Create a socket (client) that connects to the server
+        var procSocket = new net.Socket();
+        procSocket.connect(3001, "localhost", function () {
+            console.log("Client: eventCtnPageLoaded: Connected to server");
+            procSocket.write(jack);
+        });
+
+        // Cekamo odgovor sa procesora i osvjezenu event listu
+        procSocket.on("data", function (data) {
+            var list = JSON.parse(data);
+            console.log('Server: List returned from processor: ', list);
+            socket.emit('eventCtnPageSuccess', list);
             procSocket.end();
         });
     });
@@ -288,7 +311,36 @@ io.sockets.on('connection', function (socket) {
         });
     });
 
+    // *********************************************************************
+    // Socket u slucaju kada korisnik otvori stranicu Person by continent
+    // pa je potrebno dostaviti duzi spisak rijeci po nekoj
+    // kvalifikaciji
+    // *********************************************************************
+    socket.on('personCtnPageLoaded', function () {
+
+        console.log("Registrujem personCtnPageLoaded socket ");
+        // *********************************************************************
+        var data = {"data": "personCtnPageLoaded", "ip": fakeip};
+        jack = JSON.stringify(data);
+
+        // Create a socket (client) that connects to the server
+        var procSocket = new net.Socket();
+        procSocket.connect(3001, "localhost", function () {
+            console.log("Client: personCtnPageLoaded: Connected to server");
+            procSocket.write(jack);
+        });
+
+        // Cekamo odgovor sa procesora i osvjezenu event listu
+        procSocket.on("data", function (data) {
+            var list = JSON.parse(data);
+            console.log('Server: List returned from processor: ', list);
+            socket.emit('personCtnPageSuccess', list);
+            procSocket.end();
+        });
+    });
+
 });
+
 
 
 /* ****************************************************************
@@ -300,3 +352,9 @@ http.listen(80, function () {
     console.log(ver, " Initialization sequence complete. ");
     console.log(new Date(), 'Started listening on port:80');
 });
+
+
+/** TODO prije deployment-a u ovom fileu
+ * izmijeniti fixne ip adresse:
+ * linija 118 - var fakeip = '45.57.216.254'; // socket.handshake.address;
+ */

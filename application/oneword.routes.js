@@ -32,6 +32,15 @@
                         controller: 'EventController'}
                 }
             })
+            .state('econtinent', {
+                url: '/econtinent',
+                views: {
+                    'navbar@': { templateUrl: 'views/navbar.html'},
+                    // the main template will be placed here (relatively named)
+                    '': {templateUrl: 'views/Econtinent.html',
+                        controller: 'EventController'}
+                }
+            })
             .state('person', {
                 url: '/person',
                 views: {
@@ -40,6 +49,15 @@
                         templateUrl: 'views/person.html',
                         controller: "PersonController"
                     }
+                }
+            })
+            .state('pcontinent', {
+                url: '/pcontinent',
+                views: {
+                    'navbar@': { templateUrl: 'views/navbar.html'},
+                    // the main template will be placed here (relatively named)
+                    '': {templateUrl: 'views/Pcontinent.html',
+                        controller: 'PersonController'}
                 }
             })
             .state('newevent', {

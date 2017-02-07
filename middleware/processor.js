@@ -104,8 +104,24 @@ var processor = net.createServer(function (conn) {
 
             }
                 break;
+            case "eventCtnPageLoaded": {
+                EventCntPageLoaded(data, function (rezultat) {
+                    console.log("DATA: end of EventCtnPageLoaded - result: ", rezultat);
+                    conn.write(rezultat);
+                });
+
+            }
+                break;
             case "personPageLoaded": {
                 PersonPageLoaded(data, function (rezultat) {
+                    console.log("DATA: end of PersonPageLoaded - result: ", rezultat);
+                    conn.write(rezultat);
+                });
+
+            }
+                break;
+            case "personCtnPageLoaded": {
+                PersonCntPageLoaded(data, function (rezultat) {
                     console.log("DATA: end of PersonPageLoaded - result: ", rezultat);
                     conn.write(rezultat);
                 });
@@ -148,8 +164,8 @@ function NewConnection(data, callback) {
     var visitor = {};
     data = JSON.parse(data);
     console.log("NEWCONNECTION: Incomming message from client: %s", data.visitor.address);
-    ipJson = cityLookup.get('46.188.121.120'); // data.visitor.address
     visitor = data.visitor;
+    ipJson = cityLookup.get(visitor.address); // data.visitor.address moscow russia: 46.188.121.120
 
     // getting back event list top 5 and person list top 5
     // so it can be pumped in to the lists after client connects
@@ -172,8 +188,8 @@ function NewConnection(data, callback) {
                     }
                     console.error("Processor: NewConnection: Person: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
                 }
-                console.log('data.visitor', data.visitor.address);
-                connection.query(config.get('vstr.ins'),  [data.visitor.address, null, null], function (err, vrows) {
+                console.log('data.visitor', visitor.address);
+                connection.query(config.get('vstr.ins'),  [visitor.address, null, null], function (err, vrows) {
                     if (err) {
                         if (err.fatal) {
                             throw err;
@@ -306,7 +322,7 @@ function InsertPersonWord(data, callback) {
 
 
 /* **********************************************
- *         EVENT PAGE LOADED function            *
+ *     EVENT GLOBAL PAGE LOADED function         *
  * Running geolocation on the provided IP        *
  * address and saveing it in the tlocation       *
  * table. Returning list of 25 most used         *
@@ -314,7 +330,7 @@ function InsertPersonWord(data, callback) {
  *************************************************/
 function EventPageLoaded(data, callback) {
     data = JSON.parse(data);
-    ipJson = cityLookup.get('217.75.201.28');
+    ipJson = cityLookup.get(data.ip);
     console.log("DATA: EventPageLoaded: Response from client: %s", ipJson.country.names.en, data.data);
 
     // working with database requesting full list of words for the given person
@@ -336,6 +352,74 @@ function EventPageLoaded(data, callback) {
     });
 }
 
+/* **********************************************
+ *    EVENT CONTINENT PAGE LOADED function       *
+ * Running geolocation on the provided IP        *
+ * address and saveing it in the tlocation       *
+ * table. Returning list of 25 most used         *
+ * words in the current event                    *
+ *************************************************/
+function EventCntPageLoaded(data, callback) {
+    data = JSON.parse(data);
+    continents = [];
+    results = [];
+    ipJson = cityLookup.get(data.ip);
+    console.log("DATA: EventPageLoaded: Response from client: %s", ipJson.country.names.en, data.data);
+
+    // working with database requesting full list of words for the given person
+    dbcon.getConnection(function (err, connection) {
+
+        connection.query(config.get('lctn.cnt'), function (err, crows) {
+            if (err) {
+                if (err.fatal) {
+                    throw err;
+                }
+                console.error("Processor: List: EventWord: ContinentList", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
+            }
+            continents = crows;
+            var item = 0;
+
+            continents.forEach(function(cont, index, arr) {
+                item++;
+                var temp = [];
+                console.log('index', index);
+                connection.query(config.get('ewrd.lstpcnt'), [cont.continent], function (err, erows) {
+                    // console.log('continent: ', cont.continent);
+                    if (err) {
+                        if (err.fatal) {
+                            throw err;
+                        }
+                        console.error("Processor: List: EventWord: ContinentList", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
+                    }
+
+                    temp = {
+                        cont: cont.continent,
+                        ewords: erows
+                    }
+                    console.log('temp: ', temp);
+
+                    results.push(temp);
+                    console.log('results inside query: ', results);
+                    if(index === arr.length-1) {
+                        ritrn = JSON.stringify(results);
+                        console.log('ritrn: ', ritrn);
+                        callback(ritrn);
+                    }
+                })
+                console.log('results inside loop: ', results);
+                console.log(item);
+
+            });
+            console.log('results outside loop: ', results);
+            // ritrn = JSON.stringify(results);
+            // console.log('ritrn: ', ritrn);
+            // callback(ritrn);
+        })
+
+        connection.release();
+    });
+}
+
 
 /* **********************************************
  *        PERSON PAGE LOADED function            *
@@ -346,7 +430,7 @@ function EventPageLoaded(data, callback) {
  *************************************************/
 function PersonPageLoaded(data, callback) {
     data = JSON.parse(data);
-    ipJson = cityLookup.get('217.75.201.28');
+    ipJson = cityLookup.get(data.ip);
     console.log("DATA: PersonPageLoaded: Response from client: %s", ipJson.country.names.en, data.data);
 
     // working with database requesting full list of words for the given person
@@ -365,6 +449,71 @@ function PersonPageLoaded(data, callback) {
         });
         connection.release();
 
+    });
+}
+
+
+/* **********************************************
+ *    EVENT CONTINENT PAGE LOADED function       *
+ * Running geolocation on the provided IP        *
+ * address and saveing it in the tlocation       *
+ * table. Returning list of 25 most used         *
+ * words in the current event                    *
+ *************************************************/
+function PersonCntPageLoaded(data, callback) {
+    data = JSON.parse(data);
+    continents = [];
+    results = [];
+    ipJson = cityLookup.get(data.ip);
+    console.log("DATA: PersonPageLoaded: Response from client: %s", ipJson.country.names.en, data.data);
+
+    dbcon.getConnection(function (err, connection) {
+
+        connection.query(config.get('lctn.cnt'), function (err, crows) {
+            if (err) {
+                if (err.fatal) {
+                    throw err;
+                }
+                console.error("Processor: List: PersonWord: ContinentList", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
+            }
+            continents = crows;
+            var item = 0;
+
+            continents.forEach(function(cont, index, arr) {
+                item++;
+                var temp = [];
+                console.log('index', index);
+                connection.query(config.get('pwrd.lstpcnt'), [cont.continent], function (err, prows) {
+                    // console.log('continent: ', cont.continent);
+                    if (err) {
+                        if (err.fatal) {
+                            throw err;
+                        }
+                        console.error("Processor: List: PersonWord: ContinentList", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
+                    }
+
+                    temp = {
+                        cont: cont.continent,
+                        pwords: prows
+                    }
+                    console.log('temp: ', temp);
+
+                    results.push(temp);
+                    console.log('results inside query: ', results);
+                    if(index === arr.length-1) {
+                        ritrn = JSON.stringify(results);
+                        console.log('ritrn: ', ritrn);
+                        callback(ritrn);
+                    }
+                })
+                console.log('results inside loop: ', results);
+                console.log(item);
+
+            });
+            console.log('results outside loop: ', results);
+        })
+
+        connection.release();
     });
 }
 
@@ -390,3 +539,9 @@ function testDataBaseConnection() {
         }
     });
 };
+
+
+/** TODO prije deployment-a u ovom fileu
+ * izmijeniti fixne ip adresse:
+ * linija 125 - var fakeip = '45.57.216.254'; // socket.handshake.address;
+ */
