@@ -1,20 +1,15 @@
 <div class="container">
     <div class="thumbnail">
-        <h3 class="text-center">Person of the week</h3>
+        <h2 class="text-center">Person of the week</h2>
     </div>
     <div class="thumbnail">
-        <img src="images/wowMarine.png" alt="WOW" width="200" height="200"/>
-    </div>
-    <div class="thumbnail">
-        <label>Most popular words for person</label>
-        <nvd3 options="options" data="data"></nvd3>
-
-        <table >
-            <tr ng-repeat="t in personList">
-                <td>{{ t.a }}</td>
-                <td>{{ t.c }}</td>
-            </tr>
-        </table>
+        <img src="images/wowMarine.png" alt="WOW" width="400" height="400"/>
 
     </div>
+    <div>
+        <h2>Global popularity</h2>
+        <nvd3 options="options" data="globalList"></nvd3>
+    </div>
+
+
 </div>

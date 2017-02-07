@@ -1,5 +1,3 @@
-
-
 (function () {
     'use strict';
 
@@ -36,13 +34,10 @@
             }
         };
 
-
-
-        console.log('$scope.socket in PersonController: ', pctrl);
-
         $scope.$on('$stateChangeSuccess', function () {
             console.log('Person page $stateChangeSuccess fired');
             socket.emit('personPageLoaded');
+            socket.emit('personCtnPageLoaded');
             test(socket);
         });
 
@@ -50,20 +45,30 @@
             console.log('socket.id', socket);
         }
 
-        $scope.changeState = function () {
-            //$state.go('contact.detail');
-            console.log('person controller: change state invoked');
-        };
-
         socket.on('personPageSuccess', function(json){
 
             var evt = JSON.parse(json);
-            $scope.personList = evt;
-            $scope.data = evt;
+            $scope.globalList = evt;
+            $scope.pdata = evt;
+        });
+        socket.on('personCtnPageSuccess', function(json){
+
+            // var evt = JSON.parse(json);
+            console.log('evt from eventCtnPageSuccess: ', json);
+            var resultingArray =[];
+            var words = [];
+            json.forEach(function(cont){
+                words = cont.pwords;
+                resultingArray.push({
+                    cont: cont.cont,
+                    pwords: words
+                })
+            });
+            $scope.contList = resultingArray;
         });
 
         socket.on('disconnect', function(){
-            console.log('Person page socket disconnected');
+            console.log('event page socket disconnected');
             socket.removeAllListeners();
         });
 

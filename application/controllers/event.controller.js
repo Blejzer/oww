@@ -37,6 +37,7 @@
         $scope.$on('$stateChangeSuccess', function () {
             console.log('Event page $stateChangeSuccess fired');
             socket.emit('eventPageLoaded');
+            socket.emit('eventCtnPageLoaded');
             test(socket);
         });
 
@@ -44,16 +45,26 @@
             console.log('socket.id', socket);
         }
 
-        $scope.changeState = function () {
-            //$state.go('contact.detail');
-            console.log('event controller: change state invoked');
-        };
-
         socket.on('eventPageSuccess', function(json){
 
             var evt = JSON.parse(json);
-            $scope.eventList = evt;
+            $scope.globalList = evt;
             $scope.edata = evt;
+        });
+        socket.on('eventCtnPageSuccess', function(json){
+
+            // var evt = JSON.parse(json);
+            console.log('evt from eventCtnPageSuccess: ', json);
+            var resultingArray =[];
+            var words = [];
+            json.forEach(function(cont){
+                 words = cont.ewords;
+                resultingArray.push({
+                    cont: cont.cont,
+                    ewords: words
+                })
+            });
+            $scope.contList = resultingArray;
         });
 
         socket.on('disconnect', function(){
@@ -65,3 +76,10 @@
 
 
 })();
+
+
+//
+// $scope.changeState = function () {
+//     //$state.go('contact.detail');
+//     console.log('event controller: change state invoked');
+// };
