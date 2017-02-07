@@ -10,6 +10,9 @@
         $scope.pwords = [];
 
 
+        $scope.$on('$viewContentLoaded', function (event) {
+
+        });
         function LoadEventList() {
             // socket.emit('getLists', 'getLists', '');
 

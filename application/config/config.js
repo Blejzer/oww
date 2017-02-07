@@ -64,7 +64,8 @@ module.exports = {
         upd: 'UPDATE teword SET eword = ?, visitor_id = ?, event_id = ?;',
         del: 'DELETE FROM teword WHERE eword_id=?;',
         sel: '',
-        lst: 'SELECT eword a, COUNT(eword) c FROM teword GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5;'
+        lst: 'SELECT eword a, COUNT(eword) c FROM teword GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5;',
+        lstpcnt: 'SELECT t.a a, count(t.a) c FROM (SELECT e.eword a,l.continent b FROM teword e LEFT JOIN tlocation l ON e.visitor_id = l.visitor_id WHERE l.continent LIKE ?) t GROUP BY a HAVING c > 1 ORDER BY c DESC LIMIT 5;'
     },
     /*  ======================
      *   location queries
@@ -76,7 +77,8 @@ module.exports = {
         del: 'DELETE FROM tlocation WHERE location_id=?',
         cont: 'select count(*) from tlocation where continent LIKE ?;',
         coun: 'SELECT count(*) FROM tlocation WHERE country LIKE ?;',
-        city: 'SELECT count(*) FROM tlocation WHERE tlocation.city LIKE ?;'
+        city: 'SELECT count(*) FROM tlocation WHERE tlocation.city LIKE ?;',
+        cnt: 'SELECT DISTINCT continent FROM tlocation;'
     },
     /*  ======================
      *   person word queries
@@ -87,7 +89,8 @@ module.exports = {
         del: 'DELETE FROM tpword WHERE pword_id=?;',
         sel: '',
         lst: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5;',
-        flst: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC;'
+        flst: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC;',
+        lstpcnt: 'SELECT t.a a, count(t.a) c FROM (SELECT e.pword a,l.continent b FROM tpword e LEFT JOIN tlocation l ON e.visitor_id = l.visitor_id WHERE l.continent LIKE ?) t GROUP BY a HAVING c > 1 ORDER BY c DESC LIMIT 5;'
     },
     /*  ======================
      *   persons queries
