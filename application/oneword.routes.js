@@ -15,66 +15,71 @@
                 url: '/',
                 views: {
 
-                    'navbar@': { templateUrl: 'views/navbar.html'},
+                    'navbar@': { templateUrl: 'views/addons/navbar.html'},
 
                     // the main template will be placed here (relatively named)
                     '': {   templateUrl: 'views/home.html',
-                            controller: 'HomeController'}
+                            controller: 'HomeController'},
+                    'footer@': { templateUrl: 'views/addons/footer.html'}
                 }
 
             })
             .state('event', {
                 url: '/event',
                 views: {
-                    'navbar@': { templateUrl: 'views/navbar.html'},
+                    'navbar@': { templateUrl: 'views/addons/navbar.html'},
                     // the main template will be placed here (relatively named)
-                    '': {templateUrl: 'views/event.html',
-                        controller: 'EventController'}
+                    '': {templateUrl: 'views/Event.html',
+                        controller: 'EventController'},
+                    'footer@': { templateUrl: 'views/addons/footer.html'}
                 }
             })
             .state('econtinent', {
                 url: '/econtinent',
                 views: {
-                    'navbar@': { templateUrl: 'views/navbar.html'},
+                    'navbar@': { templateUrl: 'views/addons/navbar.html'},
                     // the main template will be placed here (relatively named)
                     '': {templateUrl: 'views/Econtinent.html',
-                        controller: 'EventController'}
+                        controller: 'EventController'},
+                    'footer@': { templateUrl: 'views/addons/footer.html'}
                 }
             })
             .state('person', {
                 url: '/person',
                 views: {
-                    'navbar@': { templateUrl: 'views/navbar.html'},
+                    'navbar@': { templateUrl: 'views/addons/navbar.html'},
                     '': {
-                        templateUrl: 'views/person.html',
-                        controller: "PersonController"
-                    }
+                        templateUrl: 'views/Person.html',
+                        controller: "PersonController"},
+                    'footer@': { templateUrl: 'views/addons/footer.html'}
                 }
             })
             .state('pcontinent', {
                 url: '/pcontinent',
                 views: {
-                    'navbar@': { templateUrl: 'views/navbar.html'},
+                    'navbar@': { templateUrl: 'views/addons/navbar.html'},
                     // the main template will be placed here (relatively named)
                     '': {templateUrl: 'views/Pcontinent.html',
-                        controller: 'PersonController'}
+                        controller: 'PersonController'},
+                    'footer@': { templateUrl: 'views/addons/footer.html'}
                 }
             })
             .state('newevent', {
                 url: '/newevent',
                 views: {
-
+                    'navbar@': { templateUrl: 'views/addons/navbar.html'},
                     // the main template will be placed here (relatively named)
-                    '': {templateUrl: 'views/newevent.html'}
+                    '': {templateUrl: 'views/newevent.html'},
+                    'footer@': { templateUrl: 'views/addons/footer.html'}
                 }
 
             });
 
-        // $locationProvider.html5Mode({
-        //     enabled: true,
-        //     requireBase: false
-        // });
-        $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
+        // $locationProvider.html5Mode(true);
 
     }
 })();

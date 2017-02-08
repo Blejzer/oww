@@ -12,7 +12,11 @@
     <base href="/">
 </head>
 <body id="customized" ng-app="oneWordWorld" class="paper">
-<div class="container-fluid dusty">
+<div class="col-lg-2 container-fluid lavendar">
+    <div id="one"></div>
+    <img src="images/wowMarine.png" class="img-responsive img-circle" alt="WOW" />
+</div>
+<div class="col-lg-8 container-fluid overcast">
     <div class="container dusty" ng-controller="OwwController">
         <div id="one"></div>
         <div class="row">
@@ -34,9 +38,14 @@
             <label>Number of users online</label>
             <label>{{users}}</label>
         </div>
+        <div id="one"></div>
+        <div ui-view="footer"></div>
 
     </div>
-
+</div>
+<div class="col-lg-2 container-fluid lavendar">
+    <div id="one"></div>
+    <img src="images/wowMarine.png" class="img-responsive img-circle" alt="WOW"/>
 </div>
 <!-- Libs -->
 <!-- jQuery library -->

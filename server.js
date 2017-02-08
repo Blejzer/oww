@@ -115,7 +115,7 @@ console.log("*******************************************************************
  ********************************************************/
 io.sockets.on('connection', function (socket) {
     socket.removeAllListeners();
-    var fakeip = socket.handshake.address;
+    var fakeip = '24.201.206.226' // socket.handshake.address;
     console.log("IP Adresa klijenta - pretpostavljam remote: socket.handshake.address: ", fakeip);
 
     var visitor = {};
@@ -276,7 +276,7 @@ io.sockets.on('connection', function (socket) {
         // Cekamo odgovor sa procesora i osvjezenu event listu
         procSocket.on("data", function (data) {
             var list = JSON.parse(data);
-            console.log('Server: List returned from processor: ', list);
+            // console.log('Server: List returned from processor: ', list);
             socket.emit('eventCtnPageSuccess', list);
             procSocket.end();
         });
@@ -333,7 +333,7 @@ io.sockets.on('connection', function (socket) {
         // Cekamo odgovor sa procesora i osvjezenu event listu
         procSocket.on("data", function (data) {
             var list = JSON.parse(data);
-            console.log('Server: List returned from processor: ', list);
+            // console.log('Server: List returned from processor: ', list);
             socket.emit('personCtnPageSuccess', list);
             procSocket.end();
         });

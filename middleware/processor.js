@@ -165,7 +165,12 @@ function NewConnection(data, callback) {
     data = JSON.parse(data);
     console.log("NEWCONNECTION: Incomming message from client: %s", data.visitor.address);
     visitor = data.visitor;
-    ipJson = cityLookup.get(visitor.address); // data.visitor.address moscow russia: 46.188.121.120
+    if (visitor.address != '::1'){
+        ipJson = cityLookup.get(visitor.address); // data.visitor.address moscow russia: 46.188.121.120
+    }else {
+        visitor.address = '::ffff:24.201.206.226';
+        ipJson = cityLookup.get(visitor.address);
+    }
 
     // getting back event list top 5 and person list top 5
     // so it can be pumped in to the lists after client connects
