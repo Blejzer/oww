@@ -116,7 +116,7 @@ console.log("*******************************************************************
 io.sockets.on('connection', function (socket) {
     socket.removeAllListeners();
     var fakeip = '24.201.206.226' // socket.handshake.address;
-    console.log("IP Adresa klijenta - pretpostavljam remote: socket.handshake.address: ", fakeip);
+    console.log(new Date(), "Client IP Address - assuming remote: socket.handshake.address: ", fakeip);
 
     var visitor = {};
     visitor.address = fakeip;
@@ -125,36 +125,37 @@ io.sockets.on('connection', function (socket) {
 
     // Create a socket (client) that connects to the server
     var procSocket = new net.Socket();
+
+    // if connection is not successful
     procSocket.on('error', function (error) {
-        console.error("Greska u konekciji prema procesoru. gasim server...", error);
+        console.error(new Date(), "Error connecting to the processor. shutting down the server...", error);
         procSocket.end();
         process.exit(0);
     });
+
+    // if connection is successful
     procSocket.connect(3001, "localhost", function () {
-        console.log("Server: Connected to procesor");
+        // console.log(new Date(), "Server: Connected to procesor");
         procSocket.write(jack);
     });
 
-    // Ovdje treba upumpati podatke iz funkcija
-    // ili na drugi nacin pripremiti podatke
-    // objekat koji sadrzi elemente:
-    // data, ip, word, type?, other
+    // passing data to the processor
     procSocket.on("data", function (data) {
-        console.log("Client: lists functional");
-        console.log("Client: Response from server: %s", data);
+        // console.log(new Date(), "Server: Response from the processor: %s", data);
         var lists = JSON.parse(data);
         visitor.id = lists.visitorid;
-
+        // socket.emit('notification', {
+        //         message: 'new visitor',
+        //         visitor: visitor
+        //     });
         io.emit("eventList", JSON.stringify(lists.eventList));
         io.emit("personList", JSON.stringify(lists.personList));
-        socket.emit('notification', {
-            message: 'new visitor',
-            visitor: visitor
-        });
+        //
         io.sockets.emit('conn', io.engine.clientsCount);
         procSocket.end();
     });
 
+    //
     socket.on('disconnect', function () {
         console.log(new Date(), "Diskonekcija: Broj trenutnih korisnika: ", io.engine.clientsCount);
         // console.log(socket.list());
@@ -171,15 +172,14 @@ io.sockets.on('connection', function (socket) {
     // *********************************************************************
     socket.on('event', function (newroom, eventWord, event_id) {
 
-        console.log("Registrujem event socket ", eventWord);
-        // *********************************************************************
+        // console.log(new Date(), "Registrujem event socket ", eventWord);
         var data = {"data": "eventWord", "visitor": visitor, "word": eventWord, "event_id": event_id};
         jack = JSON.stringify(data);
 
         // Create a socket (client) that connects to the server
         var procSocket = new net.Socket();
         procSocket.connect(3001, "localhost", function () {
-            console.log("Client: eventWord: Connected to server", jack);
+            console.log(new Date(), "Server: eword: Connected to processor", jack);
             procSocket.write(jack);
         });
         // Emitujemo klijentu izmjenu na event
@@ -202,7 +202,7 @@ io.sockets.on('connection', function (socket) {
     // *********************************************************************
     socket.on('person', function (newroom, personWord, person_id) {
 
-        console.log("Registrujem person socket ", personWord);
+        // console.log(new Date(), "Registrujem person socket ", personWord);
 
         var data = {"data": "personWord", "visitor": visitor, "word": personWord, "person_id": person_id};
         jack = JSON.stringify(data);
@@ -210,7 +210,7 @@ io.sockets.on('connection', function (socket) {
         // Create a socket (client) that connects to the server
         var procSocket = new net.Socket();
         procSocket.connect(3001, "localhost", function () {
-            console.log("Client: personWord: Connected to server");
+            console.log("Server: pword: Connected to processor");
             procSocket.write(jack);
         });
         // Emitujemo klijentu izmjenu na event

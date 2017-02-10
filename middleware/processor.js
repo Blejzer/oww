@@ -544,9 +544,3 @@ function testDataBaseConnection() {
         }
     });
 };
-
-
-/** TODO prije deployment-a u ovom fileu
- * izmijeniti fixne ip adresse:
- * linija 125 - var fakeip = '45.57.216.254'; // socket.handshake.address;
- */
