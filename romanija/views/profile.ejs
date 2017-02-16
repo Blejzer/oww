@@ -1,0 +1,73 @@
+<!-- views/profile.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- META SECTION -->
+	<title>Joli Admin - Responsive Bootstrap Admin Template</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="icon" href="favicon.ico" type="image/x-icon" />
+	<!-- END META SECTION -->
+
+	<!-- CSS INCLUDE -->
+	<link rel="stylesheet" type="text/css" id="theme" href="joli/css/theme-default.css"/>
+	<!-- EOF CSS INCLUDE -->
+</head>
+<body ng-app="authServer">
+<div>
+    <h1>Angular Node File Upload</h1>
+    <form ng-controller="MyCtrl as up" name="up.upload_form">
+        Single Image with validations
+        <input
+                type="file"
+                ngf-select
+                ng-model="up.file"
+                name="file"
+                ngf-pattern="'image/*'"
+                accept="image/*"
+                ngf-max-size="20MB"
+        />
+        Image thumbnail: <img style="width:100px;" ng-if="up.file" ng-show="!up.file"
+                              ngf-thumbnail="up.file || '/thumb.jpg'"/>
+        <i ng-show="up.upload_form.file.$error.required">*required</i><br>
+        <i ng-show="up.upload_form.file.$error.maxSize">File too large
+            {{up.file.size / 1000000|number:1}}MB: max 20M</i>
+        <!--  Multiple files
+         <div class="button" ngf-select ng-model="up.files" ngf-multiple="true">Select</div>
+         Drop files: <div ngf-drop ng-model="up.files" class="drop-box">Drop</div> -->
+        <button type="submit" ng-click="up.submit()">submit</button>
+        <p>{{up.progress}}</p>
+    </form>
+</div>
+<!-- Libs -->
+<!-- jQuery library -->
+<script src="scripts/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap Library -->
+<script src="scripts/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- AngularJS Libraries -->
+<script src="scripts/angular/angular.min.js"></script>
+<script src="scripts/ng-file-upload/dist/ng-file-upload-shim.js"></script>
+<script src="scripts/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="scripts/angular-cookies/angular-cookies.js"></script>
+<!--Socket.io client Library-->
+<!--<script src="scripts/socket.io-client/dist/socket.io.slim.js"></script>-->
+
+<!-- AngularJS Charts using charts.js-->
+<!--<script src="scripts/d3/d3.min.js"></script>-->
+<!--<script src="scripts/nvd3/build/nv.d3.min.js"></script> &lt;!&ndash; or use another assembly &ndash;&gt;-->
+<!--<script src="scripts/angular-nvd3/dist/angular-nvd3.min.js"></script>-->
+
+<!--AngularJS briant f socket purifier-->
+<!--<script src="custom/js/socket.js"></script>-->
+
+<!--image cropping if required-->
+<script src="scripts/ng-file-upload/dist/ng-file-upload.js"></script>
+<!--<script src="custom/js/ng-img-crop.js"></script>-->
+
+<script type="application/javascript" src="/client/app.module.js"></script>
+<script type="application/javascript" src="/client/fileupload.module.js"></script>
+
+</body>
+</html>
