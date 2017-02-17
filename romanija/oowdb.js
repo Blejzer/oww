@@ -27,7 +27,7 @@ var fs = require('fs');
 var https = require('https');
 var path = require('path');
 var multer = require('multer')
-var filename;
+var name;
 
 var app = express();
 var port = 8443;
@@ -53,7 +53,8 @@ var storage = multer.diskStorage({ //multers disk storage settings
     filename: function (req, file, cb) {
         console.log("setting up filename");
         var datetimestamp = Date.now();
-        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1]);
+        name = file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1];
+        cb(null, name);
     }
 });
 console.log("File upload destination set to: romanija/images/upload");
@@ -71,6 +72,7 @@ require('../romanija/config/passport')(passport); // pass passport for configura
 app.use('/joli', express.static('./romanija/joli'));
 app.use('/scripts', express.static('./node_modules'));
 app.use('/client', express.static('./romanija/client'));
+app.use('/images', express.static('./romanija/images'));
 app.set('views', path.join(__dirname, '../romanija/views'));
 app.set('view engine', 'ejs'); // set up ejs for templating
 app.set('view options', { layout: false });
@@ -104,7 +106,6 @@ app.use(passport.session()); // persistent login sessions
 // we will use route middleware to verify this (the isLoggedIn function)
 /** API path that will upload the files */
 app.post('/profile', isLoggedIn, function (req, res) {
-    console.log('req.file', req.up);
 
     upload(req, res, function (err) {
         if (err) {
@@ -112,6 +113,10 @@ app.post('/profile', isLoggedIn, function (req, res) {
             return;
         }
         res.json({error_code: 0, err_desc: null});
+
+        // samo naziv filea
+        console.log(res.req.file.path);
+
 
     });
 });
