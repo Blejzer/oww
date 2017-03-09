@@ -110,6 +110,11 @@ nav, ul, li, body#customized{
     height: 52px;
     background-color:#c2dde6;
 }
+#slika {
+    width: auto;
+    height: 552px;
+    background-color:#c2dde6;
+}
 
 /*#komplet div {*/
     /*position: relative;*/

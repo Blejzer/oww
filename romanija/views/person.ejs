@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<!-- META SECTION -->
-	<title>Person setup page</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- META SECTION -->
+    <title>Person setup page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-	<link rel="icon" href="favicon.ico" type="image/x-icon" />
-	<!-- END META SECTION -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- END META SECTION -->
 
     <!-- CSS INCLUDE -->
     <link rel="stylesheet" type="text/css" id="theme" href="joli/css/theme-default.css"/>
@@ -17,23 +17,23 @@
 </head>
 <body ng-app="authServer">
 <div>
-    <h1>Angular Node File Upload</h1>
+    <h1 class="text-center">Person setup page</h1>
 
     <form class="form-horizontal" ng-controller="MyCtrl as up" name="up.upload_form">
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><strong>Separated</strong> Layout</h3>
-                <ul class="panel-controls">
-                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
-                </ul>
-            </div>
-            <div class="panel-body">
-                <p>Add class <code>.form-group-separated</code> to form wrapper to get rows separated</p>
-            </div>
+            <!--<div class="panel-heading">-->
+                <!--<h3 class="panel-title"><strong>Separated</strong> Layout</h3>-->
+                <!--<ul class="panel-controls">-->
+                    <!--<li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+            <!--<div class="panel-body">-->
+                <!--<p>Add class <code>.form-group-separated</code> to form wrapper to get rows separated</p>-->
+            <!--</div>-->
             <div class="panel-body form-group-separated">
 
                 <div class="form-group">
-                    <label class="col-md-3 col-xs-12 control-label">Title of the person</label>
+                    <label class="col-md-3 col-xs-12 control-label">Title of the event</label>
                     <div class="col-md-6 col-xs-12">
                         <div class="input-group">
                             <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
@@ -44,6 +44,17 @@
                                    onchange="try{setCustomValidity('')}catch(e){}" required/>
                         </div>
                         <span class="help-block">This is sample of text field</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-xs-12 control-label">Select the week you want to set!</label>
+
+                    <div class="col-md-6 col-xs-12">
+                        <input ng-model="up.week" name="week" id="week" type="week"
+                               placeholder="YYYY-W##" min="2017W6"
+                               max="2017W52" required />
+                        <span class="help-block">Select week example</span>
                     </div>
                 </div>
 
@@ -65,14 +76,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-md-3 col-xs-12 control-label">Select the week you want to set!</label>
-
-                    <div class="col-md-6 col-xs-12">
-                        <select ng-model="up.week" name="week" ng-options="opt as opt.label for opt in weeks " ></select>
-                        <span class="help-block">Select box example</span>
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <label class="col-md-3 col-xs-12 control-label">File</label>
@@ -109,6 +112,9 @@
 <script src="scripts/ng-file-upload/dist/ng-file-upload-shim.js"></script>
 <script src="scripts/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="scripts/angular-cookies/angular-cookies.js"></script>
+<script src="scripts/moment/moment.js"></script>
+<script src="scripts/angular-moment/angular-moment.js"></script>
+
 
 
 <!--image cropping if required-->
