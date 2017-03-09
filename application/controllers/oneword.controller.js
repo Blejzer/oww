@@ -30,12 +30,12 @@
             //$state.go('contact.detail');
             console.log('index controller: change state invoked');
         };
-        socket.on('notification', function (data) {
-            // console.log("notification data: ", data.visitor);
-            OwwUPS.setCookieData(data.visitor.id);
-            $scope.visitor = data.visitor;
-            // console.log('OwwUPS.getCookieData(): ', OwwUPS.getCookieData());
-        });
+        // socket.on('notification', function (data) {
+        //     // console.log("notification data: ", data.visitor);
+        //     OwwUPS.setCookieData(data.visitor.id);
+        //     $scope.visitor = data.visitor;
+        //     // console.log('OwwUPS.getCookieData(): ', OwwUPS.getCookieData());
+        // });
 
     }
 })();

@@ -1,33 +1,140 @@
 div
-.paper {
-    background-color: #d5d5d5;
+.one {
+    width: 100%;
+    height: 52px;
+    background-color: transparent;
 }
-.overcast {
-    background-color: #9099A2;
+.stranice{
+    height: 100%;
+    background-color:#431c5d;
+    overflow:hidden;
 }
-.lavendar{
-    background-color: #6d7993;
+/*.paper {*/
+    /*background-color: #d5d5d5;*/
+/*}*/
+/*.overcast {*/
+    /*background-color: #9099A2;*/
+/*}*/
+/*.lavendar{*/
+    /*background-color: #6d7993;*/
+/*}*/
+/*.dusty {*/
+    /*background-color: #96858F;*/
+/*}*/
+.jedan{
+    background-color:#bccbde;
 }
-.dusty {
-    background-color: #96858F;
+.dva{
+    background-color:#c2dde6;
+}
+.tri{
+    background-color:#e6e9f0;
+}
+.cetiri{
+    background-color:#431c5d;
+}
+.pet{
+    background-color:#e05915;
+}
+.sest{
+    background-color:#cdd422;
 }
 
-body#customized{
-    background-color: #d5d5d5;
+nav, ul, li, body#customized{
+    background-color: #bccbde;
 }
-.paper {
-    background-color: #d5d5d5;
+/*.paper {*/
+    /*background-color: #d5d5d5;*/
+/*}*/
+/*.overcast {*/
+    /*background-color: #9099A2;*/
+/*}*/
+/*.lavendar{*/
+    /*background-color: #6d7993;*/
+/*}*/
+/*.dusty {*/
+    /*background-color: #96858F;*/
+/*}*/
+.jedan{
+    background-color:#bccbde;
 }
-.overcast {
-    background-color: #9099A2;
+.dva{
+    background-color:#c2dde6;
 }
-.lavendar{
-    background-color: #6d7993;
+.tri{
+    background-color:#e6e9f0;
 }
-.dusty {
-    background-color: #96858F;
+.cetiri{
+    background-color:#431c5d;
+}
+.pet{
+    background-color:#e05915;
+}
+.sest{
+    background-color:#cdd422;
 }
 
-#one {
-    height: 55px;
+
+.navbar.center .navbar-inner {
+    text-align: center;
 }
+.navbar.center .navbar-inner .nav {
+    display:inline-block;
+    float: none;
+}
+
+
+/*colors*/
+/*.jedan{*/
+    /*background-color:#bccbde;*/
+/*}*/
+/*.dva{*/
+    /*background-color:#c2dde6;*/
+/*}*/
+/*.tri{*/
+    /*background-color:#e6e9f0;*/
+/*}*/
+/*.cetiri{*/
+    /*background-color:#431c5d;*/
+/*}*/
+/*.pet{*/
+    /*background-color:#e05915;*/
+/*}*/
+/*.sest{*/
+    /*background-color:#cdd422;*/
+/*}*/
+
+
+#komplet {
+    width: 100%;
+    height: 52px;
+    background-color:#c2dde6;
+}
+#slika {
+    width: auto;
+    height: 552px;
+    background-color:#c2dde6;
+}
+
+/*#komplet div {*/
+    /*position: relative;*/
+    /*top: 50px;*/
+    /*float: left;*/
+    /*border: 1px solid blue;*/
+    /*background-color:#e6e9f0;*/
+/*}*/
+/*#komplet div:first-child {*/
+    /*width: 15%;*/
+    /*height: 50%;*/
+    /*background-color:#431c5d;*/
+/*}*/
+/*#komplet div:nth-child(2) {*/
+    /*width: 70%;*/
+    /*height: 100%;*/
+    /*background-color:#cdd422;*/
+/*}*/
+/*#komplet div:last-child {*/
+    /*width: 15%;*/
+    /*height: 55%;*/
+    /*background-color:#431c5d;*/
+/*}*/

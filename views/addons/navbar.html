@@ -1,0 +1,26 @@
+<nav class="navbar navbar-default navbar-fixed-top tri">
+    <div class="container-fluid tri">
+        <div class="navbar-header tri">
+            <a class="navbar-brand" ui-sref="#">
+                <img src="images/wowMarine.png" width="32" height="32" alt="OWW" >
+            </a>
+        </div>
+        <ul class="nav navbar-nav tri">
+            <li class="tri" ui-sref-active="active"><a ui-sref="home">Home</a></li>
+            <li class="tri" ui-sref-active="active"><a class="dropdown-toggle tri" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Person</a>
+                <ul class="dropdown-menu tri">
+                    <li class="tri"><a ui-sref="person">Global</a></li>
+                    <li class="tri" role="separator" class="divider"></li>
+                    <li class="tri"><a ui-sref="pcontinent">By Continent</a></li>
+                </ul>
+            </li>
+            <li class="tri" ui-sref-active="active"><a class="dropdown-toggle tri" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Event</a>
+                <ul class="dropdown-menu tri">
+                    <li class="tri"><a ui-sref="event">Global</a></li>
+                    <li class="tri" role="separator" class="divider"></li>
+                    <li class="tri"><a ui-sref="econtinent">By Continent</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
