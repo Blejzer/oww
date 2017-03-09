@@ -28,11 +28,11 @@ var https = require('https');
 var path = require('path');
 var multer = require('multer')
 var name;
-
+var db = require('./config/processing');
 var app = express();
 var port = 8443;
 
-
+console.log(db);
 
 var privateKey  = fs.readFileSync('./romanija/localhost-key.pem', 'utf8');
 var certificate = fs.readFileSync('./romanija/localhost-cert.pem', 'utf8');
@@ -48,7 +48,7 @@ var options = {
 var storage = multer.diskStorage({ //multers disk storage settings
     destination: function (req, file, cb) {
         console.log("setting up destination");
-        cb(null, './romanija/images/upload');
+        cb(null, './images/upload');
     },
     filename: function (req, file, cb) {
         console.log("setting up filename");
@@ -72,7 +72,7 @@ require('../romanija/config/passport')(passport); // pass passport for configura
 app.use('/joli', express.static('./romanija/joli'));
 app.use('/scripts', express.static('./node_modules'));
 app.use('/client', express.static('./romanija/client'));
-app.use('/images', express.static('./romanija/images'));
+app.use('/images', express.static('./images'));
 app.set('views', path.join(__dirname, '../romanija/views'));
 app.set('view engine', 'ejs'); // set up ejs for templating
 app.set('view options', { layout: false });
@@ -104,8 +104,8 @@ app.use(passport.session()); // persistent login sessions
 // =====================================
 // we will want this protected so you have to be logged in to visit
 // we will use route middleware to verify this (the isLoggedIn function)
-/** API path that will upload the files */
-app.post('/profile', isLoggedIn, function (req, res) {
+/** API path that will upload the event data */
+app.post('/event', isLoggedIn, function (req, res) {
 
     upload(req, res, function (err) {
         if (err) {
@@ -115,11 +115,46 @@ app.post('/profile', isLoggedIn, function (req, res) {
         res.json({error_code: 0, err_desc: null});
 
         // samo naziv filea
+        console.log(res.req.body.title);
         console.log(res.req.file.path);
+        console.log(res.req.body.week);
+
+        var data = {title: res.req.body.title, path: res.req.file.path, week: res.req.body.week};
+        db.insertEvent(data, function (rezultat) {
+            console.log("DATA: end of InsertEventWord - result: ", rezultat);
+
+        });
 
 
     });
 });
+
+/** API path that will upload the person data */
+app.post('/person', isLoggedIn, function (req, res) {
+
+    upload(req, res, function (err) {
+        if (err) {
+            res.json({error_code: 1, err_desc: err});
+            return;
+        }
+        res.json({error_code: 0, err_desc: null});
+
+        // samo naziv filea
+        console.log(res.req.body.title);
+        console.log(res.req.file.path);
+        console.log(res.req.body.week);
+
+        var data = {title: res.req.body.title, path: res.req.file.path, week: res.req.body.week};
+        db.insertPerson(data, function (rezultat) {
+            console.log("DATA: end of InsertPerson - result: ", rezultat);
+
+        });
+
+
+    });
+});
+
+
 // cross origin requests - required for image upload!
 app.use(function (req, res, next) {
     res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");

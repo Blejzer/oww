@@ -1,78 +1,66 @@
-<div>
-    <div class="container-fluid">
-    <!-- theme divs (person & event) -->
-        <div class="row text-center">
-            <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
-                <div class="thumbnail">
-                    <a ui-sref="person"><h3>Person of the week</h3></a>
-                </div>
-                <div class="thumbnail">
-                    <a ui-sref="person"><img src="images/wowMarine.png" alt="WOW" width="200" height="200"/></a>
-                </div>
-                <!-- person input part -->
-                <div class="thumbnail">
-                    <form id="formPerson" ng-submit="submitPword()">
-                        <input type="hidden" id="person_id" value="9999"/>
-                        <input ng-model="p" id="p" class="form-control" autocomplete="off"
-                               pattern="^([\Sa-zA-Z]){1,25}$"
-                               oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
-                               onchange="try{setCustomValidity('')}catch(e){}" required/>
-                        <button class="form-control btn pull-right" style="background-color:yellow">
-                            <strong>Send</strong>
-                        </button>
-                    </form>
-                </div>
-                <div class="thumbnail" style="overflow:hidden; height: 150px">
-                    <!--<ul id="persons"></ul>-->
-                    <ul>
-                        <li ng-repeat="pword in pwords track by $index">{{pword}}</li>
-                    </ul>
-                </div>
+<div class="container-fluid">
+<!-- theme divs (person & event) -->
+    <div class="row text-center jedan">
+        <div class="col-sm-6 col-md-6 col-lg-6 center">
+            <div class="thumbnail">
+                <h3>{{ person[0].title }}</h3>
             </div>
-            <div class="col-sm-6 col-md-6 col-lg-6 center thumbnail">
-                <div class="thumbnail">
-                    <a ui-sref="event"><h3>Event of the week</h3></a>
-                </div>
-                <div class="thumbnail">
-                    <a ui-sref="event"><img src="images/wowMarine.png" alt="WOW" width="200" height="200"/></a>
-                </div>
-                <!-- event input part -->
-                <div class="thumbnail">
-                    <form id="formEvent" ng-submit="submitEword()">
-                        <input type="hidden" id="event_id" value="9999"/>
-                        <input ng-model="e" id="e" class="form-control" autocomplete="off"
-                               pattern="^([\Sa-zA-Z]){1,25}$"
-                               oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
-                               onchange="try{setCustomValidity('')}catch(e){}"required />
-                        <button class="form-control btn pull-right" style="background-color:yellow; color:navyblue">
-                            <strong>Send</strong>
-                        </button>
-                    </form>
-                </div>
-                <div class="content thumbnail" style="overflow:hidden; height: 150px">
-                    <ul>
-                        <li ng-repeat="eword in ewords track by $index">{{eword}}</li>
-                    </ul>
-                </div>
+            <div class="thumbnail">
+                <img src="{{ person[0].image }}" alt="WOW" width="200" height="200"/>
+            </div>
+            <!-- person input part -->
+            <div class="thumbnail">
+                <form id="formPerson" ng-submit="submitPword()">
+                    <input type="hidden" ng-model="person_id" id="person_id" value="{{ person[0].person_id }}"/>
+                    <input ng-model="p" id="p" class="form-control" autocomplete="off"
+                           pattern="^([\Sa-zA-Z]){1,25}$"
+                           oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
+                           onchange="try{setCustomValidity('')}catch(e){}" required/>
+                    <button class="form-control btn dva">
+                        <strong>Send</strong>
+                    </button>
+                </form>
+            </div>
+            <div class="thumbnail" style="overflow:hidden; height: 150px">
+                <!--<ul id="persons"></ul>-->
+                <ul>
+                    <li ng-repeat="pword in pwords track by $index">{{pword}}</li>
+                </ul>
             </div>
         </div>
-
-    <!-- oneWordInput part -->
-        <div class="row center">
-            <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
-
-
+        <div class="col-sm-6 col-md-6 col-lg-6 center">
+            <div class="thumbnail">
+                <h3>{{ event[0].title }}</h3>
             </div>
-            <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
-
+            <div class="thumbnail">
+                <img src="{{ event[0].image }}" alt="WOW" width="200" height="200"/>
+            </div>
+            <!-- event input part -->
+            <div class="thumbnail">
+                <form id="formEvent" ng-submit="submitEword()">
+                    <input type="hidden" ng-model="event_id" id="event_id" value="{{ event[0].event_id }}"/>
+                    <input ng-model="e" id="e" class="form-control" autocomplete="off"
+                           pattern="^([\Sa-zA-Z]){1,25}$"
+                           oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
+                           onchange="try{setCustomValidity('')}catch(e){}"required />
+                    <button class="form-control btn dva">
+                        <strong>Send</strong>
+                    </button>
+                </form>
+            </div>
+            <div class="content thumbnail" style="overflow:hidden; height: 150px">
+                <ul>
+                    <li ng-repeat="eword in ewords track by $index">{{eword}}</li>
+                </ul>
             </div>
         </div>
+    </div>
 
-    <!-- results part -->
-        <div class="row thumbnail">
-            <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+<!-- results part -->
+    <div class="row text-center jedan ">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="thumbnail">
                 <a ui-sref="person">
-                    <div class="thumbnail">
                         <!-- <ul id="eventList"></ul> -->
                         <label >Most popular words for person</label>
                         <table >
@@ -81,12 +69,12 @@
                                 <td>{{ t.c }}</td>
                             </tr>
                         </table>
-                    </div>
                 </a>
             </div>
-            <div class="col-sm-6 col-md-6 col-lg-6 thumbnail">
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="thumbnail">
                 <a ui-sref="event">
-                    <div class="thumbnail">
                         <!-- <ul id="eventList"></ul> -->
                         <label >Most popular words for event</label>
 
@@ -96,10 +84,9 @@
                                 <td>{{ t.c }}</td>
                             </tr>
                         </table>
-                    </div>
                 </a>
             </div>
         </div>
     </div>
-
 </div>
+

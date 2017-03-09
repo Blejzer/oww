@@ -1,0 +1,124 @@
+<!-- views/event.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- META SECTION -->
+	<title>Person setup page</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="icon" href="favicon.ico" type="image/x-icon" />
+	<!-- END META SECTION -->
+
+    <!-- CSS INCLUDE -->
+    <link rel="stylesheet" type="text/css" id="theme" href="joli/css/theme-default.css"/>
+    <!-- EOF CSS INCLUDE -->
+</head>
+<body ng-app="authServer">
+<div>
+    <h1>Angular Node File Upload</h1>
+
+    <form class="form-horizontal" ng-controller="MyCtrl as up" name="up.upload_form">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><strong>Separated</strong> Layout</h3>
+                <ul class="panel-controls">
+                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <p>Add class <code>.form-group-separated</code> to form wrapper to get rows separated</p>
+            </div>
+            <div class="panel-body form-group-separated">
+
+                <div class="form-group">
+                    <label class="col-md-3 col-xs-12 control-label">Title of the person</label>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                            <input ng-model="up.title" id="title" name="title" class="form-control" autocomplete="off"
+                                   pattern="^([\Sa-zA-Z]){1,25}$"
+                                   oninvalid="setCustomValidity('Plz enter only English Alphabet\n ' +
+                                                                'No spaces, numbers, or funny characters allowed!')"
+                                   onchange="try{setCustomValidity('')}catch(e){}" required/>
+                        </div>
+                        <span class="help-block">This is sample of text field</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-xs-12 control-label">Image preview</label>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="fa fa-unlock-alt"></span></span>
+                            <img style="max-height:640px;" ngf-src="up.file || 'images/wowMarine.png'" class="ngf-hide" />
+                        </div>
+                        <span class="help-block">Password field sample</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 col-xs-12 control-label">Progress</label>
+                    <div class="col-md-6 col-xs-12">
+                        <p>{{up.progress}}</p>
+                        <span class="help-block">Upload progress</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-xs-12 control-label">Select the week you want to set!</label>
+
+                    <div class="col-md-6 col-xs-12">
+                        <select ng-model="up.week" name="week" ng-options="opt as opt.label for opt in weeks " ></select>
+                        <span class="help-block">Select box example</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-xs-12 control-label">File</label>
+                    <div class="col-md-6 col-xs-12">
+                        <input
+                                type="file"
+                                ngf-select
+                                ng-model="up.file"
+                                name="file"
+                                ngf-pattern="'image/*'"
+                                accept="image/*"
+                                ngf-max-size="20MB"
+                                class="fileinput btn btn-primary"
+                        />
+                        <span class="help-block">Input type file</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-default">Clear Form</button>
+                <button class="btn btn-primary pull-right" ng-click="up.submitPerson()">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Libs -->
+<!-- jQuery library -->
+<script src="scripts/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap Library -->
+<script src="scripts/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- AngularJS Libraries -->
+<script src="scripts/angular/angular.min.js"></script>
+<script src="scripts/ng-file-upload/dist/ng-file-upload-shim.js"></script>
+<script src="scripts/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="scripts/angular-cookies/angular-cookies.js"></script>
+
+
+<!--image cropping if required-->
+<script src="scripts/ng-file-upload/dist/ng-file-upload.js"></script>
+<!--<script src="custom/js/ng-img-crop.js"></script>-->
+
+<script type="application/javascript" src="/client/app.module.js"></script>
+<script type="application/javascript" src="/client/fileupload.module.js"></script>
+<!--<script type="application/javascript" src="/client/img.module.js"></script>-->
+
+
+</body>
+</html>

@@ -33,7 +33,6 @@ var dbcon = mysql.createPool({
 // kreiramo konekciju na maxmind
 var cityLookup = maxmind.openSync('data/maxmind/GeoLite2-City.mmdb');
 
-
 // Kreiramo jednostavan server
 var processor = net.createServer(function (conn) {
 
@@ -162,6 +161,10 @@ processor.listen(3001, "localhost", function () {
  *************************************************/
 function NewConnection(data, callback) {
     var visitor = {};
+
+    var moment = require('moment');
+    var week = moment().format('YYYYWW');
+
     data = JSON.parse(data);
     console.log("NEWCONNECTION: Incomming message from client: %s", data.visitor.address);
     visitor = data.visitor;
@@ -179,59 +182,78 @@ function NewConnection(data, callback) {
     dbcon.getConnection(function (err, connection) {
 
         // Use the connection
-        connection.query(config.get('ewrd.lst'), function (err, erows) {
-            if (err) {
+        connection.query(config.get('prsn.cur'), week, function (err,prsn) {
+            if(err){
                 if (err.fatal) {
                     throw err;
                 }
                 console.error("Processor: NewConnection: Event: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
             }
-            connection.query(config.get('pwrd.lst'), function (err, rows) {
-                if (err) {
+            console.log('prsn', prsn[0].person_id);
+            connection.query(config.get('evnt.cur'), week, function (err, wrows) {
+                if(err){
                     if (err.fatal) {
                         throw err;
                     }
-                    console.error("Processor: NewConnection: Person: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
+                    console.error("Processor: NewConnection: Event: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
                 }
-                console.log('data.visitor', visitor.address);
-                connection.query(config.get('vstr.ins'),  [visitor.address, null, null], function (err, vrows) {
+                console.log('wrows', wrows[0].event_id);
+                connection.query(config.get('ewrd.lst'), wrows[0].event_id, function (err, erows) {
                     if (err) {
                         if (err.fatal) {
                             throw err;
                         }
-                        console.error("Processor: NewConnection: Visitor: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
+                        console.error("Processor: NewConnection: Event: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
                     }
-                    visitor.id = vrows.insertId;
-                    if (!ipJson.city) {
-                        connection.query(config.get('lctn.ins2'), [ipJson.country.names.en, ipJson.continent.names.en, visitor.id], function (err, rows) {
+                    connection.query(config.get('pwrd.lst'), prsn[0].person_id, function (err, prows) {
+                        if (err) {
+                            if (err.fatal) {
+                                throw err;
+                            }
+                            console.error("Processor: NewConnection: Person: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
+                        }
+                        console.log('data.visitor', visitor.address);
+                        connection.query(config.get('vstr.ins'),  [visitor.address, null, null], function (err, vrows) {
                             if (err) {
                                 if (err.fatal) {
                                     throw err;
                                 }
-                                console.error("Processor: List: Event: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+                                console.error("Processor: NewConnection: Visitor: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
                             }
-                            console.log("Insert location ID: ", rows.insertId);
-                        });
-                    } else {
-                        connection.query(config.get('lctn.ins1'), [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, visitor.id], function (err, rows) {
-                            if (err) {
-                                if (err.fatal) {
-                                    throw err;
-                                }
-                                console.error("Processor: List: Event: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+                            visitor.id = vrows.insertId;
+                            if (!ipJson.city) {
+                                connection.query(config.get('lctn.ins2'), [ipJson.country.names.en, ipJson.continent.names.en, visitor.id], function (err, rows) {
+                                    if (err) {
+                                        if (err.fatal) {
+                                            throw err;
+                                        }
+                                        console.error("Processor: List: Event: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+                                    }
+                                    console.log("Insert location ID: ", rows.insertId);
+                                    visitor.location = rows.insertId;
+                                });
+                            } else {
+                                connection.query(config.get('lctn.ins1'), [ipJson.city.names.en, ipJson.country.names.en, ipJson.continent.names.en, visitor.id], function (err, rows) {
+                                    if (err) {
+                                        if (err.fatal) {
+                                            throw err;
+                                        }
+                                        console.error("Processor: List: Event: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+                                    }
+
+                                    console.log("Insert location ID: ", rows.insertId);
+                                    visitor.location = rows.insertId;
+                                    var ritrn = JSON.stringify({eventList: erows, personList: prows, visitorid : vrows.insertId, event : wrows, person : prsn});
+                                    callback(ritrn);
+                                });
                             }
-
-                            console.log("Insert location ID: ", rows.insertId);
                         });
-                    }
-
-                    var ritrn = JSON.stringify({eventList: erows, personList: rows, visitorid : vrows.insertId});
-                    callback(ritrn);
+                    });
                 });
-
             });
             connection.release();
         });
+
 
     });
 
@@ -265,7 +287,7 @@ function InsertEventWord(data, callback) {
             }
             console.log("Insert teword ID: ", erows.insertId);
             teword_id = erows.insertId;
-            connection.query(config.get('ewrd.lst'), function (err, rows) {
+            connection.query(config.get('ewrd.lst'), data.event_id, function (err, rows) {
                 if (err) {
                     if (err.fatal) {
                         throw err;
@@ -292,13 +314,14 @@ function InsertEventWord(data, callback) {
 function InsertPersonWord(data, callback) {
     data = JSON.parse(data);
     // ipJson = cityLookup.get('217.75.201.28');
-    console.log("DATA: PersonWord: Incoming message from client: %s", data);
+    console.log("DATA: PersonWord: Incoming message from client: %s", JSON.stringify(data));
     // working with database inserting new evet word
     // and getting back
     // new event list top 5
     dbcon.getConnection(function (err, connection) {
         var tpword_id;
         // Use the connection
+        console.log('data.person_id: ', data.person_id);
         connection.query(config.get('pwrd.ins'), [data.word, data.visitor.id, data.person_id], function (err, prows) {
             if (err) {
                 if (err.fatal) {
@@ -308,8 +331,8 @@ function InsertPersonWord(data, callback) {
             }
             console.log("Processor: Insert: PersonWord: InsertID: ", prows.insertId);
             tpword_id = prows.insertId;
-
-            connection.query(config.get('pwrd.lst'), function (err, rows) {
+            console.log(data.person_id);
+            connection.query(config.get('pwrd.lst'), data.person_id, function (err, rows) {
                 if (err) {
                     if (err.fatal) {
                         throw err;

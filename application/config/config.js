@@ -50,11 +50,12 @@ module.exports = {
     *   events queries
     *   ======================*/
     evnt: {
-        ins: 'INSERT INTO tperson (title, image, week_id) VALUES (?, ?, ?);',
-        upd: 'UPDATE tperson SET title=?, image=?, week_id=?;',
-        del: 'DELETE FROM tperson WHERE person_id=?;',
+        ins: 'INSERT INTO tevent (title, image, week_id) VALUES (?, ?, ?);',
+        upd: 'UPDATE tevent SET title=?, image=?, week_id=?;',
+        del: 'DELETE FROM tevent WHERE event_id=?;',
         sel: '',
-        lst: 'SELECT * FROM tevent ORDER BY event_id DESC LIMIT 5;'
+        lst: 'SELECT * FROM tevent ORDER BY event_id DESC LIMIT 5;',
+        cur: 'SELECT * FROM tevent WHERE week_id=?;'
     },
     /*  ======================
      *   event word queries
@@ -64,7 +65,9 @@ module.exports = {
         upd: 'UPDATE teword SET eword = ?, visitor_id = ?, event_id = ?;',
         del: 'DELETE FROM teword WHERE eword_id=?;',
         sel: '',
-        lst: 'SELECT eword a, COUNT(eword) c FROM teword GROUP BY eword HAVING c > 1 ORDER BY c DESC LIMIT 5;',
+        lst:    'SELECT veword.eword a, COUNT(veword.eword) c FROM ' +
+                '(select * from teword WHERE event_id=?) as veword ' +
+                'GROUP BY veword.eword HAVING c > 1 ORDER BY c DESC LIMIT 5;',
         lstpcnt: 'SELECT t.a a, count(t.a) c FROM (SELECT e.eword a,l.continent b FROM teword e LEFT JOIN tlocation l ON e.visitor_id = l.visitor_id WHERE l.continent LIKE ?) t GROUP BY a HAVING c > 1 ORDER BY c DESC LIMIT 5;'
     },
     /*  ======================
@@ -88,7 +91,10 @@ module.exports = {
         upd: 'UPDATE tpword SET pword=?, visitor_id=?, person_id=?;',
         del: 'DELETE FROM tpword WHERE pword_id=?;',
         sel: '',
-        lst: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5;',
+        lst:    'SELECT vpword.pword a, COUNT(vpword.pword) c FROM ' +
+                '(select * from tpword WHERE person_id=?) as vpword ' +
+                'GROUP BY vpword.pword HAVING c > 1 ORDER BY c DESC LIMIT 5;',
+        lstOld: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5;',
         flst: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC;',
         lstpcnt: 'SELECT t.a a, count(t.a) c FROM (SELECT e.pword a,l.continent b FROM tpword e LEFT JOIN tlocation l ON e.visitor_id = l.visitor_id WHERE l.continent LIKE ?) t GROUP BY a HAVING c > 1 ORDER BY c DESC LIMIT 5;'
     },
@@ -100,7 +106,8 @@ module.exports = {
         upd: 'UPDATE tperson SET title=?, image=?, week_id=?;',
         del: 'DELETE FROM tperson WHERE person_id=?;',
         sel: '',
-        lst: 'SELECT * FROM tperson ORDER BY person_id DESC LIMIT 5;'
+        lst: 'SELECT * FROM tperson ORDER BY person_id DESC LIMIT 5;',
+        cur: 'SELECT * FROM tperson WHERE week_id=?;'
     },
     /*  ======================
      *   visitor queries

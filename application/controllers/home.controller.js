@@ -8,7 +8,8 @@
     function HomeController($scope, $location, $window, socket, OwwUPS) {
         $scope.ewords = [];
         $scope.pwords = [];
-
+        $scope.event = [];
+        $scope.person = [];
 
         $scope.$on('$viewContentLoaded', function (event) {
 
@@ -17,6 +18,11 @@
             // socket.emit('getLists', 'getLists', '');
 
         }
+        socket.on('week', function (evt) {
+            $scope.event = evt.event;
+            $scope.person = evt.person;
+            console.log('$scope.event.title = evt: ', evt);
+        });
 
         socket.on('eventWord', function (evt) {
             $scope.ewords.unshift(evt);
@@ -28,14 +34,14 @@
         });
 
         $scope.submitEword = function () {
-            socket.emit('event', 'event', this.e);
+            socket.emit('event', 'event', this.e, this.event[0].event_id);
             console.log('eword: ', this.e);
             this.e = '';
             return false;
         }
 
         $scope.submitPword = function () {
-            socket.emit('person', 'person', this.p);
+            socket.emit('person', 'person', this.p,this.person[0].person_id);
             console.log('pword: ', this.p);
             this.p = '';
             return false;

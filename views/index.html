@@ -11,15 +11,19 @@
     <link rel="stylesheet" href="custom/css/colors.css">
     <base href="/">
 </head>
-<body id="customized" ng-app="oneWordWorld" class="paper">
-<div class="col-lg-2 container-fluid lavendar">
-    <div id="one"></div>
+<body id="customized" ng-app="oneWordWorld" class="tri">
+<div id="komplet"></div>
+<!--Lijevi reklamni blok-->
+<div class="col-lg-2 container-fluid stranice">
+    <!--<div class="one"></div>-->
     <img src="images/wowMarine.png" class="img-responsive img-circle" alt="WOW" />
 </div>
-<div class="col-lg-8 container-fluid overcast">
-    <div class="container dusty" ng-controller="OwwController">
-        <div id="one"></div>
-        <div class="row">
+<!--Centralni blok-->
+<div class="col-lg-8 container-fluid">
+    <!--<div class="one"></div>-->
+    <div class="container" ng-controller="OwwController">
+        <!--<div class="one tri"></div>-->
+        <div class="row ">
             <div class="col-xs-3 ">
                 <img src="images/wowMarine.png" class="img-responsive img-circle" alt="WOW" width="80" height="80"/>
             </div>
@@ -30,21 +34,23 @@
         <!--<label ng-show="visitor">{{visitor}}</label>-->
         <div ui-view="navbar"></div>
 
-        <div class="row">
-            <div class="overcast" ui-view></div>
+        <div class="row ">
+            <div ui-view></div>
         </div>
 
-        <div class="row thumbnail overcast">
+        <div class="row ">
             <label>Number of users online</label>
             <label>{{users}}</label>
         </div>
-        <div id="one"></div>
+        <div class="one"></div>
         <div ui-view="footer"></div>
 
     </div>
 </div>
-<div class="col-lg-2 container-fluid lavendar">
-    <div id="one"></div>
+
+<!--Desni reklamni blok-->
+<div class="col-lg-2 container-fluid">
+    <!--<div class="one"></div>-->
     <img src="images/wowMarine.png" class="img-responsive img-circle" alt="WOW"/>
 </div>
 <!-- Libs -->
@@ -85,6 +91,8 @@
 <!--<script src="application/controllers/visitor.controller.js"></script>-->
 <script src="application/factories/kukiz.function.js"></script>
 <script src="application/factories/visitor.factory.js"></script>
+<script src="scripts/moment/moment.js"></script>
+<script src="scripts/angular-moment/angular-moment.js"></script>
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;

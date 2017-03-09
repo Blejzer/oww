@@ -25,6 +25,7 @@ var multer = require('multer')
 var bodyParser = require('body-parser');
 var filename;
 
+
 // ******************************************************
 console.log(new Date());
 console.log(ver, "starting with initialization sequence: ");
@@ -123,7 +124,7 @@ io.sockets.on('connection', function (socket) {
     var data = {"data": "newconn", "visitor": visitor};
     jack = JSON.stringify(data);
 
-    // Create a socket (client) that connects to the server
+    // Create a socket (client) that connects to the processor
     var procSocket = new net.Socket();
 
     // if connection is not successful
@@ -135,7 +136,7 @@ io.sockets.on('connection', function (socket) {
 
     // if connection is successful
     procSocket.connect(3001, "localhost", function () {
-        // console.log(new Date(), "Server: Connected to procesor");
+        // console.log(new Date(), "Server: Connected to processor");
         procSocket.write(jack);
     });
 
@@ -144,10 +145,15 @@ io.sockets.on('connection', function (socket) {
         // console.log(new Date(), "Server: Response from the processor: %s", data);
         var lists = JSON.parse(data);
         visitor.id = lists.visitorid;
+        var eANDp = {};
+        eANDp.event = lists.event;
+        eANDp.person = lists.person;
+        console.log('eANDp: ', eANDp);
         // socket.emit('notification', {
         //         message: 'new visitor',
         //         visitor: visitor
         //     });
+        io.emit("week", eANDp);
         io.emit("eventList", JSON.stringify(lists.eventList));
         io.emit("personList", JSON.stringify(lists.personList));
         //
@@ -210,7 +216,7 @@ io.sockets.on('connection', function (socket) {
         // Create a socket (client) that connects to the server
         var procSocket = new net.Socket();
         procSocket.connect(3001, "localhost", function () {
-            console.log("Server: pword: Connected to processor");
+            console.log("Server: pword: Connected to processor", jack);
             procSocket.write(jack);
         });
         // Emitujemo klijentu izmjenu na event
