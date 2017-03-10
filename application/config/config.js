@@ -68,7 +68,10 @@ module.exports = {
         lst:    'SELECT veword.eword a, COUNT(veword.eword) c FROM ' +
                 '(select * from teword WHERE event_id=?) as veword ' +
                 'GROUP BY veword.eword HAVING c > 1 ORDER BY c DESC LIMIT 5;',
-        lstpcnt: 'SELECT t.a a, count(t.a) c FROM (SELECT e.eword a,l.continent b FROM teword e LEFT JOIN tlocation l ON e.visitor_id = l.visitor_id WHERE l.continent LIKE ?) t GROUP BY a HAVING c > 1 ORDER BY c DESC LIMIT 5;'
+        flst:   'SELECT veword.eword a, COUNT(veword.eword) c FROM ' +
+        '(select * from teword WHERE event_id=?) as veword ' +
+        'GROUP BY veword.eword HAVING c > 1 ORDER BY c DESC;',
+        lstpcnt: 'SELECT t.a a, count(t.a) c FROM (SELECT e.eword a,l.continent b FROM teword e LEFT JOIN tlocation l ON e.visitor_id = l.visitor_id WHERE l.continent LIKE ? AND event_id=?) t GROUP BY a HAVING c > 1 ORDER BY c DESC LIMIT 5;'
     },
     /*  ======================
      *   location queries
@@ -94,9 +97,10 @@ module.exports = {
         lst:    'SELECT vpword.pword a, COUNT(vpword.pword) c FROM ' +
                 '(select * from tpword WHERE person_id=?) as vpword ' +
                 'GROUP BY vpword.pword HAVING c > 1 ORDER BY c DESC LIMIT 5;',
-        lstOld: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC LIMIT 5;',
-        flst: 'SELECT pword a, COUNT(pword) c FROM tpword GROUP BY pword HAVING c > 1 ORDER BY c DESC;',
-        lstpcnt: 'SELECT t.a a, count(t.a) c FROM (SELECT e.pword a,l.continent b FROM tpword e LEFT JOIN tlocation l ON e.visitor_id = l.visitor_id WHERE l.continent LIKE ?) t GROUP BY a HAVING c > 1 ORDER BY c DESC LIMIT 5;'
+        flst:    'SELECT vpword.pword a, COUNT(vpword.pword) c FROM ' +
+        '(select * from tpword WHERE person_id=?) as vpword ' +
+        'GROUP BY vpword.pword HAVING c > 1 ORDER BY c DESC;',
+        lstpcnt: 'SELECT t.a a, count(t.a) c FROM (SELECT e.pword a,l.continent b FROM tpword e LEFT JOIN tlocation l ON e.visitor_id = l.visitor_id WHERE l.continent LIKE ? AND person_id=?) t GROUP BY a HAVING c > 1 ORDER BY c DESC LIMIT 5;'
     },
     /*  ======================
      *   persons queries

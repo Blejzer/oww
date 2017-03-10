@@ -1,26 +1,47 @@
+.frame {
+    height: 550px;
+    border: 1px solid #e05915;
+    white-space: nowrap;
+    text-align: center; margin: 1em 0;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.slika img {
+    vertical-align: middle;
+    max-height: 95%;
+}
+
+
+
+
+
 div
+.test {
+    height: 550px;
+    height: 550px;
+    max-height: 550px;
+}
 .one {
     width: 100%;
     height: 52px;
     background-color: transparent;
+}
+.right {
+    min-height: 550px;
+}
+.left {
+    min-height: 550px;
 }
 .stranice{
     height: 100%;
     background-color:#431c5d;
     overflow:hidden;
 }
-/*.paper {*/
-    /*background-color: #d5d5d5;*/
-/*}*/
-/*.overcast {*/
-    /*background-color: #9099A2;*/
-/*}*/
-/*.lavendar{*/
-    /*background-color: #6d7993;*/
-/*}*/
-/*.dusty {*/
-    /*background-color: #96858F;*/
-/*}*/
 .jedan{
     background-color:#bccbde;
 }
