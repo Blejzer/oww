@@ -1,11 +1,11 @@
 <div class="container-fluid">
 <!-- theme divs (person & event) -->
-    <div class="row text-center jedan">
+    <div class="row text-center tri">
         <div class="col-sm-6 col-md-6 col-lg-6 center">
-            <div class="thumbnail">
+            <div class="thumbnail pet">
                 <h3>{{ person.title }}</h3>
             </div>
-            <div class="thumbnail slika">
+            <div class="frame slika dva">
                 <img src="{{ person.image }}" alt="WOW"/>
             </div>
             <!-- person input part -->
@@ -29,11 +29,12 @@
             </div>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 center">
-            <div class="thumbnail">
+            <div class="thumbnail pet">
                 <h3>{{ event.title }}</h3>
             </div>
-            <div class="thumbnail img-responsive">
-                <img src="{{ event.image }}" alt="WOW" min-height="90%"/>
+            <div class="frame slika dva">
+                <span class="helper"></span>
+                <img src="{{ event.image }}" alt="WOW" />
             </div>
             <!-- event input part -->
             <div class="thumbnail">

@@ -45,7 +45,7 @@
                 }
             })
             .state('person', {
-                url: '/person',
+                url: '/person:person_id',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar.html'},
                     '': {
@@ -55,7 +55,7 @@
                 }
             })
             .state('pcontinent', {
-                url: '/pcontinent',
+                url: '/pcontinent:person_id',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar.html'},
                     // the main template will be placed here (relatively named)

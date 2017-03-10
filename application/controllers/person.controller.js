@@ -8,9 +8,11 @@
     /**
      * Configures the routes and views
      */
-    PersonController.$inject = ['$scope', 'socket'];
-    function PersonController($scope, socket) {
+    PersonController.$inject = ['$rootScope','$scope', 'socket', '$state'];
+    function PersonController($rootScope, $scope, socket, $state) {
         var pctrl = this;
+        var person_id = $rootScope.person.person_id;
+        console.log('$rootScope.person: ', $rootScope.person);
 
         // Pie Chart configuration!
         $scope.options = {
@@ -35,15 +37,19 @@
         };
 
         $scope.$on('$stateChangeSuccess', function () {
+            switch ($state.current.name) {
+                case "person": {
+                    socket.emit('personPageLoaded', person_id);
+                }
+                    break;
+                case "pcontinent": {
+                    socket.emit('personCtnPageLoaded', person_id);
+                }
+                    break;
+                default:
+            }
             console.log('Person page $stateChangeSuccess fired');
-            socket.emit('personPageLoaded');
-            socket.emit('personCtnPageLoaded');
-            test(socket);
         });
-
-        function test (socket) {
-            console.log('socket.id', socket);
-        }
 
         socket.on('personPageSuccess', function(json){
 

@@ -458,12 +458,12 @@ function EventCntPageLoaded(data, callback) {
 function PersonPageLoaded(data, callback) {
     data = JSON.parse(data);
     ipJson = cityLookup.get(data.ip);
-    console.log("DATA: PersonPageLoaded: Response from client: %s", ipJson.country.names.en, data.data);
+    console.log("DATA: PersonPageLoaded: Response from client: %s", ipJson.country.names.en, data.data, data.person_id);
 
     // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
 
-        connection.query(config.get('pwrd.lst'), function (err, rows) {
+        connection.query(config.get('pwrd.lst'), data.person_id, function (err, rows) {
             if (err) {
                 if (err.fatal) {
                     throw err;

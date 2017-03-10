@@ -262,11 +262,11 @@ io.sockets.on('connection', function (socket) {
     // pa je potrebno dostaviti duzi spisak rijeci po nekoj
     // kvalifikaciji
     // *********************************************************************
-    socket.on('eventCtnPageLoaded', function () {
+    socket.on('eventCtnPageLoaded', function (event_id) {
 
         console.log("Registrujem eventCtnPageLoaded socket ");
         // *********************************************************************
-        var data = {"data": "eventCtnPageLoaded", "ip": fakeip};
+        var data = {"data": "eventCtnPageLoaded", "ip": fakeip, "event_id" : event_id};
         jack = JSON.stringify(data);
 
         // Create a socket (client) that connects to the server
@@ -290,11 +290,11 @@ io.sockets.on('connection', function (socket) {
     // pa je potrebno dostaviti duzi spisak rijeci po nekoj
     // kvalifikaciji
     // *********************************************************************
-    socket.on('personPageLoaded', function () {
+    socket.on('personPageLoaded', function (person_id) {
 
-        console.log("Registrujem personPageLoaded socket ");
+        console.log("Registrujem personPageLoaded socket ", person_id);
         // *********************************************************************
-        var data = {"data": "personPageLoaded", "ip": fakeip};
+        var data = {"data": "personPageLoaded", "ip": fakeip, "person_id" : person_id};
         jack = JSON.stringify(data);
 
         // Create a socket (client) that connects to the server
@@ -319,11 +319,11 @@ io.sockets.on('connection', function (socket) {
     // pa je potrebno dostaviti duzi spisak rijeci po nekoj
     // kvalifikaciji
     // *********************************************************************
-    socket.on('personCtnPageLoaded', function () {
+    socket.on('personCtnPageLoaded', function (person_id) {
 
         console.log("Registrujem personCtnPageLoaded socket ");
         // *********************************************************************
-        var data = {"data": "personCtnPageLoaded", "ip": fakeip};
+        var data = {"data": "personCtnPageLoaded", "ip": fakeip, "person_id" : person_id};
         jack = JSON.stringify(data);
 
         // Create a socket (client) that connects to the server

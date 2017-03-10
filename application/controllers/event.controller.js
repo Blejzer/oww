@@ -49,12 +49,7 @@
                     break;
                 default:
             }
-            // test(socket);
         });
-
-        // function test (socket) {
-        //     console.log('socket.id', socket);
-        // }
 
         socket.on('eventPageSuccess', function(json){
             var evt = JSON.parse(json);
@@ -86,10 +81,3 @@
 
 
 })();
-
-
-//
-// $scope.changeState = function () {
-//     //$state.go('contact.detail');
-//     console.log('event controller: change state invoked');
-// };
