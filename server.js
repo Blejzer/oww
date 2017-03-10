@@ -116,7 +116,7 @@ console.log("*******************************************************************
  ********************************************************/
 io.sockets.on('connection', function (socket) {
     socket.removeAllListeners();
-    var fakeip = '24.201.206.226' // socket.handshake.address;
+    var fakeip = socket.handshake.address;
     console.log(new Date(), "Client IP Address - assuming remote: socket.handshake.address: ", fakeip);
 
     var visitor = {};

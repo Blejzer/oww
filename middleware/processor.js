@@ -8,10 +8,8 @@
  * 1411972                                              *
  ********************************************************/
 
-
 var json;
 var ipJson; // for maxmind GeoLite2-City result
-
 
 // middleware loading
 const net = require("net");
@@ -364,7 +362,7 @@ function EventPageLoaded(data, callback) {
     // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
 
-        connection.query(config.get('ewrd.lst'), data.event_id, function (err, rows) {
+        connection.query(config.get('ewrd.flst'), data.event_id, function (err, rows) {
             if (err) {
                 if (err.fatal) {
                     throw err;
@@ -410,7 +408,7 @@ function EventCntPageLoaded(data, callback) {
                 item++;
                 var temp = [];
                 console.log('index', index);
-                connection.query(config.get('ewrd.lstpcnt'), [cont.continent], function (err, erows) {
+                connection.query(config.get('ewrd.lstpcnt'), [cont.continent, data.event_id], function (err, erows) {
                     // console.log('continent: ', cont.continent);
                     if (err) {
                         if (err.fatal) {
@@ -463,7 +461,7 @@ function PersonPageLoaded(data, callback) {
     // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
 
-        connection.query(config.get('pwrd.lst'), data.person_id, function (err, rows) {
+        connection.query(config.get('pwrd.flst'), data.person_id, function (err, rows) {
             if (err) {
                 if (err.fatal) {
                     throw err;
@@ -510,7 +508,7 @@ function PersonCntPageLoaded(data, callback) {
                 item++;
                 var temp = [];
                 console.log('index', index);
-                connection.query(config.get('pwrd.lstpcnt'), [cont.continent], function (err, prows) {
+                connection.query(config.get('pwrd.lstpcnt'), [cont.continent, data.person_id], function (err, prows) {
                     // console.log('continent: ', cont.continent);
                     if (err) {
                         if (err.fatal) {
