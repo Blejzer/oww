@@ -243,7 +243,7 @@ function NewConnection(data, callback) {
 
                                     console.log("Insert location ID: ", rows.insertId);
                                     visitor.location = rows.insertId;
-                                    var ritrn = JSON.stringify({eventList: erows, personList: prows, visitorid : vrows.insertId, event : wrows, person : prsn});
+                                    var ritrn = JSON.stringify({eventList: erows, personList: prows, visitorid : vrows.insertId, event : wrows, person : prsn, week : week});
                                     callback(ritrn);
                                 });
                             }
@@ -359,19 +359,18 @@ function InsertPersonWord(data, callback) {
 function EventPageLoaded(data, callback) {
     data = JSON.parse(data);
     ipJson = cityLookup.get(data.ip);
-    console.log("DATA: EventPageLoaded: Response from client: %s", ipJson.country.names.en, data.data);
+    console.log("DATA: EventPageLoaded: Response from client: %s", ipJson.country.names.en, data.data, data.event_id);
 
     // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
 
-        connection.query(config.get('ewrd.lst'), function (err, rows) {
+        connection.query(config.get('ewrd.lst'), data.event_id, function (err, rows) {
             if (err) {
                 if (err.fatal) {
                     throw err;
                 }
                 console.error("Processor: List: EventWord: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
             }
-
             ritrn = JSON.stringify(rows);
             callback(ritrn);
         });
@@ -459,12 +458,12 @@ function EventCntPageLoaded(data, callback) {
 function PersonPageLoaded(data, callback) {
     data = JSON.parse(data);
     ipJson = cityLookup.get(data.ip);
-    console.log("DATA: PersonPageLoaded: Response from client: %s", ipJson.country.names.en, data.data);
+    console.log("DATA: PersonPageLoaded: Response from client: %s", ipJson.country.names.en, data.data, data.person_id);
 
     // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
 
-        connection.query(config.get('pwrd.lst'), function (err, rows) {
+        connection.query(config.get('pwrd.lst'), data.person_id, function (err, rows) {
             if (err) {
                 if (err.fatal) {
                     throw err;

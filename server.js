@@ -144,20 +144,19 @@ io.sockets.on('connection', function (socket) {
     procSocket.on("data", function (data) {
         // console.log(new Date(), "Server: Response from the processor: %s", data);
         var lists = JSON.parse(data);
+        // var eANDp = {};
+        // eANDp.event = lists.event;
+        // eANDp.person = lists.person;
+        socket.emit('test', lists.event[0], lists.person[0]);
+
         visitor.id = lists.visitorid;
-        var eANDp = {};
-        eANDp.event = lists.event;
-        eANDp.person = lists.person;
-        console.log('eANDp: ', eANDp);
-        // socket.emit('notification', {
-        //         message: 'new visitor',
-        //         visitor: visitor
-        //     });
-        io.emit("week", eANDp);
+
+        io.sockets.emit('conn', io.engine.clientsCount);
+
+        // io.emit("week", eANDp);
         io.emit("eventList", JSON.stringify(lists.eventList));
         io.emit("personList", JSON.stringify(lists.personList));
-        //
-        io.sockets.emit('conn', io.engine.clientsCount);
+
         procSocket.end();
     });
 
@@ -178,7 +177,7 @@ io.sockets.on('connection', function (socket) {
     // *********************************************************************
     socket.on('event', function (newroom, eventWord, event_id) {
 
-        // console.log(new Date(), "Registrujem event socket ", eventWord);
+        console.log(new Date(), "Registrujem event socket ", event_id);
         var data = {"data": "eventWord", "visitor": visitor, "word": eventWord, "event_id": event_id};
         jack = JSON.stringify(data);
 
@@ -235,11 +234,11 @@ io.sockets.on('connection', function (socket) {
     // pa je potrebno dostaviti duzi spisak rijeci po nekoj
     // kvalifikaciji
     // *********************************************************************
-    socket.on('eventPageLoaded', function () {
+    socket.on('eventPageLoaded', function (event_id) {
 
         console.log("Registrujem eventPageLoaded socket ");
         // *********************************************************************
-        var data = {"data": "eventPageLoaded", "ip": fakeip};
+        var data = {"data": "eventPageLoaded", "ip": fakeip, "event_id" : event_id};
         jack = JSON.stringify(data);
 
         // Create a socket (client) that connects to the server
@@ -248,8 +247,6 @@ io.sockets.on('connection', function (socket) {
             console.log("Client: eventPageLoaded: Connected to server");
             procSocket.write(jack);
         });
-        // Emitujemo klijentu izmjenu na event
-        // io.emit('eventWord', eventWord);
 
         // Cekamo odgovor sa procesora i osvjezenu event listu
         procSocket.on("data", function (data) {
@@ -265,11 +262,11 @@ io.sockets.on('connection', function (socket) {
     // pa je potrebno dostaviti duzi spisak rijeci po nekoj
     // kvalifikaciji
     // *********************************************************************
-    socket.on('eventCtnPageLoaded', function () {
+    socket.on('eventCtnPageLoaded', function (event_id) {
 
         console.log("Registrujem eventCtnPageLoaded socket ");
         // *********************************************************************
-        var data = {"data": "eventCtnPageLoaded", "ip": fakeip};
+        var data = {"data": "eventCtnPageLoaded", "ip": fakeip, "event_id" : event_id};
         jack = JSON.stringify(data);
 
         // Create a socket (client) that connects to the server
@@ -293,11 +290,11 @@ io.sockets.on('connection', function (socket) {
     // pa je potrebno dostaviti duzi spisak rijeci po nekoj
     // kvalifikaciji
     // *********************************************************************
-    socket.on('personPageLoaded', function () {
+    socket.on('personPageLoaded', function (person_id) {
 
-        console.log("Registrujem personPageLoaded socket ");
+        console.log("Registrujem personPageLoaded socket ", person_id);
         // *********************************************************************
-        var data = {"data": "personPageLoaded", "ip": fakeip};
+        var data = {"data": "personPageLoaded", "ip": fakeip, "person_id" : person_id};
         jack = JSON.stringify(data);
 
         // Create a socket (client) that connects to the server
@@ -322,11 +319,11 @@ io.sockets.on('connection', function (socket) {
     // pa je potrebno dostaviti duzi spisak rijeci po nekoj
     // kvalifikaciji
     // *********************************************************************
-    socket.on('personCtnPageLoaded', function () {
+    socket.on('personCtnPageLoaded', function (person_id) {
 
         console.log("Registrujem personCtnPageLoaded socket ");
         // *********************************************************************
-        var data = {"data": "personCtnPageLoaded", "ip": fakeip};
+        var data = {"data": "personCtnPageLoaded", "ip": fakeip, "person_id" : person_id};
         jack = JSON.stringify(data);
 
         // Create a socket (client) that connects to the server
