@@ -4,8 +4,8 @@
     angular.module('oneWordWorld')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', '$location', '$window', 'socket', 'OwwUPS'];
-    function HomeController($scope, $location, $window, socket, OwwUPS) {
+    HomeController.$inject = ['$rootScope', '$scope', '$location', '$window', 'socket', 'OwwUPS'];
+    function HomeController($rootScope, $scope, $location, $window, socket, OwwUPS) {
         $scope.ewords = [];
         $scope.pwords = [];
         $scope.event = [];
@@ -18,11 +18,19 @@
             // socket.emit('getLists', 'getLists', '');
 
         }
-        socket.on('week', function (evt) {
-            $scope.event = evt.event;
-            $scope.person = evt.person;
-            console.log('$scope.event.title = evt: ', evt);
-        });
+        socket.on('test', function (event, person) {
+            console.log('socket.on test fired', event);
+            $scope.event = event;
+            $scope.person = person;
+            $rootScope.person = $scope.person;
+            $rootScope.event = $scope.event;
+        })
+
+        // socket.on('week', function (evt) {
+        //     $scope.event = evt.event;
+        //     $scope.person = evt.person;
+        //     console.log('$scope.event.title = evt: ', evt);
+        // });
 
         socket.on('eventWord', function (evt) {
             $scope.ewords.unshift(evt);

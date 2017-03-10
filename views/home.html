@@ -3,15 +3,15 @@
     <div class="row text-center jedan">
         <div class="col-sm-6 col-md-6 col-lg-6 center">
             <div class="thumbnail">
-                <h3>{{ person[0].title }}</h3>
+                <h3>{{ person.title }}</h3>
             </div>
             <div class="thumbnail slika">
-                <img src="{{ person[0].image }}" alt="WOW"/>
+                <img src="{{ person.image }}" alt="WOW"/>
             </div>
             <!-- person input part -->
             <div class="thumbnail">
                 <form id="formPerson" ng-submit="submitPword()">
-                    <input type="hidden" ng-model="person_id" id="person_id" value="{{ person[0].person_id }}"/>
+                    <input type="hidden" ng-model="person_id" id="person_id" value="{{ person.person_id }}"/>
                     <input ng-model="p" id="p" class="form-control" autocomplete="off"
                            pattern="^([\Sa-zA-Z]){1,25}$"
                            oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
@@ -30,15 +30,15 @@
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 center">
             <div class="thumbnail">
-                <h3>{{ event[0].title }}</h3>
+                <h3>{{ event.title }}</h3>
             </div>
             <div class="thumbnail img-responsive">
-                <img src="{{ event[0].image }}" alt="WOW" min-height="90%"/>
+                <img src="{{ event.image }}" alt="WOW" min-height="90%"/>
             </div>
             <!-- event input part -->
             <div class="thumbnail">
                 <form id="formEvent" ng-submit="submitEword()">
-                    <input type="hidden" ng-model="event_id" id="event_id" value="{{ event[0].event_id }}"/>
+                    <input type="hidden" ng-model="event_id" id="event_id" value="{{ event.event_id }}"/>
                     <input ng-model="e" id="e" class="form-control" autocomplete="off"
                            pattern="^([\Sa-zA-Z]){1,25}$"
                            oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"

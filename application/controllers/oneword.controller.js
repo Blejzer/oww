@@ -4,38 +4,30 @@
     angular.module('oneWordWorld')
         .controller('OwwController', OwwController);
 
-    OwwController.$inject = ['$rootScope', '$scope', '$location', '$window', 'socket', 'OwwUPS'];
-    function OwwController($rootScope, $scope, $location, $window, socket, OwwUPS) {
-        // $scope.ewords = [];
-        // $scope.pwords = [];
+    OwwController.$inject = ['$rootScope', '$scope', '$location', '$window', 'socket'];
+    function OwwController($rootScope, $scope, $location, $window, socket) {
         $rootScope.$on('$viewContentLoaded', function (event) {
             $window.ga('send', 'pageview', {page: $location.url()});
         });
-
-
-        // $scope.$on('$viewContentLoaded', function() {
-        //     console.log('Index page $viewContentLoaded fired');
-        // });
-        //
-        // $scope.$on('$stateChangeSuccess', function () {
-        //     console.log('Index page $stateChangeSuccess fired');
-        // });
 
         socket.on('conn', function (num) {
             console.log('socket.on conn fired');
             $scope.users = num;
         });
+        socket.on('test', function (event, person) {
+            console.log('socket.on test fired', event);
+            $scope.event = event;
+            $scope.person = person;
+            $rootScope.person = $scope.person;
+            $rootScope.event = $scope.event;
+        })
 
         $scope.changeState = function () {
             //$state.go('contact.detail');
             console.log('index controller: change state invoked');
         };
-        // socket.on('notification', function (data) {
-        //     // console.log("notification data: ", data.visitor);
-        //     OwwUPS.setCookieData(data.visitor.id);
-        //     $scope.visitor = data.visitor;
-        //     // console.log('OwwUPS.getCookieData(): ', OwwUPS.getCookieData());
-        // });
+
+        $location.path("/")
 
     }
 })();

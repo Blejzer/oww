@@ -8,10 +8,11 @@
     /**
      * Configures the routes and views
      */
-    EventController.$inject = ['$scope', 'socket'];
-    function EventController($scope, socket) {
+    EventController.$inject = ['$rootScope','$scope', 'socket', '$state'];
+    function EventController($rootScope, $scope, socket, $state) {
         var ectrl = this;
-
+        var event_id = $rootScope.event.event_id;
+        console.log('$rootScope.event: ', $rootScope.event);
         // Pie Chart configuration!
         $scope.options = {
             chart: {
@@ -35,18 +36,27 @@
         };
 
         $scope.$on('$stateChangeSuccess', function () {
-            console.log('Event page $stateChangeSuccess fired');
-            socket.emit('eventPageLoaded');
-            socket.emit('eventCtnPageLoaded');
-            test(socket);
+
+            console.log('Event page $stateChangeSuccess fired', $state.current.name);
+            switch ($state.current.name) {
+                case "event": {
+                    socket.emit('eventPageLoaded', event_id);
+                }
+                    break;
+                case "econtinent": {
+                    socket.emit('eventCtnPageLoaded', event_id);
+                }
+                    break;
+                default:
+            }
+            // test(socket);
         });
 
-        function test (socket) {
-            console.log('socket.id', socket);
-        }
+        // function test (socket) {
+        //     console.log('socket.id', socket);
+        // }
 
         socket.on('eventPageSuccess', function(json){
-
             var evt = JSON.parse(json);
             $scope.globalList = evt;
             $scope.edata = evt;
