@@ -16,7 +16,10 @@
     max-height: 95%;
 }
 
-
+#demo {
+    padding:5px;
+    padding-top: 10px;
+}
 
 
 
@@ -61,6 +64,29 @@ div
     background-color:#cdd422;
 }
 
+@font-face
+.colorJedan{
+    color:#bccbde;
+}
+.colorDva{
+    color:#c2dde6;
+}
+.colorTri{
+    color:#e6e9f0;
+}
+.colorCetiri{
+    color:#431c5d;
+}
+.colorPet{
+    color:#e05915;
+}
+.colorSest{
+    color:#cdd422;
+}
+.colorSedam{
+    color: #27378D;
+}
+
 nav, ul, li, body#customized{
     background-color: #bccbde;
 }
@@ -95,6 +121,15 @@ nav, ul, li, body#customized{
     background-color:#cdd422;
 }
 
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+td{
+    padding-left: 5em;
+    text-align: justify;
+}
 
 .navbar.center .navbar-inner {
     text-align: center;

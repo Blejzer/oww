@@ -61,31 +61,27 @@
     <div class="row text-center jedan ">
         <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="thumbnail">
-                <a ui-sref="person">
-                        <!-- <ul id="eventList"></ul> -->
-                        <label >Most popular words for person</label>
-                        <table >
-                            <tr ng-repeat="t in personList">
-                                <td>{{ t.a }}</td>
-                                <td>{{ t.c }}</td>
-                            </tr>
-                        </table>
-                </a>
+                <!-- <ul id="eventList"></ul> -->
+                <label >Most popular words for person</label>
+                <table >
+                    <tr ng-repeat="t in personList">
+                        <td>{{ t.a }}</td>
+                        <td>{{ t.c }}</td>
+                    </tr>
+                </table>
             </div>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="thumbnail">
-                <a ui-sref="event">
-                        <!-- <ul id="eventList"></ul> -->
-                        <label >Most popular words for event</label>
+                <!-- <ul id="eventList"></ul> -->
+                <label >Most popular words for event</label>
 
-                        <table >
-                            <tr ng-repeat="t in eventList">
-                                <td>{{ t.a }}</td>
-                                <td>{{ t.c }}</td>
-                            </tr>
-                        </table>
-                </a>
+                <table >
+                    <tr ng-repeat="t in eventList">
+                        <td>{{ t.a }}</td>
+                        <td>{{ t.c }}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

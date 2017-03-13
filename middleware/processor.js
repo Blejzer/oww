@@ -168,9 +168,11 @@ function NewConnection(data, callback) {
     visitor = data.visitor;
     if (visitor.address != '::1'){
         ipJson = cityLookup.get(visitor.address); // data.visitor.address moscow russia: 46.188.121.120
+        // console.log('pronadjena adresa izgleda ovako: ', ipJson);
     }else {
         visitor.address = '::ffff:24.201.206.226';
         ipJson = cityLookup.get(visitor.address);
+        // console.log('pronadjena adresa za ::ffff:24.201.206.226: ', ipJson);
     }
 
     // getting back event list top 5 and person list top 5
@@ -225,7 +227,7 @@ function NewConnection(data, callback) {
                                         if (err.fatal) {
                                             throw err;
                                         }
-                                        console.error("Processor: List: Event: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+                                        console.error("Processor: List: Insert location without city: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
                                     }
                                     console.log("Insert location ID: ", rows.insertId);
                                     visitor.location = rows.insertId;
@@ -236,22 +238,21 @@ function NewConnection(data, callback) {
                                         if (err.fatal) {
                                             throw err;
                                         }
-                                        console.error("Processor: List: Event: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+                                        console.error("Processor: List: Insert location with city: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
                                     }
 
                                     console.log("Insert location ID: ", rows.insertId);
                                     visitor.location = rows.insertId;
-                                    var ritrn = JSON.stringify({eventList: erows, personList: prows, visitorid : vrows.insertId, event : wrows, person : prsn, week : week});
-                                    callback(ritrn);
                                 });
                             }
+                            var ritrn = JSON.stringify({eventList: erows, personList: prows, visitorid : vrows.insertId, event : wrows, person : prsn, week : week});
+                            callback(ritrn);
                         });
                     });
                 });
             });
             connection.release();
         });
-
 
     });
 
@@ -356,8 +357,8 @@ function InsertPersonWord(data, callback) {
  *************************************************/
 function EventPageLoaded(data, callback) {
     data = JSON.parse(data);
-    ipJson = cityLookup.get(data.ip);
-    console.log("DATA: EventPageLoaded: Response from client: %s", ipJson.country.names.en, data.data, data.event_id);
+    // ipJson = cityLookup.get(data.ip);
+    console.log("DATA: EventPageLoaded: Response from client: %s", data.data, data.event_id); // ipJson.country.names.en,
 
     // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
@@ -388,8 +389,8 @@ function EventCntPageLoaded(data, callback) {
     data = JSON.parse(data);
     continents = [];
     results = [];
-    ipJson = cityLookup.get(data.ip);
-    console.log("DATA: EventPageLoaded: Response from client: %s", ipJson.country.names.en, data.data);
+    // ipJson = cityLookup.get(data.ip);
+    console.log("DATA: EventPageLoaded: Response from client: %s", data.data); // ipJson.country.names.en,
 
     // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
@@ -436,9 +437,6 @@ function EventCntPageLoaded(data, callback) {
 
             });
             console.log('results outside loop: ', results);
-            // ritrn = JSON.stringify(results);
-            // console.log('ritrn: ', ritrn);
-            // callback(ritrn);
         })
 
         connection.release();
@@ -455,8 +453,8 @@ function EventCntPageLoaded(data, callback) {
  *************************************************/
 function PersonPageLoaded(data, callback) {
     data = JSON.parse(data);
-    ipJson = cityLookup.get(data.ip);
-    console.log("DATA: PersonPageLoaded: Response from client: %s", ipJson.country.names.en, data.data, data.person_id);
+    // ipJson = cityLookup.get(data.ip);
+    console.log("DATA: PersonPageLoaded: Response from client: %s", data.data, data.person_id); // ipJson.country.names.en,
 
     // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
@@ -489,8 +487,8 @@ function PersonCntPageLoaded(data, callback) {
     data = JSON.parse(data);
     continents = [];
     results = [];
-    ipJson = cityLookup.get(data.ip);
-    console.log("DATA: PersonPageLoaded: Response from client: %s", ipJson.country.names.en, data.data);
+    // ipJson = cityLookup.get(data.ip);
+    console.log("DATA: PersonPageLoaded: Response from client: %s", data.data); // ipJson.country.names.en,
 
     dbcon.getConnection(function (err, connection) {
 
