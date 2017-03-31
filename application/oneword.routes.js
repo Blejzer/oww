@@ -14,9 +14,7 @@
             .state('home', {
                 url: '/',
                 views: {
-
                     'navbar@': { templateUrl: 'views/addons/navbar.html'},
-
                     // the main template will be placed here (relatively named)
                     '': {   templateUrl: 'views/home.html',
                             controller: 'HomeController'},

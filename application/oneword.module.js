@@ -6,7 +6,7 @@
      * ngCookies and btford.socket-io modules
      * Look for the included files in their respective folders.
      */
-    angular.module('oneWordWorld', ['ui.router', 'fileUpload', 'ngCookies', 'btford.socket-io', 'nvd3', 'angularMoment'])
+    angular.module('oneWordWorld', ['ui.router', 'ngCookies', 'btford.socket-io', 'nvd3', 'angularMoment'])
 
     // https://github.com/btford/angular-socket-io-seed to get more info on 'btford.socket-io'
     // http://krispo.github.io/angular-nvd3/

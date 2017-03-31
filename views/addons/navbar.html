@@ -1,24 +1,69 @@
-<nav class="navbar navbar-default navbar-fixed-top tri">
-    <div class="container-fluid tri">
-        <div id="demo" class="navbar-header">
-            <img src="images/wowLogo.png" width="32" height="32" alt="OWW" >
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top">World's Word <i class="fa fa-globe"></i> </a>
         </div>
-        <ul class="nav navbar-nav tri">
-            <li class="tri" ui-sref-active="active"><a ui-sref="home">Home</a></li>
-            <li class="tri" ui-sref-active="active"><a class="dropdown-toggle tri" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Person</a>
-                <ul class="dropdown-menu tri colorSedam">
-                    <li class="tri"><a ui-sref="person({person_id : '{{ person.person_id }}'})">Global</a></li>
-                    <li class="tri" role="separator" class="divider"></li>
-                    <li class="tri"><a ui-sref="pcontinent({person_id : '{{ person.person_id }}'})">By Continent</a></li>
-                </ul>
-            </li>
-            <li class="tri" ui-sref-active="active"><a class="dropdown-toggle tri" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Event</a>
-                <ul class="dropdown-menu tri">
-                    <li class="tri"><a href="event?event_id={{ event.event_id }}">Global</a></li>
-                    <li class="tri" role="separator" class="divider"></li>
-                    <li class="tri"><a ui-sref="econtinent({event_id : '{{ event.event_id }}'})">By Continent</a></li>
-                </ul>
-            </li>
-        </ul>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="page-scroll" href="#person">Person</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#event">Event</a>
+                </li>
+                <li><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Results</a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="person({person_id : '{{ person.person_id }}'})">Person</a></li>
+                        <!--<li role="separator" class="divider"></li>-->
+                        <li><a ui-sref="event({event_id : '{{ event.event_id }}'})">Event</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
     </div>
+    <!-- /.container-fluid -->
 </nav>
+
+
+
+
+
+<!--<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">-->
+    <!--<div class="container">-->
+        <!--&lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;-->
+        <!--<div class="navbar-header">-->
+            <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">-->
+                <!--<span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>-->
+            <!--</button>-->
+            <!--<a class="navbar-brand page-scroll" href="/">World's Word <i class="fa fa-globe"></i> </a>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;-->
+        <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
+            <!--<ul class="nav navbar-nav navbar-right">-->
+                <!--<li>-->
+                    <!--<a class="page-scroll" href="#person">Person</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a class="page-scroll" href="#event">Event</a>-->
+                <!--</li>-->
+                <!--<li><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Results</a>-->
+                    <!--<ul class="dropdown-menu">-->
+                        <!--<li><a ui-sref="person({person_id : '{{ person.person_id }}'})">Person</a></li>-->
+                        <!--&lt;!&ndash;<li role="separator" class="divider"></li>&ndash;&gt;-->
+                        <!--<li><a ui-sref="event({event_id : '{{ event.event_id }}'})">Event</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <!--&lt;!&ndash; /.navbar-collapse &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; /.container-fluid &ndash;&gt;-->
+<!--</nav>-->

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Word World</title>
+    <!-- Bootstrap import -->
+    <link rel="stylesheet" href="scripts/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="custom/css/ng-img-crop.css">
+    <link rel="stylesheet" href="scripts/nvd3/build/nv.d3.min.css">
+    <link rel="stylesheet" href="custom/css/colors.css">
+    <base href="/">
+</head>
+<body id="customized" ng-app="oneWordWorld" class="tri">
+<div id="komplet"></div>
+<!--Lijevi reklamni blok-->
+<div class="col-lg-2 container-fluid left">
+    <!--<div class="one"></div>-->
+    <img src="images/WorldsWord.png" class="img-responsive" alt="WOW" />
+</div>
+<!--Centralni blok-->
+<div class="col-lg-8 container-fluid">
+    <!--<div class="one"></div>-->
+    <div class="container" ng-controller="OwwController">
+        <!--<div class="one tri"></div>-->
+        <div class="row">
+            <!--<div class="col-xs-3 ">-->
+                <!--<img src="images/wowLogo.png" class="img-responsive img-circle" alt="WOW" width="80" height="80"/>-->
+            <!--</div>-->
+            <div class="col-xs-12">
+                <h1 class="text-center colorSedam">This is One Word World!</h1>
+            </div>
+        </div>
+        <!--<label ng-show="visitor">{{visitor}}</label>-->
+        <div ui-view="navbar"></div>
+
+        <div class="row ">
+            <div ui-view></div>
+        </div>
+
+        <div class="row ">
+            <label>Number of users online</label>
+            <label>{{users}}</label>
+        </div>
+        <div class="one"></div>
+        <div ui-view="footer"></div>
+
+    </div>
+</div>
+
+<!--Desni reklamni blok-->
+<div class="col-lg-2 container-fluid jedan">
+    <!--<div class="one"></div>-->
+    <img src="images/WorldsWord.png" class="img-responsive" alt="WOW"/>
+</div>
+<!-- Libs -->
+<!-- jQuery library -->
+<script src="scripts/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap Library -->
+<script src="scripts/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- AngularJS Libraries -->
+<script src="scripts/angular/angular.min.js"></script>
+<script src="scripts/ng-file-upload/dist/ng-file-upload-shim.js"></script>
+<script src="scripts/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="scripts/angular-cookies/angular-cookies.js"></script>
+<!--Socket.io client Library-->
+<script src="scripts/socket.io-client/dist/socket.io.slim.js"></script>
+
+<!-- AngularJS Charts using charts.js-->
+<script src="scripts/d3/d3.min.js"></script>
+<script src="scripts/nvd3/build/nv.d3.min.js"></script> <!-- or use another assembly -->
+<script src="scripts/angular-nvd3/dist/angular-nvd3.min.js"></script>
+
+<!--AngularJS briant f socket purifier-->
+<script src="custom/js/socket.js"></script>
+
+<!--image cropping if required-->
+<script src="scripts/ng-file-upload/dist/ng-file-upload.js"></script>
+<script src="custom/js/ng-img-crop.js"></script>
+
+<!-- Main OneWordWorld Module -->
+<script src="application/oneword.module.js"></script>
+<script src="application/modules/fileupload.module.js"></script>
+<script src="application/oneword.routes.js"></script>
+<script src="application/factories/socket.factory.js"></script>
+<script src="application/controllers/oneword.controller.js"></script>
+<script src="application/controllers/home.controller.js"></script>
+<script src="application/controllers/event.controller.js"></script>
+<script src="application/controllers/person.controller.js"></script>
+<script src="application/controllers/newevent.controller.js"></script>
+<!--<script src="application/controllers/visitor.controller.js"></script>-->
+<script src="application/factories/kukiz.function.js"></script>
+<script src="application/factories/visitor.factory.js"></script>
+<script src="scripts/moment/moment.js"></script>
+<script src="scripts/angular-moment/angular-moment.js"></script>
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-17888622-5', 'auto');
+    //  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

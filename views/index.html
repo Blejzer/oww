@@ -1,66 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>One Word World</title>
-    <!-- Bootstrap import -->
-    <link rel="stylesheet" href="scripts/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="custom/css/ng-img-crop.css">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>World's Word - One Word World Trendsetters</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="scripts/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="scripts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="scripts/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="lib/device-mockups/device-mockups.min.css">
+
+    <!-- Theme CSS -->
+    <link href="/custom/css/new-age.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--Bootstrap import -->
     <link rel="stylesheet" href="scripts/nvd3/build/nv.d3.min.css">
-    <link rel="stylesheet" href="custom/css/colors.css">
     <base href="/">
+
 </head>
-<body id="customized" ng-app="oneWordWorld" class="tri">
-<div id="komplet"></div>
-<!--Lijevi reklamni blok-->
-<div class="col-lg-2 container-fluid left">
-    <!--<div class="one"></div>-->
-    <img src="images/WorldsWord.png" class="img-responsive" alt="WOW" />
-</div>
-<!--Centralni blok-->
-<div class="col-lg-8 container-fluid">
-    <!--<div class="one"></div>-->
-    <div class="container" ng-controller="OwwController">
-        <!--<div class="one tri"></div>-->
+
+<body id="page-top" ng-app="oneWordWorld" ng-controller="OwwController">
+
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top">World's Word <i class="fa fa-globe"></i> </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="page-scroll" href="#person">Person</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#event">Event</a>
+                </li>
+                <li><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Results</a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref="person({person_id : '{{ person.person_id }}'})">Person</a></li>
+                        <!--<li role="separator" class="divider"></li>-->
+                        <li><a ui-sref="event({event_id : '{{ event.event_id }}'})">Event</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<header>
+    <div class="container">
         <div class="row">
-            <!--<div class="col-xs-3 ">-->
-                <!--<img src="images/wowLogo.png" class="img-responsive img-circle" alt="WOW" width="80" height="80"/>-->
-            <!--</div>-->
-            <div class="col-xs-12">
-                <h1 class="text-center colorSedam">This is One Word World!</h1>
+            <div class="col-sm-7">
+                <div class="header-content">
+                    <div class="header-content-inner">
+                        <h1>World's word is a place where you should try and express yourself in ONE word only!</h1>
+                        <a href="#person" class="btn btn-outline btn-xl page-scroll">Try it, it's fun!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="header-content">
+                    <div class="header-content-inner">
+                        <h2 class="section-heading">Discover what all the buzz is about!</h2>
+                        <h4>Our app can be accessed from any web enabled device! </h4>
+                    </div>
+                </div>
             </div>
         </div>
-        <!--<label ng-show="visitor">{{visitor}}</label>-->
-        <div ui-view="navbar"></div>
-
-        <div class="row ">
-            <div ui-view></div>
-        </div>
-
-        <div class="row ">
-            <label>Number of users online</label>
-            <label>{{users}}</label>
-        </div>
-        <div class="one"></div>
-        <div ui-view="footer"></div>
-
     </div>
-</div>
+</header>
 
-<!--Desni reklamni blok-->
-<div class="col-lg-2 container-fluid jedan">
-    <!--<div class="one"></div>-->
-    <img src="images/WorldsWord.png" class="img-responsive" alt="WOW"/>
-</div>
-<!-- Libs -->
-<!-- jQuery library -->
+
+<div ui-view></div>
+
+
+
+
+<footer>
+    <div class="container">
+        <p>&copy; 2017 World's Word. All Rights Reserved.</p>
+        <ul class="list-inline">
+            <li>
+                Privacy
+            </li>
+            <li>
+                Terms
+            </li>
+            <li>
+                FAQ
+            </li>
+        </ul>
+    </div>
+</footer>
+
+<!-- jQuery -->
 <script src="scripts/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap Library -->
+
+<!-- Bootstrap Core JavaScript -->
 <script src="scripts/bootstrap/dist/js/bootstrap.min.js"></script>
+
 <!-- AngularJS Libraries -->
 <script src="scripts/angular/angular.min.js"></script>
-<script src="scripts/ng-file-upload/dist/ng-file-upload-shim.js"></script>
+<!--<script src="scripts/ng-file-upload/dist/ng-file-upload-shim.js"></script>-->
 <script src="scripts/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="scripts/angular-cookies/angular-cookies.js"></script>
 <!--Socket.io client Library-->
@@ -74,9 +143,6 @@
 <!--AngularJS briant f socket purifier-->
 <script src="custom/js/socket.js"></script>
 
-<!--image cropping if required-->
-<script src="scripts/ng-file-upload/dist/ng-file-upload.js"></script>
-<script src="custom/js/ng-img-crop.js"></script>
 
 <!-- Main OneWordWorld Module -->
 <script src="application/oneword.module.js"></script>
@@ -87,29 +153,31 @@
 <script src="application/controllers/home.controller.js"></script>
 <script src="application/controllers/event.controller.js"></script>
 <script src="application/controllers/person.controller.js"></script>
-<script src="application/controllers/newevent.controller.js"></script>
+<!--<script src="application/controllers/newevent.controller.js"></script>-->
 <!--<script src="application/controllers/visitor.controller.js"></script>-->
 <script src="application/factories/kukiz.function.js"></script>
 <script src="application/factories/visitor.factory.js"></script>
 <script src="scripts/moment/moment.js"></script>
 <script src="scripts/angular-moment/angular-moment.js"></script>
+<!-- Theme JavaScript -->
+<script src="/custom/js/frontview.js"></script>
 <script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-17888622-5', 'auto');
-    //  ga('send', 'pageview');
+    ga('create', 'UA-17888622-6', 'auto');
+    // ga('send', 'pageview');
 
 </script>
 
+<!-- Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+<!-- Theme JavaScript -->
+<script src="/custom/js/new-age.min.js"></script>
+
 </body>
+
 </html>
