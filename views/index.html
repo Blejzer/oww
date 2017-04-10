@@ -22,7 +22,7 @@
     <!-- Plugin CSS -->
     <link rel="stylesheet" href="scripts/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="scripts/simple-line-icons/css/simple-line-icons.css">
-    <link rel="stylesheet" href="lib/device-mockups/device-mockups.min.css">
+    <!--<link rel="stylesheet" href="lib/device-mockups/device-mockups.min.css">-->
 
     <!-- Theme CSS -->
     <link href="/custom/css/new-age.css" rel="stylesheet">
@@ -42,62 +42,62 @@
 
 <body id="page-top" ng-app="oneWordWorld" ng-controller="OwwController">
 
-<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-            </button>
-            <a class="navbar-brand page-scroll" href="#page-top">World's Word <i class="fa fa-globe"></i> </a>
-        </div>
+<!--<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">-->
+    <!--<div class="container">-->
+        <!--&lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;-->
+        <!--<div class="navbar-header">-->
+            <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">-->
+                <!--<span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>-->
+            <!--</button>-->
+            <!--<a class="navbar-brand page-scroll" href="#page-top">World's Word <i class="fa fa-globe"></i> </a>-->
+        <!--</div>-->
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a class="page-scroll" href="#person">Person</a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="#event">Event</a>
-                </li>
-                <li><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Results</a>
-                    <ul class="dropdown-menu">
-                        <li><a ui-sref="person({person_id : '{{ person.person_id }}'})">Person</a></li>
-                        <!--<li role="separator" class="divider"></li>-->
-                        <li><a ui-sref="event({event_id : '{{ event.event_id }}'})">Event</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
-</nav>
+        <!--&lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;-->
+        <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
+            <!--<ul class="nav navbar-nav navbar-right">-->
+                <!--<li>-->
+                    <!--<a class="page-scroll" href="#person">Person</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a class="page-scroll" href="#event">Event</a>-->
+                <!--</li>-->
+                <!--<li><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Results</a>-->
+                    <!--<ul class="dropdown-menu">-->
+                        <!--<li><a ui-sref="test({person_id : '{{ person.person_id }}'})">Person</a></li>-->
+                        <!--&lt;!&ndash;<li role="separator" class="divider"></li>&ndash;&gt;-->
+                        <!--<li><a ui-sref="teste1({event_id : '{{ event.event_id }}'})">Event</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <!--&lt;!&ndash; /.navbar-collapse &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; /.container-fluid &ndash;&gt;-->
+<!--</nav>-->
 
-<header>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-7">
-                <div class="header-content">
-                    <div class="header-content-inner">
-                        <h1>World's word is a place where you should try and express yourself in ONE word only!</h1>
-                        <a href="#person" class="btn btn-outline btn-xl page-scroll">Try it, it's fun!</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-5">
-                <div class="header-content">
-                    <div class="header-content-inner">
-                        <h2 class="section-heading">Discover what all the buzz is about!</h2>
-                        <h4>Our app can be accessed from any web enabled device! </h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
+<!--<header>-->
+    <!--<div class="container">-->
+        <!--<div class="row">-->
+            <!--<div class="col-sm-7">-->
+                <!--<div class="header-content">-->
+                    <!--<div class="header-content-inner">-->
+                        <!--<h1>World's word is a place where you should try and express yourself in ONE word only!</h1>-->
+                        <!--<a href="#person" class="btn btn-outline btn-xl page-scroll">Try it, it's fun!</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-sm-5">-->
+                <!--<div class="header-content">-->
+                    <!--<div class="header-content-inner">-->
+                        <!--<h2 class="section-heading">Discover what all the buzz is about!</h2>-->
+                        <!--<h4>Our app can be accessed from any web enabled device! </h4>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</header>-->
+<div ui-view="navbar"></div>
 
 <div ui-view></div>
 

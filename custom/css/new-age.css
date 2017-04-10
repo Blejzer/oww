@@ -24,6 +24,14 @@ body {
 body {
     font-family: 'Muli', 'Helvetica', 'Arial', 'sans-serif';
 }
+
+ul {
+
+}
+ul.ul-test {
+    height: 140px;
+    overflow: hidden;
+}
 a {
     -webkit-transition: all 0.35s;
     -moz-transition: all 0.35s;
@@ -431,6 +439,7 @@ section .style {
     -moz-border-radius: 50px;
     border-radius: 50px;
     border: double;
+    padding: 5px;
 }
 section .badges .badge-link {
     display: block;
@@ -494,6 +503,7 @@ section .badges .badge-link img {
     section
     .badges {
         min-height: 150px;
+        background-size: 100% 100%;  /*fill the div with background image*/
     }
     section
     .badges .badge-link {
@@ -512,6 +522,7 @@ section .badges .badge-link img {
     section
     .badges {
         min-height: 250px;
+        background-size: 100% 100%;  /*fill the div with background image*/
     }
     section
     .badges .badge-link {
@@ -531,6 +542,7 @@ section .badges .badge-link img {
     section
     .badges {
         min-height: 400px;
+        background-size: 100% 100%;  /*fill the div with background image*/
     }
     section
     .badges .badge-link {
@@ -570,7 +582,8 @@ section .badges .badge-link img {
 @media (min-width:992px){
     section
     .badges {
-        min-height: 550px;
+        min-height: 550px; /*minimum height of the div with image*/
+        background-size: 100% 100%;  /*fill the div with background image*/
     }
     section
     .badges .badge-link {

@@ -117,6 +117,30 @@ var processor = net.createServer(function (conn) {
 
             }
                 break;
+            case "newPersonPageLoaded": {
+                var rezultati = [];
+                function pushToAry(name, val) {
+                    var obj = {};
+                    obj[name] = val;
+                    rezultati.push(obj);
+                }
+
+                PersonPageLoaded(data, function (rezultatg) {
+                    console.log("DATA: newPersonPageLoaded: end of PersonPageLoaded - result: ", rezultatg);
+                    PersonCntPageLoaded(data, function (rezultatc) {
+                        console.log("DATA: newPersonPageLoaded: end of PersonCntPageLoaded - result: ", rezultatc);
+
+                        pushToAry('global', rezultatg);
+                        pushToAry('continent', rezultatc);
+                        // rezultati.push(['continent'],rezultatc);
+                        conn.write(JSON.stringify(rezultati));
+
+                    });
+                });
+
+
+            }
+                break;
             case "personCtnPageLoaded": {
                 PersonCntPageLoaded(data, function (rezultat) {
                     console.log("DATA: end of PersonPageLoaded - result: ", rezultat);
@@ -443,7 +467,6 @@ function EventCntPageLoaded(data, callback) {
     });
 }
 
-
 /* **********************************************
  *        PERSON PAGE LOADED function            *
  * Running geolocation on the provided IP        *
@@ -466,7 +489,7 @@ function PersonPageLoaded(data, callback) {
                 }
                 console.error("Processor: List: PersonWord: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
             }
-            
+
             ritrn = JSON.stringify(rows);
             callback(ritrn);
         });
@@ -505,7 +528,7 @@ function PersonCntPageLoaded(data, callback) {
             continents.forEach(function(cont, index, arr) {
                 item++;
                 var temp = [];
-                console.log('index', index);
+                // console.log('index', index);
                 connection.query(config.get('pwrd.lstpcnt'), [cont.continent, data.person_id], function (err, prows) {
                     // console.log('continent: ', cont.continent);
                     if (err) {
@@ -519,21 +542,21 @@ function PersonCntPageLoaded(data, callback) {
                         cont: cont.continent,
                         pwords: prows
                     }
-                    console.log('temp: ', temp);
+                    // console.log('temp: ', temp);
 
                     results.push(temp);
-                    console.log('results inside query: ', results);
+                    // console.log('results inside query: ', results);
                     if(index === arr.length-1) {
                         ritrn = JSON.stringify(results);
-                        console.log('ritrn: ', ritrn);
+                        // console.log('ritrn: ', ritrn);
                         callback(ritrn);
                     }
                 })
-                console.log('results inside loop: ', results);
-                console.log(item);
+                // console.log('results inside loop: ', results);
+                // console.log(item);
 
             });
-            console.log('results outside loop: ', results);
+            // console.log('results outside loop: ', results);
         })
 
         connection.release();

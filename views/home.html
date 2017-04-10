@@ -1,4 +1,26 @@
 
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="header-content">
+                    <div class="header-content-inner">
+                        <h1>World's word is a place where you should try and express yourself in ONE word only!</h1>
+                        <a href="#person" class="btn btn-outline btn-xl page-scroll">Try it, it's fun!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="header-content">
+                    <div class="header-content-inner">
+                        <h2 class="section-heading">Discover what all the buzz is about!</h2>
+                        <h4>Our app can be accessed from any web enabled device! </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 <section id="person" class="person bg-person text-center">
     <div class="container">
         <div class="col-md-4">
@@ -13,10 +35,11 @@
                     <strong>Send</strong>
                 </button>
             </form>
-            <ul>
+            <ul class="ul-test">
                 <li ng-repeat="pword in pwords track by $index">{{pword}}</li>
             </ul>
-            <table >
+            <table class="table table-condensed">
+                <tr><td>Current leading feels</td></tr>
                 <tr ng-repeat="t in personList">
                     <td>{{ t.a }}</td>
                     <td>{{ t.c }}</td>
@@ -46,10 +69,10 @@
                     <strong>Send</strong>
                 </button>
             </form>
-            <ul>
+            <ul class="ul-test">
                 <li ng-repeat="eword in ewords track by $index">{{eword}}</li>
             </ul>
-            <table >
+            <table class="table table-condensed" >
                 <tr ng-repeat="t in eventList">
                     <td>{{ t.a }}</td>
                     <td>{{ t.c }}</td>

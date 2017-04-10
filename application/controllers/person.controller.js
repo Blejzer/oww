@@ -35,35 +35,40 @@
                 }
             }
         };
-
         $scope.$on('$stateChangeSuccess', function () {
-            switch ($state.current.name) {
-                case "person": {
-                    socket.emit('personPageLoaded', person_id);
-                }
-                    break;
-                case "pcontinent": {
-                    socket.emit('personCtnPageLoaded', person_id);
-                }
-                    break;
-                default:
-            }
-            console.log('Person page $stateChangeSuccess fired');
+            socket.emit('newPersonPageLoaded', person_id);
+            // socket.emit('personCtnPageLoaded', person_id);
         });
 
+        // $scope.$on('$stateChangeSuccess', function () {
+        //     switch ($state.current.name) {
+        //         case "person": {
+        //             socket.emit('personPageLoaded', person_id);
+        //         }
+        //             break;
+        //         case "pcontinent": {
+        //             socket.emit('personCtnPageLoaded', person_id);
+        //         }
+        //             break;
+        //         default:
+        //     }
+        //     console.log('Person page $stateChangeSuccess fired');
+        // });
+        //
         socket.on('personPageSuccess', function(json){
 
-            var evt = JSON.parse(json);
-            $scope.globalList = evt;
-            $scope.pdata = evt;
+            var glbprsn = JSON.parse(json);
+            $scope.globalList = glbprsn;
+            $scope.pdata = glbprsn;
         });
         socket.on('personCtnPageSuccess', function(json){
 
             // var evt = JSON.parse(json);
-            console.log('evt from eventCtnPageSuccess: ', json);
+            console.log('person from personCtnPageSuccess: ', json);
             var resultingArray =[];
             var words = [];
-            json.forEach(function(cont){
+            var cntnprsn = JSON.parse(json);
+            cntnprsn.forEach(function(cont){
                 words = cont.pwords;
                 resultingArray.push({
                     cont: cont.cont,

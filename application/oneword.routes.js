@@ -18,7 +18,8 @@
                     // the main template will be placed here (relatively named)
                     '': {   templateUrl: 'views/home.html',
                             controller: 'HomeController'},
-                    'footer@': { templateUrl: 'views/addons/footer.html'}
+                    // 'footer@': { templateUrl: 'views/addons/footer.html'}
+
                 }
 
             })
@@ -71,6 +72,14 @@
                     'footer@': { templateUrl: 'views/addons/footer.html'}
                 }
 
+            })
+            .state('test', {
+                url: '/test:person_id',
+                views: {
+                    '': {
+                        templateUrl: 'views/testp1.html',
+                        controller: "PersonController"}
+                }
             });
 
         $locationProvider.html5Mode({

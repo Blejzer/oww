@@ -312,6 +312,40 @@ io.sockets.on('connection', function (socket) {
     });
 
     // *********************************************************************
+    // Socket u slucaju kada korisnik otvori stranicu Person
+    // pa je potrebno dostaviti duzi spisak rijeci po nekoj
+    // kvalifikaciji
+    // *********************************************************************
+    socket.on('newPersonPageLoaded', function (person_id) {
+
+        console.log("Registrujem personPageLoaded socket ", person_id);
+        // *********************************************************************
+        var data = {"data": "newPersonPageLoaded", "person_id" : person_id}; // "ip": fakeip,
+        jack = JSON.stringify(data);
+
+        // Create a socket (client) that connects to the server
+        var procSocket = new net.Socket();
+        procSocket.connect(3001, "localhost", function () {
+            console.log("Client: newPersonPageLoaded: Connected to server");
+            procSocket.write(jack);
+        });
+        // Emitujemo klijentu izmjenu na event
+        // io.emit('eventWord', eventWord);
+
+        // Cekamo odgovor sa procesora i osvjezenu event listu
+        procSocket.on("data", function (data) {
+            var list = JSON.parse(data);
+            // console.log("list", list);
+            // console.log("list[0]", list[0]);
+            // console.log("test",list[0].global);
+            // console.log("list[1]", list[1].continent);
+            socket.emit('personCtnPageSuccess', list[1].continent);
+            socket.emit('personPageSuccess', list[0].global);
+            procSocket.end();
+        });
+    });
+
+    // *********************************************************************
     // Socket u slucaju kada korisnik otvori stranicu Person by continent
     // pa je potrebno dostaviti duzi spisak rijeci po nekoj
     // kvalifikaciji
