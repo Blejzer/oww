@@ -1,10 +1,10 @@
 /********************************************************
- *                ONE WORD WORLD SERVER
+ *                ONE WORD WORLD SERVER                 *
  * ******************************************************
  * Copyright (C) Nikola Kujaca - All Rights Reserved    *
  * Unauthorized copying of this file, via any medium    *
  * is strictly prohibited proprietary and confidential  *
- * Written by Nikola Kujaca <nikola.kujaca@gmail.com>,  *
+ * Written by Nikola Kujaca <www.bdslab.info>,          *
  * 1411972                                              *
  ********************************************************/
 
@@ -116,7 +116,7 @@ console.log("*******************************************************************
  ********************************************************/
 io.sockets.on('connection', function (socket) {
     socket.removeAllListeners();
-    var fakeip = '2a02:a03f:2eca:2200:b940:6ce4:ac98:2ff3' // socket.handshake.address;
+    var fakeip = socket.handshake.address;
     console.log(new Date(), "Client IP Address - assuming remote: socket.handshake.address: ", fakeip);
 
     var visitor = {};
@@ -287,120 +287,6 @@ io.sockets.on('connection', function (socket) {
             procSocket.end();
         });
     });
-
-                            // *********************************************************************
-                            // Socket u slucaju kada korisnik otvori stranicu Event
-                            // pa je potrebno dostaviti duzi spisak rijeci po nekoj
-                            // kvalifikaciji
-                            // *********************************************************************
-                            // socket.on('eventPageLoaded', function (event_id) {
-                            //
-                            //     console.log("Registrujem eventPageLoaded socket ");
-                            //     // *********************************************************************
-                            //     var data = {"data": "eventPageLoaded", "event_id" : event_id}; // "ip": fakeip,
-                            //     jack = JSON.stringify(data);
-                            //
-                            //     // Create a socket (client) that connects to the server
-                            //     var procSocket = new net.Socket();
-                            //     procSocket.connect(3001, "localhost", function () {
-                            //         console.log("Client: eventPageLoaded: Connected to server");
-                            //         procSocket.write(jack);
-                            //     });
-                            //
-                            //     // Cekamo odgovor sa procesora i osvjezenu event listu
-                            //     procSocket.on("data", function (data) {
-                            //         var list = JSON.parse(data);
-                            //         socket.emit('eventPageSuccess', JSON.stringify(list));
-                            //         procSocket.end();
-                            //     });
-                            // });
-
-
-                            // *********************************************************************
-                            // Socket u slucaju kada korisnik otvori stranicu Event by continent
-                            // pa je potrebno dostaviti duzi spisak rijeci po nekoj
-                            // kvalifikaciji
-                            // *********************************************************************
-                            // socket.on('eventCtnPageLoaded', function (event_id) {
-                            //
-                            //     console.log("Registrujem eventCtnPageLoaded socket ");
-                            //     // *********************************************************************
-                            //     var data = {"data": "eventCtnPageLoaded", "event_id" : event_id}; // "ip": fakeip,
-                            //     jack = JSON.stringify(data);
-                            //
-                            //     // Create a socket (client) that connects to the server
-                            //     var procSocket = new net.Socket();
-                            //     procSocket.connect(3001, "localhost", function () {
-                            //         console.log("Client: eventCtnPageLoaded: Connected to server");
-                            //         procSocket.write(jack);
-                            //     });
-                            //
-                            //     // Cekamo odgovor sa procesora i osvjezenu event listu
-                            //     procSocket.on("data", function (data) {
-                            //         var list = JSON.parse(data);
-                            //         // console.log('Server: List returned from processor: ', list);
-                            //         socket.emit('eventCtnPageSuccess', list);
-                            //         procSocket.end();
-                            //     });
-                            // });
-
-
-                            // // *********************************************************************
-                            // // Socket u slucaju kada korisnik otvori stranicu Person
-                            // // pa je potrebno dostaviti duzi spisak rijeci po nekoj
-                            // // kvalifikaciji
-                            // // *********************************************************************
-                            // socket.on('personPageLoaded', function (person_id) {
-                            //
-                            //     console.log("Registrujem personPageLoaded socket ", person_id);
-                            //     // *********************************************************************
-                            //     var data = {"data": "personPageLoaded", "person_id" : person_id}; // "ip": fakeip,
-                            //     jack = JSON.stringify(data);
-                            //
-                            //     // Create a socket (client) that connects to the server
-                            //     var procSocket = new net.Socket();
-                            //     procSocket.connect(3001, "localhost", function () {
-                            //         console.log("Client: personPageLoaded: Connected to server");
-                            //         procSocket.write(jack);
-                            //     });
-                            //     // Emitujemo klijentu izmjenu na event
-                            //     // io.emit('eventWord', eventWord);
-                            //
-                            //     // Cekamo odgovor sa procesora i osvjezenu event listu
-                            //     procSocket.on("data", function (data) {
-                            //         var list = JSON.parse(data);
-                            //         socket.emit('personPageSuccess', JSON.stringify(list));
-                            //         procSocket.end();
-                            //     });
-                            // });
-                            //
-                            // // *********************************************************************
-                            // // Socket u slucaju kada korisnik otvori stranicu Person by continent
-                            // // pa je potrebno dostaviti duzi spisak rijeci po nekoj
-                            // // kvalifikaciji
-                            // // *********************************************************************
-                            // socket.on('personCtnPageLoaded', function (person_id) {
-                            //
-                            //     console.log("Registrujem personCtnPageLoaded socket ");
-                            //     // *********************************************************************
-                            //     var data = {"data": "personCtnPageLoaded", "person_id" : person_id}; // "ip": fakeip,
-                            //     jack = JSON.stringify(data);
-                            //
-                            //     // Create a socket (client) that connects to the server
-                            //     var procSocket = new net.Socket();
-                            //     procSocket.connect(3001, "localhost", function () {
-                            //         console.log("Client: personCtnPageLoaded: Connected to server");
-                            //         procSocket.write(jack);
-                            //     });
-                            //
-                            //     // Cekamo odgovor sa procesora i osvjezenu event listu
-                            //     procSocket.on("data", function (data) {
-                            //         var list = JSON.parse(data);
-                            //         // console.log('Server: List returned from processor: ', list);
-                            //         socket.emit('personCtnPageSuccess', list);
-                            //         procSocket.end();
-                            //     });
-                            // });
 
 });
 
