@@ -12,7 +12,6 @@
     function EventController($rootScope, $scope, socket, $state) {
         var ectrl = this;
         var event_id = $rootScope.event.event_id;
-        console.log('$rootScope.event: ', $rootScope.event);
         // Pie Chart configuration!
         $scope.options = {
             chart: {
@@ -49,8 +48,6 @@
         });
         socket.on('eventCtnPageSuccess', function(json){
 
-            // var evt = JSON.parse(json);
-            console.log('evt from eventCtnPageSuccess: ', json);
             var resultingArray =[];
             var words = [];
             var cntnevnt = JSON.parse(json);

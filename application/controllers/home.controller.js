@@ -16,9 +16,8 @@
         });
 
         socket.on('test', function (event, person) {
-            console.log('socket.on test HomeController fired', event);
             $scope.$apply(function() {
-                // every changes goes here
+
                 $scope.event = event;
                 $scope.person = person;
                 $rootScope.person = $scope.person;
@@ -63,12 +62,10 @@
         }
 
         $scope.$on('$stateChangeSuccess', function () {
-            console.log("$stateChangeSuccess - HomeContorller");
             $scope.event = $rootScope.event;
             $scope.person = $rootScope.person;
             $scope.eventList = $rootScope.eventList;
             $scope.personList = $rootScope.personList;
-
 
         });
 

@@ -12,7 +12,6 @@
     function PersonController($rootScope, $scope, socket, $state) {
         var pctrl = this;
         var person_id = $rootScope.person.person_id;
-        console.log('$rootScope.person: ', $rootScope.person);
 
         // Pie Chart configuration!
         $scope.options = {
@@ -48,8 +47,6 @@
         });
         socket.on('personCtnPageSuccess', function(json){
 
-            // var evt = JSON.parse(json);
-            console.log('person from personCtnPageSuccess: ', json);
             var resultingArray =[];
             var words = [];
             var cntnprsn = JSON.parse(json);

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>World's Word - One Word World Trendsetters</title>
+    <title>World's Word - Fastest Trends Stats</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="scripts/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -22,10 +22,9 @@
     <!-- Plugin CSS -->
     <link rel="stylesheet" href="scripts/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="scripts/simple-line-icons/css/simple-line-icons.css">
-    <!--<link rel="stylesheet" href="lib/device-mockups/device-mockups.min.css">-->
 
     <!-- Theme CSS -->
-    <link href="/custom/css/new-age.css" rel="stylesheet">
+    <link href="/custom/css/frontview.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,45 +41,11 @@
 
 <body id="page-top" ng-app="oneWordWorld" ng-controller="OwwController">
 
-<!--<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">-->
-    <!--<div class="container">-->
-        <!--&lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;-->
-        <!--<div class="navbar-header">-->
-            <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">-->
-                <!--<span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>-->
-            <!--</button>-->
-            <!--<a class="navbar-brand page-scroll" href="#page-top">World's Word <i class="fa fa-globe"></i> </a>-->
-        <!--</div>-->
 
-        <!--&lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;-->
-        <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
-            <!--<ul class="nav navbar-nav navbar-right">-->
-                <!--<li>-->
-                    <!--<a class="page-scroll" href="#person">Person</a>-->
-                <!--</li>-->
-                <!--<li>-->
-                    <!--<a class="page-scroll" href="#event">Event</a>-->
-                <!--</li>-->
-                <!--<li><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Results</a>-->
-                    <!--<ul class="dropdown-menu">-->
-                        <!--<li><a ui-sref="test({person_id : '{{ person.person_id }}'})">Person</a></li>-->
-                        <!--&lt;!&ndash;<li role="separator" class="divider"></li>&ndash;&gt;-->
-                        <!--<li><a ui-sref="teste1({event_id : '{{ event.event_id }}'})">Event</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
-            <!--</ul>-->
-        <!--</div>-->
-        <!--&lt;!&ndash; /.navbar-collapse &ndash;&gt;-->
-    <!--</div>-->
-    <!--&lt;!&ndash; /.container-fluid &ndash;&gt;-->
-<!--</nav>-->
 
 <div ui-view="navbar"></div>
 
 <div ui-view></div>
-
-
-
 
 <footer>
     <div class="container">
@@ -96,7 +61,7 @@
                 FAQ
             </li>
         </ul>
-        <p>This product includes GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com">http://www.maxmind.com</a>.</p>
+        <p>This product includes GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com" target="_blank">http://www.maxmind.com</a>.</p>
     </div>
 </footer>
 
@@ -110,7 +75,7 @@
 <script src="scripts/angular/angular.min.js"></script>
 <!--<script src="scripts/ng-file-upload/dist/ng-file-upload-shim.js"></script>-->
 <script src="scripts/angular-ui-router/release/angular-ui-router.min.js"></script>
-<script src="scripts/angular-cookies/angular-cookies.js"></script>
+<script src="scripts/angular-cookies/angular-cookies.min.js"></script>
 <!--Socket.io client Library-->
 <script src="scripts/socket.io-client/dist/socket.io.slim.js"></script>
 
@@ -125,21 +90,18 @@
 
 <!-- Main OneWordWorld Module -->
 <script src="application/oneword.module.js"></script>
-<script src="application/modules/fileupload.module.js"></script>
+<!--<script src="application/modules/fileupload.module.js"></script>-->
 <script src="application/oneword.routes.js"></script>
 <script src="application/factories/socket.factory.js"></script>
 <script src="application/controllers/oneword.controller.js"></script>
 <script src="application/controllers/home.controller.js"></script>
 <script src="application/controllers/event.controller.js"></script>
 <script src="application/controllers/person.controller.js"></script>
-<!--<script src="application/controllers/newevent.controller.js"></script>-->
 <!--<script src="application/controllers/visitor.controller.js"></script>-->
 <script src="application/factories/kukiz.function.js"></script>
 <script src="application/factories/visitor.factory.js"></script>
-<script src="scripts/moment/moment.js"></script>
-<script src="scripts/angular-moment/angular-moment.js"></script>
-<!-- Theme JavaScript -->
-<!--<script src="/custom/js/frontview.js"></script>-->
+<script src="scripts/moment/min/moment.min.js"></script>
+<script src="scripts/angular-moment/angular-moment.min.js"></script>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -153,9 +115,6 @@
 
 <!-- Plugin JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-
-<!-- Theme JavaScript -->
-<script src="/custom/js/new-age.min.js"></script>
 
 </body>
 

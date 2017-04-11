@@ -24,6 +24,14 @@ body {
 body {
     font-family: 'Muli', 'Helvetica', 'Arial', 'sans-serif';
 }
+
+ul {
+
+}
+ul.ul-test {
+    height: 140px;
+    overflow: hidden;
+}
 a {
     -webkit-transition: all 0.35s;
     -moz-transition: all 0.35s;
@@ -187,8 +195,33 @@ header .device-container {
 header .device-container .screen img {
     border-radius: 3px;
 }
+header .test{
+    min-height: 1500px;
+}
 @media (min-width: 768px) {
-
+    header {
+        min-height: 100%;
+    }
+    header .header-content {
+        text-align: left;
+        padding: 0;
+        height: 100vh;
+    }
+    header .header-content .header-content-inner {
+        max-width: none;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    header .header-content .header-content-inner h1 {
+        font-size: 35px;
+    }
+    header .device-container {
+        max-width: none;
+        max-height: calc(0vh);
+        margin: 100px auto 0;
+    }
 }
 @media (min-width: 992px) {
     header .header-content .header-content-inner h1 {
@@ -196,13 +229,47 @@ header .device-container .screen img {
     }
 }
 
-
 section {
     padding: 100px 0;
 }
 section h2 {
     font-size: 50px;
 }
+
+section.person {
+    padding: 150px 0;
+    position: relative;
+}
+section.person h2 {
+    margin-top: 0;
+    font-size: 50px;
+}
+section.person .badges .badge-link {
+    display: block;
+    margin-bottom: 25px;
+}
+section.person .badges .badge-link:last-child {
+    margin-bottom: 0;
+}
+section.person .badges .badge-link img {
+    height: 60px;
+}
+@media (min-width: 768px) {
+    section.person .badges .badge-link {
+        display: inline-block;
+        margin-bottom: 0;
+    }
+}
+@media (min-width: 768px) {
+    section.person h2 {
+        font-size: 70px;
+    }
+}
+
+
+
+
+
 
 
 
@@ -375,6 +442,7 @@ section .style {
     -moz-border-radius: 50px;
     border-radius: 50px;
     border: double;
+    padding: 5px;
 }
 section .badges .badge-link {
     display: block;
@@ -393,12 +461,6 @@ section .badges .badge-link img {
     background: linear-gradient(#cdd422, #e05915);
     color: #e6e9f0;
 }
-.bg-person .btn {
-    border: none;
-}
-.bg-event .btn {
-    border: none;
-}
 
 .bg-event {
     background: #e05915;
@@ -407,18 +469,14 @@ section .badges .badge-link img {
     color: #e6e9f0;
 }
 
-/*.btn{*/
-    /*border: none;*/
-/*}*/
+.btn{
+    border: none;
+}
 .btn:hover,
 .btn:focus,
 .btn.focus {
     color: #431c5d;
     text-decoration: none;
-}
-
-.dropdown-menu {
-    background-color: #e6e9f0;
 }
 
 .dropdown-menu > li > a {
@@ -448,6 +506,7 @@ section .badges .badge-link img {
     section
     .badges {
         min-height: 150px;
+        background-size: 100% 100%;  /*fill the div with background image*/
     }
     section
     .badges .badge-link {
@@ -466,6 +525,7 @@ section .badges .badge-link img {
     section
     .badges {
         min-height: 250px;
+        background-size: 100% 100%;  /*fill the div with background image*/
     }
     section
     .badges .badge-link {
@@ -485,6 +545,7 @@ section .badges .badge-link img {
     section
     .badges {
         min-height: 400px;
+        background-size: 100% 100%;  /*fill the div with background image*/
     }
     section
     .badges .badge-link {
@@ -524,7 +585,8 @@ section .badges .badge-link img {
 @media (min-width:992px){
     section
     .badges {
-        min-height: 550px;
+        min-height: 550px; /*minimum height of the div with image*/
+        background-size: 100% 100%;  /*fill the div with background image*/
     }
     section
     .badges .badge-link {
