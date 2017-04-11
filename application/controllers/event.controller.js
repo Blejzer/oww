@@ -59,7 +59,7 @@
                 })
             });
             $scope.contList = resultingArray;
-            
+
         });
 
         socket.on('disconnect', function(){
