@@ -1,0 +1,31 @@
+<header>
+    <div class="container thumbnail">
+        <div class="col-md-8 text-center">
+            <h2>"{{ person.title }}"</h2>
+        </div>
+        <div class="col-md-4">
+            <img src="{{ person.image }}" alt="WOW" style="max-height: 300px; max-width: 300px"/>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="col-md-6">
+        <div>
+            <h2 class="text-center">Global feel</h2>
+        </div>
+        <div>
+            <h3>Global feel</h3>
+            <nvd3 options="options" data="globalList"></nvd3>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div>
+            <h2 class="text-center">Per Continent feel</h2>
+        </div>
+        <div ng-repeat="kont in contList">
+            <h3>{{ kont.cont }}</h3>
+            <nvd3 options="options" data="kont.pwords"></nvd3>
+        </div>
+    </div>
+
+</div>

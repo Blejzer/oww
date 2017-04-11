@@ -36,19 +36,7 @@
         };
 
         $scope.$on('$stateChangeSuccess', function () {
-
-            console.log('Event page $stateChangeSuccess fired', $state.current.name);
-            switch ($state.current.name) {
-                case "event": {
-                    socket.emit('eventPageLoaded', event_id);
-                }
-                    break;
-                case "econtinent": {
-                    socket.emit('eventCtnPageLoaded', event_id);
-                }
-                    break;
-                default:
-            }
+            socket.emit('newEventPageLoaded', event_id);
         });
 
         socket.on('eventPageSuccess', function(json){
@@ -62,7 +50,8 @@
             console.log('evt from eventCtnPageSuccess: ', json);
             var resultingArray =[];
             var words = [];
-            json.forEach(function(cont){
+            var cntnevnt = JSON.parse(json);
+            cntnevnt.forEach(function(cont){
                  words = cont.ewords;
                 resultingArray.push({
                     cont: cont.cont,
@@ -70,6 +59,7 @@
                 })
             });
             $scope.contList = resultingArray;
+            
         });
 
         socket.on('disconnect', function(){

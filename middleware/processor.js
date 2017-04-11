@@ -92,31 +92,39 @@ var processor = net.createServer(function (conn) {
                 });
 
             }
-                break;
-            case "eventPageLoaded": {
-                EventPageLoaded(data, function (rezultat) {
-                    console.log("DATA: end of EventPageLoaded - result: ", rezultat);
-                    conn.write(rezultat);
-                });
-
-            }
-                break;
-            case "eventCtnPageLoaded": {
-                EventCntPageLoaded(data, function (rezultat) {
-                    console.log("DATA: end of EventCtnPageLoaded - result: ", rezultat);
-                    conn.write(rezultat);
-                });
-
-            }
-                break;
-            case "personPageLoaded": {
-                PersonPageLoaded(data, function (rezultat) {
-                    console.log("DATA: end of PersonPageLoaded - result: ", rezultat);
-                    conn.write(rezultat);
-                });
-
-            }
-                break;
+                                                                                                                        //     break;
+                                                                                                                        // case "eventPageLoaded": {
+                                                                                                                        //     EventPageLoaded(data, function (rezultat) {
+                                                                                                                        //         console.log("DATA: end of EventPageLoaded - result: ", rezultat);
+                                                                                                                        //         conn.write(rezultat);
+                                                                                                                        //     });
+                                                                                                                        //
+                                                                                                                        // }
+                                                                                                                        //     break;
+                                                                                                                        // case "eventCtnPageLoaded": {
+                                                                                                                        //     EventCntPageLoaded(data, function (rezultat) {
+                                                                                                                        //         console.log("DATA: end of EventCtnPageLoaded - result: ", rezultat);
+                                                                                                                        //         conn.write(rezultat);
+                                                                                                                        //     });
+                                                                                                                        //
+                                                                                                                        // }
+                                                                                                                        //     break;
+                                                                                                                        // case "personPageLoaded": {
+                                                                                                                        //     PersonPageLoaded(data, function (rezultat) {
+                                                                                                                        //         console.log("DATA: end of PersonPageLoaded - result: ", rezultat);
+                                                                                                                        //         conn.write(rezultat);
+                                                                                                                        //     });
+                                                                                                                        //
+                                                                                                                        // }
+                                                                                                                        //     break;
+                                                                                                                        // case "personCtnPageLoaded": {
+                                                                                                                        //     PersonCntPageLoaded(data, function (rezultat) {
+                                                                                                                        //         console.log("DATA: end of PersonPageLoaded - result: ", rezultat);
+                                                                                                                        //         conn.write(rezultat);
+                                                                                                                        //     });
+                                                                                                                        //
+                                                                                                                        // }
+                                                                                                                        //     break;
             case "newPersonPageLoaded": {
                 var rezultati = [];
                 function pushToAry(name, val) {
@@ -141,11 +149,26 @@ var processor = net.createServer(function (conn) {
 
             }
                 break;
-            case "personCtnPageLoaded": {
-                PersonCntPageLoaded(data, function (rezultat) {
-                    console.log("DATA: end of PersonPageLoaded - result: ", rezultat);
-                    conn.write(rezultat);
+            case "newEventPageLoaded": {
+                var rezultati = [];
+                function pushToAry(name, val) {
+                    var obj = {};
+                    obj[name] = val;
+                    rezultati.push(obj);
+                }
+
+                EventPageLoaded(data, function (rezultatg) {
+                    console.log("DATA: newEventPageLoaded: end of EventPageLoaded - result: ", rezultatg);
+                    EventCntPageLoaded(data, function (rezultatc) {
+                        console.log("DATA: newEventPageLoaded: end of EventCntPageLoaded - result: ", rezultatc);
+
+                        pushToAry('global', rezultatg);
+                        pushToAry('continent', rezultatc);
+                        conn.write(JSON.stringify(rezultati));
+
+                    });
                 });
+
 
             }
                 break;
@@ -382,7 +405,7 @@ function InsertPersonWord(data, callback) {
 function EventPageLoaded(data, callback) {
     data = JSON.parse(data);
     // ipJson = cityLookup.get(data.ip);
-    console.log("DATA: EventPageLoaded: Response from client: %s", data.data, data.event_id); // ipJson.country.names.en,
+    // console.log("DATA: EventPageLoaded: Response from client: %s", data.data, data.event_id); // ipJson.country.names.en,
 
     // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
@@ -414,7 +437,7 @@ function EventCntPageLoaded(data, callback) {
     continents = [];
     results = [];
     // ipJson = cityLookup.get(data.ip);
-    console.log("DATA: EventPageLoaded: Response from client: %s", data.data); // ipJson.country.names.en,
+    // console.log("DATA: EventPageLoaded: Response from client: %s", data.data); // ipJson.country.names.en,
 
     // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
@@ -432,7 +455,7 @@ function EventCntPageLoaded(data, callback) {
             continents.forEach(function(cont, index, arr) {
                 item++;
                 var temp = [];
-                console.log('index', index);
+                // console.log('index', index);
                 connection.query(config.get('ewrd.lstpcnt'), [cont.continent, data.event_id], function (err, erows) {
                     // console.log('continent: ', cont.continent);
                     if (err) {
@@ -446,21 +469,21 @@ function EventCntPageLoaded(data, callback) {
                         cont: cont.continent,
                         ewords: erows
                     }
-                    console.log('temp: ', temp);
+                    // console.log('temp: ', temp);
 
                     results.push(temp);
-                    console.log('results inside query: ', results);
+                    // console.log('results inside query: ', results);
                     if(index === arr.length-1) {
                         ritrn = JSON.stringify(results);
                         console.log('ritrn: ', ritrn);
                         callback(ritrn);
                     }
                 })
-                console.log('results inside loop: ', results);
-                console.log(item);
+                // console.log('results inside loop: ', results);
+                // console.log(item);
 
             });
-            console.log('results outside loop: ', results);
+            // console.log('results outside loop: ', results);
         })
 
         connection.release();
