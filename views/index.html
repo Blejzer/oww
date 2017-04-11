@@ -75,28 +75,6 @@
     <!--&lt;!&ndash; /.container-fluid &ndash;&gt;-->
 <!--</nav>-->
 
-<!--<header>-->
-    <!--<div class="container">-->
-        <!--<div class="row">-->
-            <!--<div class="col-sm-7">-->
-                <!--<div class="header-content">-->
-                    <!--<div class="header-content-inner">-->
-                        <!--<h1>World's word is a place where you should try and express yourself in ONE word only!</h1>-->
-                        <!--<a href="#person" class="btn btn-outline btn-xl page-scroll">Try it, it's fun!</a>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="col-sm-5">-->
-                <!--<div class="header-content">-->
-                    <!--<div class="header-content-inner">-->
-                        <!--<h2 class="section-heading">Discover what all the buzz is about!</h2>-->
-                        <!--<h4>Our app can be accessed from any web enabled device! </h4>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</header>-->
 <div ui-view="navbar"></div>
 
 <div ui-view></div>
@@ -109,17 +87,16 @@
         <p>&copy; 2017 World's Word. All Rights Reserved.</p>
         <ul class="list-inline">
             <li>
-                Privacy
+                <a ui-sref="aboutus" href="#page-top">About Us</a>
             </li>
             <li>
-                Terms
+                <a ui-sref="terms" href="#page-top">Terms</a>
             </li>
             <li>
                 FAQ
             </li>
-            <li>This product includes GeoLite2 data created by MaxMind, available from
-                <a href="http://www.maxmind.com">http://www.maxmind.com</a>.</li>
         </ul>
+        <p>This product includes GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com">http://www.maxmind.com</a>.</p>
     </div>
 </footer>
 

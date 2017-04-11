@@ -16,11 +16,14 @@
         });
 
         socket.on('test', function (event, person) {
-            console.log('socket.on test fired', event);
-            $scope.event = event;
-            $scope.person = person;
-            $rootScope.person = $scope.person;
-            $rootScope.event = $scope.event;
+            console.log('socket.on test HomeController fired', event);
+            $scope.$apply(function() {
+                // every changes goes here
+                $scope.event = event;
+                $scope.person = person;
+                $rootScope.person = $scope.person;
+                $rootScope.event = $scope.event;
+            });
         });
 
         socket.on('eventWord', function (evt) {

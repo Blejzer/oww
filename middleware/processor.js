@@ -85,14 +85,64 @@ var processor = net.createServer(function (conn) {
 
             }
                 break;
+
             case "personWord": {
                 InsertPersonWord(data, function (rezultat) {
                     console.log("DATA: end of InsertPersonWord - result: ", rezultat);
                     conn.write(rezultat);
                 });
+            }
+                break;
+
+            case "newPersonPageLoaded": {
+                var rezultati = [];
+
+                function pushToAry(name, val) {
+                    var obj = {};
+                    obj[name] = val;
+                    rezultati.push(obj);
+                }
+
+                PersonPageLoaded(data, function (rezultatg) {
+                    console.log("DATA: newPersonPageLoaded: end of PersonPageLoaded - result: ", rezultatg);
+
+                    PersonCntPageLoaded(data, function (rezultatc) {
+                        console.log("DATA: newPersonPageLoaded: end of PersonCntPageLoaded - result: ", rezultatc);
+
+                        pushToAry('global', rezultatg);
+                        pushToAry('continent', rezultatc);
+                        // rezultati.push(['continent'],rezultatc);
+                        conn.write(JSON.stringify(rezultati));
+
+                    })
+                });
+
 
             }
-                                                                                                                        //     break;
+                break;
+
+            case "newEventPageLoaded": {
+                var rezultati = [];
+                function pushToAry(name, val) {
+                    var obj = {};
+                    obj[name] = val;
+                    rezultati.push(obj);
+                }
+
+                EventPageLoaded(data, function (rezultatg) {
+                    console.log("DATA: newEventPageLoaded: end of EventPageLoaded - result: ", rezultatg);
+
+                    EventCntPageLoaded(data, function (rezultatc) {
+                        console.log("DATA: newEventPageLoaded: end of EventCntPageLoaded - result: ", rezultatc);
+
+                        pushToAry('global', rezultatg);
+                        pushToAry('continent', rezultatc);
+                        conn.write(JSON.stringify(rezultati));
+
+                    });
+                });
+            }
+                break;
                                                                                                                         // case "eventPageLoaded": {
                                                                                                                         //     EventPageLoaded(data, function (rezultat) {
                                                                                                                         //         console.log("DATA: end of EventPageLoaded - result: ", rezultat);
@@ -125,53 +175,6 @@ var processor = net.createServer(function (conn) {
                                                                                                                         //
                                                                                                                         // }
                                                                                                                         //     break;
-            case "newPersonPageLoaded": {
-                var rezultati = [];
-                function pushToAry(name, val) {
-                    var obj = {};
-                    obj[name] = val;
-                    rezultati.push(obj);
-                }
-
-                PersonPageLoaded(data, function (rezultatg) {
-                    console.log("DATA: newPersonPageLoaded: end of PersonPageLoaded - result: ", rezultatg);
-                    PersonCntPageLoaded(data, function (rezultatc) {
-                        console.log("DATA: newPersonPageLoaded: end of PersonCntPageLoaded - result: ", rezultatc);
-
-                        pushToAry('global', rezultatg);
-                        pushToAry('continent', rezultatc);
-                        // rezultati.push(['continent'],rezultatc);
-                        conn.write(JSON.stringify(rezultati));
-
-                    });
-                });
-
-
-            }
-                break;
-            case "newEventPageLoaded": {
-                var rezultati = [];
-                function pushToAry(name, val) {
-                    var obj = {};
-                    obj[name] = val;
-                    rezultati.push(obj);
-                }
-
-                EventPageLoaded(data, function (rezultatg) {
-                    console.log("DATA: newEventPageLoaded: end of EventPageLoaded - result: ", rezultatg);
-                    EventCntPageLoaded(data, function (rezultatc) {
-                        console.log("DATA: newEventPageLoaded: end of EventCntPageLoaded - result: ", rezultatc);
-
-                        pushToAry('global', rezultatg);
-                        pushToAry('continent', rezultatc);
-                        conn.write(JSON.stringify(rezultati));
-
-                    });
-                });
-
-
-            }
-                break;
             default:
 
         }

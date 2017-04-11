@@ -91,7 +91,22 @@
                         controller: "PersonController"}
                 }
             })
-            // novi prelaz na statistiku
+            .state('aboutus', {
+                url: '/aboutus',
+                views: {
+                    'navbar@': { templateUrl: 'views/addons/navbar2.html'},
+                    '': {
+                        templateUrl: 'views/aboutus.html'}
+                }
+            })
+            .state('terms', {
+                url: '/terms',
+                views: {
+                    'navbar@': { templateUrl: 'views/addons/navbar2.html'},
+                    '': {
+                        templateUrl: 'views/terms.html'}
+                }
+            })
             .state('event', {
                 url: '/event:event_id',
                 views: {
