@@ -16,7 +16,6 @@
 
         OwwUPS.on('notification', function (data) {
             $scope.$apply(function () {
-                console.log("notification data: ", data.visitor);
                 $scope.visitor = data.visitor;
             });
         });

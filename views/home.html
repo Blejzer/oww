@@ -1,89 +1,88 @@
-<div class="container-fluid">
-<!-- theme divs (person & event) -->
-    <div class="row text-center tri">
-        <div class="col-sm-6 col-md-6 col-lg-6 center">
-            <div class="thumbnail pet">
-                <h3>{{ person.title }}</h3>
+
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="header-content">
+                    <div class="header-content-inner">
+                        <h1>World's word is a place where you should try and express yourself in ONE word only!</h1>
+                        <a href="#person" class="btn btn-outline btn-xl page-scroll">Try it, it's fun!</a>
+                    </div>
+                </div>
             </div>
-            <div class="frame slika dva">
-                <img src="{{ person.image }}" alt="WOW"/>
-            </div>
-            <!-- person input part -->
-            <div class="thumbnail">
-                <form id="formPerson" ng-submit="submitPword()">
-                    <input type="hidden" ng-model="person_id" id="person_id" value="{{ person.person_id }}"/>
-                    <input ng-model="p" id="p" class="form-control" autocomplete="off"
-                           pattern="^([\Sa-zA-Z]){1,25}$"
-                           oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
-                           onchange="try{setCustomValidity('')}catch(e){}" required/>
-                    <button class="form-control btn dva">
-                        <strong>Send</strong>
-                    </button>
-                </form>
-            </div>
-            <div class="thumbnail" style="overflow:hidden; height: 150px">
-                <!--<ul id="persons"></ul>-->
-                <ul>
-                    <li ng-repeat="pword in pwords track by $index">{{pword}}</li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-6 center">
-            <div class="thumbnail pet">
-                <h3>{{ event.title }}</h3>
-            </div>
-            <div class="frame slika dva">
-                <span class="helper"></span>
-                <img src="{{ event.image }}" alt="WOW" />
-            </div>
-            <!-- event input part -->
-            <div class="thumbnail">
-                <form id="formEvent" ng-submit="submitEword()">
-                    <input type="hidden" ng-model="event_id" id="event_id" value="{{ event.event_id }}"/>
-                    <input ng-model="e" id="e" class="form-control" autocomplete="off"
-                           pattern="^([\Sa-zA-Z]){1,25}$"
-                           oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
-                           onchange="try{setCustomValidity('')}catch(e){}"required />
-                    <button class="form-control btn dva">
-                        <strong>Send</strong>
-                    </button>
-                </form>
-            </div>
-            <div class="content thumbnail" style="overflow:hidden; height: 150px">
-                <ul>
-                    <li ng-repeat="eword in ewords track by $index">{{eword}}</li>
-                </ul>
+            <div class="col-sm-5">
+                <div class="header-content">
+                    <div class="header-content-inner">
+                        <h2 class="section-heading">Discover what all the buzz is about!</h2>
+                        <h4>Our app can be accessed from any web enabled device! </h4>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-<!-- results part -->
-    <div class="row text-center jedan ">
-        <div class="col-sm-6 col-md-6 col-lg-6">
-            <div class="thumbnail">
-                <!-- <ul id="eventList"></ul> -->
-                <label >Most popular words for person</label>
-                <table >
-                    <tr ng-repeat="t in personList">
-                        <td>{{ t.a }}</td>
-                        <td>{{ t.c }}</td>
-                    </tr>
-                </table>
-            </div>
+</header>
+<section id="person" class="person bg-person text-center">
+    <div class="container">
+        <div class="col-md-4">
+            <h4 class="section-heading">How do you feel about <i class="fa fa-arrow-right" aria-hidden="true"></i></h4>
+            <form id="formPerson" ng-submit="submitPword()">
+                <input type="hidden" ng-model="person_id" id="person_id" value="{{ person.person_id }}"/>
+                <input ng-model="p" id="p" class="form-control" autocomplete="off"
+                       pattern="^([\Sa-zA-Z]){1,25}$"
+                       oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
+                       onchange="try{setCustomValidity('')}catch(e){}" required/>
+                <button class="form-control btn bg-person">
+                    <strong>Send</strong>
+                </button>
+            </form>
+            <ul class="ul-test">
+                <li ng-repeat="pword in pwords track by $index">{{pword}}</li>
+            </ul>
+            <table class="table table-condensed">
+                <tr><td>Current leading feels</td></tr>
+                <tr ng-repeat="t in personList">
+                    <td>{{ t.a }}</td>
+                    <td>{{ t.c }}</td>
+                </tr>
+            </table>
         </div>
-        <div class="col-sm-6 col-md-6 col-lg-6">
-            <div class="thumbnail">
-                <!-- <ul id="eventList"></ul> -->
-                <label >Most popular words for event</label>
-
-                <table >
-                    <tr ng-repeat="t in eventList">
-                        <td>{{ t.a }}</td>
-                        <td>{{ t.c }}</td>
-                    </tr>
-                </table>
+        <div class="col-md-8">
+            <h2>{{ person.title }}</h2>
+            <div class="badges style" style="background-image: url('{{ person.image }}')">
+                <!--<img src="img/OneWordWorld.png" alt="WOW" />-->
             </div>
         </div>
     </div>
-</div>
+</section>
 
+<section id="event" class="event bg-event text-center">
+    <div class="container">
+        <div class="col-md-4">
+            <h4 class="section-heading">How do you feel about <i class="fa fa-arrow-right" aria-hidden="true"></i></h4>
+            <form id="formEvent" ng-submit="submitEword()">
+                <input type="hidden" ng-model="event_id" id="event_id" value="{{ event.event_id }}"/>
+                <input ng-model="e" id="e" class="form-control" autocomplete="off"
+                       pattern="^([\Sa-zA-Z]){1,25}$"
+                       oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
+                       onchange="try{setCustomValidity('')}catch(e){}"required />
+                <button class="form-control btn bg-event">
+                    <strong>Send</strong>
+                </button>
+            </form>
+            <ul class="ul-test">
+                <li ng-repeat="eword in ewords track by $index">{{eword}}</li>
+            </ul>
+            <table class="table table-condensed" >
+                <tr ng-repeat="t in eventList">
+                    <td>{{ t.a }}</td>
+                    <td>{{ t.c }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-8">
+            <h2>{{ event.title }}</h2>
+            <div class="badges style" style="background-image: url('{{ event.image }}')">
+            </div>
+        </div>
+    </div>
+</section>

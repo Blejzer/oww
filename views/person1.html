@@ -1,0 +1,30 @@
+<header style="padding-top: 50px">
+    <div class="container">
+        <div class="col-md-12 text-center">
+            <h2>"{{ person.title }}"</h2>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-md-6">
+            <div>
+                <h2 class="text-center">Global feel</h2>
+            </div>
+            <div class="thumbnail">
+                <h3>Global feel</h3>
+                <nvd3 options="options" data="globalList"></nvd3>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div>
+                <h2 class="text-center">Per Continent feel</h2>
+            </div>
+            <div class="thumbnail" ng-repeat="kont in contList">
+                <h3>{{ kont.cont }}</h3>
+                <nvd3 options="options" data="kont.pwords"></nvd3>
+            </div>
+        </div>
+
+    </div>
+</header>
+
+

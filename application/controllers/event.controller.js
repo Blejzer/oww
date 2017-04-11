@@ -12,7 +12,6 @@
     function EventController($rootScope, $scope, socket, $state) {
         var ectrl = this;
         var event_id = $rootScope.event.event_id;
-        console.log('$rootScope.event: ', $rootScope.event);
         // Pie Chart configuration!
         $scope.options = {
             chart: {
@@ -21,6 +20,9 @@
                 x: function(d){return d.a;}, // d.a (a is key of parsed json response)
                 y: function(d){return d.c;}, // d.c (c is value of parsed json response)
                 showLabels: true,
+                callback: function(){
+                    d3.selectAll('.nvd3.text g').style('fill', "white");
+                },
                 duration: 500,
                 labelThreshold: 0.01,
                 labelSunbeamLayout: true,
@@ -36,19 +38,7 @@
         };
 
         $scope.$on('$stateChangeSuccess', function () {
-
-            console.log('Event page $stateChangeSuccess fired', $state.current.name);
-            switch ($state.current.name) {
-                case "event": {
-                    socket.emit('eventPageLoaded', event_id);
-                }
-                    break;
-                case "econtinent": {
-                    socket.emit('eventCtnPageLoaded', event_id);
-                }
-                    break;
-                default:
-            }
+            socket.emit('newEventPageLoaded', event_id);
         });
 
         socket.on('eventPageSuccess', function(json){
@@ -58,11 +48,10 @@
         });
         socket.on('eventCtnPageSuccess', function(json){
 
-            // var evt = JSON.parse(json);
-            console.log('evt from eventCtnPageSuccess: ', json);
             var resultingArray =[];
             var words = [];
-            json.forEach(function(cont){
+            var cntnevnt = JSON.parse(json);
+            cntnevnt.forEach(function(cont){
                  words = cont.ewords;
                 resultingArray.push({
                     cont: cont.cont,
@@ -70,12 +59,14 @@
                 })
             });
             $scope.contList = resultingArray;
+
         });
 
         socket.on('disconnect', function(){
             console.log('event page socket disconnected');
             socket.removeAllListeners();
         });
+
 
     }
 

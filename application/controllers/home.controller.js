@@ -16,11 +16,13 @@
         });
 
         socket.on('test', function (event, person) {
-            console.log('socket.on test fired', event);
-            $scope.event = event;
-            $scope.person = person;
-            $rootScope.person = $scope.person;
-            $rootScope.event = $scope.event;
+            $scope.$apply(function() {
+
+                $scope.event = event;
+                $scope.person = person;
+                $rootScope.person = $scope.person;
+                $rootScope.event = $scope.event;
+            });
         });
 
         socket.on('eventWord', function (evt) {
@@ -60,12 +62,10 @@
         }
 
         $scope.$on('$stateChangeSuccess', function () {
-            console.log("$stateChangeSuccess - HomeContorller");
             $scope.event = $rootScope.event;
             $scope.person = $rootScope.person;
             $scope.eventList = $rootScope.eventList;
             $scope.personList = $rootScope.personList;
-
 
         });
 
