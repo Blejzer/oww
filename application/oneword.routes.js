@@ -17,17 +17,7 @@
                     'navbar@': { templateUrl: 'views/addons/navbar.html'},
                     // the main template will be placed here (relatively named)
                     '': {   templateUrl: 'views/home.html',
-                            controller: 'HomeController'} //,
-                    // onEnter: function () {
-                    //     if(anker){
-                    //         console.log(anker);
-                    //         $('html, body').animate({
-                    //             scrollTop: $("#anker").offset().top
-                    //         }, 2000);
-                    //     }
-                    //
-                    // }
-
+                            controller: 'HomeController'}
                 }
 
             })
@@ -115,7 +105,17 @@
                         templateUrl: 'views/event2.html',
                         controller: "EventController"}
                 }
-            });
+            })
+            .state('archive', {
+            url: '/archive',
+            views: {
+                'navbar@': { templateUrl: 'views/addons/navbar2.html'},
+                '': {
+                    templateUrl: 'views/archive.html',
+                    controller: "ArchiveController"}
+            }
+        })
+        ;
 
         $locationProvider.html5Mode({
             enabled: true,

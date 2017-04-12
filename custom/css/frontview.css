@@ -599,3 +599,32 @@ section .badges .badge-link img {
     }
 
 }
+
+/* NE RADI, PROVJERITI ZASTO!*/
+@media (max-width : 768px){
+    /*Make dropdown links appear inline*/
+    ul {
+        position: static;
+    }
+    /*Create vertical spacing*/
+    li {
+        margin-bottom: 1px;
+
+    }
+    /*Make all menu links full width*/
+    ul li, li a {
+        width: 100%;
+    }
+    /*Display 'show menu' link*/
+    .show-menu {
+        display:block;
+    }
+}
+
+img {
+}
+.test {
+    height: 100%;
+    float: right;
+    padding-right: 2px;
+}

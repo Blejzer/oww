@@ -6,8 +6,8 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="#page-top">World's Word <i class="fa fa-globe"></i> </a>
-                <label class="navbar-brand">Number of users online: {{users}}</label>
+            <a class="navbar-brand page-scroll" href="#page-top"><img class="test" src="images/owwLogo2.png">&nbsp;World's Word&nbsp;</a>
+            <p class="navbar-brand">&nbsp;Number of users online: {{users}}</p>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -25,6 +25,9 @@
                         <!--<li role="separator" class="divider"></li>-->
                         <li><a ui-sref="event({event_id : '{{ event.event_id }}'})">Event</a></li>
                     </ul>
+                </li>
+                <li>
+                    <a class="page-scroll" ui-sref="archive" href="#event">Archives</a>
                 </li>
             </ul>
         </div>
