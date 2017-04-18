@@ -32,7 +32,7 @@ var db = require('./config/processing');
 var app = express();
 var port = 8443;
 
-console.log(db);
+console.log("baza podataka: ", db);
 
 var privateKey  = fs.readFileSync('./romanija/localhost-key.pem', 'utf8');
 var certificate = fs.readFileSync('./romanija/localhost-cert.pem', 'utf8');
@@ -152,6 +152,31 @@ app.post('/person', isLoggedIn, function (req, res) {
 
 
     });
+});
+
+// =====================================
+// MAIN SECTION =========================
+// =====================================
+// we will want this protected so you have to be logged in to visit
+// we will use route middleware to verify this (the isLoggedIn function)
+app.get('/main', isLoggedIn, function(req, res, next) {
+
+    console.log('Request Type:', req.method);
+    var events = [];
+    var persons = [];
+    db.mainLists(function (rezultat){
+
+        events = rezultat.eventList;
+        persons = rezultat.personList;
+        console.log("test: ", persons);
+
+        return res.render('main.ejs', {
+            user : req.user,
+            eventList: events,
+            personList: persons
+        });
+    });
+
 });
 
 

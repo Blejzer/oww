@@ -67,7 +67,37 @@ module.exports = {
 
         });
     },
-    listEvents: function (data, callback) {
+    mainLists: function (callback) {
+        console.log("DATA: Main Page Lists");
+
+        dbcon.getConnection(function (err, connection) {
+            // Use the connection
+            var persons, events = new Array(5);
+            connection.query(config.get('prsn.lst'), function (err, prows) {
+                if (err) {
+                    if (err.fatal) {
+                        throw err;
+                    }
+                    console.error("DATA: Main Person List: %s: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+                }
+                connection.query(config.get('evnt.lst'), function (err, erows) {
+                    if (err) {
+                        if (err.fatal) {
+                            throw err;
+                        }
+                        console.error("DATA: Main Event List: %s: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+                    }
+                    persons = prows;
+                    events = erows;
+                    var ritrn = ({eventList: erows, personList: prows});
+                    callback(ritrn);
+                    connection.release();
+                })
+            });
+        });
+
+
+
 
 
     },
