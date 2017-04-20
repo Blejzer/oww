@@ -1,15 +1,15 @@
-<!-- vieventOld.ejs.ejs -->
+<!-- views/event.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- META SECTION -->
-    <title>Person setup page</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- META SECTION -->
+	<title>Event setup page</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <!-- END META SECTION -->
+	<link rel="icon" href="favicon.ico" type="image/x-icon" />
+	<!-- END META SECTION -->
 
     <!-- CSS INCLUDE -->
     <link rel="stylesheet" type="text/css" id="theme" href="joli/css/theme-default.css"/>
@@ -17,19 +17,19 @@
 </head>
 <body ng-app="authServer">
 <div>
-    <h1 class="text-center">Person setup page</h1>
+    <h1>Event File Upload</h1>
 
     <form class="form-horizontal" ng-controller="MyCtrl as up" name="up.upload_form">
         <div class="panel panel-default">
-            <!--<div class="panel-heading">-->
-                <!--<h3 class="panel-title"><strong>Separated</strong> Layout</h3>-->
-                <!--<ul class="panel-controls">-->
-                    <!--<li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>-->
-                <!--</ul>-->
-            <!--</div>-->
-            <!--<div class="panel-body">-->
-                <!--<p>Add class <code>.form-group-separated</code> to form wrapper to get rows separated</p>-->
-            <!--</div>-->
+            <div class="panel-heading">
+                <h3 class="panel-title"><strong>Separated</strong> Layout</h3>
+                <ul class="panel-controls">
+                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <p>Add class <code>.form-group-separated</code> to form wrapper to get rows separated</p>
+            </div>
             <div class="panel-body form-group-separated">
 
                 <div class="form-group">
@@ -97,7 +97,7 @@
             </div>
             <div class="panel-footer">
                 <button class="btn btn-default">Clear Form</button>
-                <button class="btn btn-primary pull-right" ng-click="up.submitPerson()">Submit</button>
+                <button class="btn btn-primary pull-right" ng-click="up.submitEvent()">Submit</button>
             </div>
         </div>
     </form>

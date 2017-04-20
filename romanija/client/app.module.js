@@ -9,17 +9,8 @@
     angular.module('authServer', ['fileUpload', 'angularMoment'])
         .controller('MyCtrl', ['Upload', '$window', '$scope', 'moment', function (Upload, $window, $scope, moment) {
             var vm = this;
+            vm.bar = 0;
 
-
-            $scope.$watch('value', function(value) {
-                if(!value){
-                    $scope.orientation = false;
-                }else{
-                    $scope.orientation = value;
-                }
-
-                console.log('radio button: ', $scope.orientation);
-            });
 
             vm.uploadEvent = function (file, title, week) {
                 Upload.upload({
@@ -27,9 +18,10 @@
                     data: {file: file, title: title, week: week} //pass file as data, should be user ng-model
                 }).then(function (resp) { //upload function returns a promise
                     if (resp.data.error_code === 0) { //validate success
-                        $window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');
+                        $window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.err_desc);
+                        $window.location='main';
                     } else {
-                        $window.alert('an error occured', resp.data.error_code);
+                        $window.alert('an error occured' + resp.data.error_code + resp.data.err_desc);
                         console.log('resp ', resp);
                     }
                 }, function (resp) { //catch error
@@ -40,6 +32,7 @@
                     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                     // console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
                     vm.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
+                    vm.bar = progressPercentage; // capture upload progress
                 });
             };
 
@@ -49,7 +42,8 @@
                     data: {file: file, title: title, week: week} //pass file as data, should be user ng-model
                 }).then(function (resp) { //upload function returns a promise
                     if (resp.data.error_code === 0) { //validate success
-                        $window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');
+                        $window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: '+ resp.data.err_desc);
+                        $window.location='main';
                     } else {
                         $window.alert('an error occured', resp.data.error_code);
                         console.log('resp ', resp);
@@ -68,9 +62,10 @@
 
             vm.submitEvent = function () { //function to call on form submit
                 console.log('vm.title', vm.title);
+                console.log('vm.week', vm.week);
                 console.log('vm.upload_form.title', vm.upload_form.title.$valid);
-                var test = moment(vm.week).format('YYYYWW')
-                console.log('vm.week', test);
+                var test = moment(vm.week).format('YYYYWW');
+                console.log('test', test);
 
                 if (vm.upload_form.file.$valid && vm.file && vm.upload_form.title.$valid) { //check if from is valid
                     console.log('valid file');
@@ -80,7 +75,7 @@
             vm.submitPerson = function () { //function to call on form submit
                 console.log('vm.title', vm.title);
                 console.log('vm.upload_form.title', vm.upload_form.title.$valid);
-                var test = moment(vm.week).format('YYYYWW')
+                var test = moment(vm.week).format('YYYYWW');
                 console.log('vm.week', test);
 
                 if (vm.upload_form.file.$valid && vm.file && vm.upload_form.title.$valid) { //check if from is valid

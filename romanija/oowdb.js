@@ -109,19 +109,24 @@ app.post('/event', isLoggedIn, function (req, res) {
 
     upload(req, res, function (err) {
         if (err) {
-            res.json({error_code: 1, err_desc: err});
+            res.json({error_code: 1, err_desc: "TEST: "+err});
             return;
         }
-        res.json({error_code: 0, err_desc: null});
 
         // samo naziv filea
-        console.log(res.req.body.title);
-        console.log(res.req.file.path);
-        console.log(res.req.body.week);
+        // console.log(res.req.body.title);
+        // console.log(res.req.file.path);
+        // console.log(res.req.body.week);
 
         var data = {title: res.req.body.title, path: res.req.file.path, week: res.req.body.week};
         db.insertEvent(data, function (rezultat) {
             console.log("DATA: end of InsertEventWord - result: ", rezultat);
+
+            if(rezultat.weekcheck){
+                res.json({error_code: 0, err_desc: "Event successfully created"});
+            }else{
+                res.json({error_code: 1, err_desc: "Event for this week already created. Please check the date!"});
+            }
 
         });
 
@@ -140,13 +145,18 @@ app.post('/person', isLoggedIn, function (req, res) {
         res.json({error_code: 0, err_desc: null});
 
         // samo naziv filea
-        console.log(res.req.body.title);
-        console.log(res.req.file.path);
-        console.log(res.req.body.week);
+        // console.log(res.req.body.title);
+        // console.log(res.req.file.path);
+        // console.log(res.req.body.week);
 
         var data = {title: res.req.body.title, path: res.req.file.path, week: res.req.body.week};
         db.insertPerson(data, function (rezultat) {
             console.log("DATA: end of InsertPerson - result: ", rezultat);
+            if(rezultat.weekcheck){
+                res.json({error_code: 0, err_desc: "Person successfully created"});
+            }else{
+                res.json({error_code: 1, err_desc: "Person for this week already created. Please check the date!"});
+            }
 
         });
 

@@ -23,24 +23,50 @@ var dbcon = mysql.createPool({
  *************************************************/
 module.exports = {
     insertEvent: function(data, callback){
-    console.log("DATA: Event: %s", data.title, data.path, data.week);
+    // console.log("DATA: Event: %s", data.title, data.path, data.week);
 
     // working with database inserting new event
     dbcon.getConnection(function (err, connection) {
         // Use the connection
         var event_id;
-        connection.query(config.get('evnt.ins'), [data.title, data.path, data.week], function (err, rows) {
-            if (err) {
-                if (err.fatal) {
-                    throw err;
-                }
-                console.error("Processor: Insert: Event: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+        var test = false;
+        connection.query("SELECT * FROM tevent where week_id = ?", data.week, function (err,wrows) {
+            if(err) throw err;
+            console.log("wrows: ", wrows);
+            if (wrows[0]){
+                console.log("Event for the week: ", wrows[0].week_id, "already exists!");
+                callback({weekcheck: test, event_id: null});
+                connection.release();
+            }else{
+                test = true;
+                connection.query(config.get('evnt.ins'), [data.title, data.path, data.week], function (err, rows) {
+                    if (err) {
+                        if (err.fatal) {
+                            throw err;
+                        }
+                        console.error("Processor: Insert: Event: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err);
+                    }
+                    console.log("Insert event ID: ", rows.insertId);
+                    event_id = rows.insertId;
+                    callback({weekcheck: test, event_id: rows.insertId});
+                    connection.release();
+                })
             }
-            console.log("Insert event ID: ", rows.insertId);
-            event_id = rows.insertId;
-            callback(event_id);
-            connection.release();
-            });
+
+
+        });
+        // connection.query(config.get('evnt.ins'), [data.title, data.path, data.week], function (err, rows) {
+        //     if (err) {
+        //         if (err.fatal) {
+        //             throw err;
+        //         }
+        //         console.error("Processor: Insert: Event: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+        //     }
+        //     console.log("Insert event ID: ", rows.insertId);
+        //     event_id = rows.insertId;
+        //     callback(event_id);
+        //     connection.release();
+        //     });
 
         });
     },
@@ -52,17 +78,31 @@ module.exports = {
         dbcon.getConnection(function (err, connection) {
             // Use the connection
             var person_id;
-            connection.query(config.get('prsn.ins'), [data.title, data.path, data.week], function (err, rows) {
-                if (err) {
-                    if (err.fatal) {
-                        throw err;
-                    }
-                    console.error("Processor: Insert: Event: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err.fatal);
+            var test = false;
+            connection.query("SELECT * FROM tperson where week_id = ?", data.week, function (err,wrows) {
+                if(err) throw err;
+                console.log("wrows: ", wrows);
+                if (wrows[0]){
+                    console.log("Person for the week: ", wrows[0].week_id, "already exists!");
+                    callback({weekcheck: test, event_id: null});
+                    connection.release();
+                }else{
+                    test = true;
+                    connection.query(config.get('prsn.ins'), [data.title, data.path, data.week], function (err, rows) {
+                        if (err) {
+                            if (err.fatal) {
+                                throw err;
+                            }
+                            console.error("Processor: Insert: Person: ", new Date(), config.get('poruke.upitNijeOK'), err.code, err);
+                        }
+                        console.log("Insert person ID: ", rows.insertId);
+                        person_id = rows.insertId;
+                        callback({weekcheck: test, person_id: person_id});
+                        connection.release();
+                    })
                 }
-                console.log("Insert tperson ID: ", rows.insertId);
-                person_id = rows.insertId;
-                callback(person_id);
-                connection.release();
+
+
             });
 
         });
