@@ -11,7 +11,7 @@ var connection;
 
 function handleDisconnect() {
     if(connection) connection.destroy();
-    
+
     connection = mysql.createConnection(dbconfig.connection); // Recreate the connection, since
                                                     // the old one cannot be reused.
 
