@@ -4,7 +4,7 @@ $(function() {
         // Bootstrap datepicker
         var feDatepicker = function(){                        
             if($(".datepicker").length > 0){
-                $(".datepicker").datepicker({format: 'yyyy-mm-dd'});                
+                $(".datepicker").datepicker({format: 'dd-mm-yyyy', calendarWeeks: true});
                 $("#dp-2,#dp-3,#dp-4").datepicker(); // Sample
             }           
             

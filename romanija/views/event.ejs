@@ -41,21 +41,14 @@
                 </div>
             </li>
             <li class="xn-title">Navigation</li>
-            <li class="active">
+            <li>
                 <a href="main"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
             </li>
-            <li class="xn-openable">
-                <a href="#"><span class="fa fa-bullhorn"></span> <span class="xn-text">Events</span></a>
-                <ul>
-                    <li><a href="event"><span class="fa fa-plus-circle"></span> Add new event</a></li>
-                    <li><a href="elist"><span class="fa fa-list-ul"></span> View events</a></li>
-                </ul>
-            </li><li class="xn-openable">
-                <a href="#"><span class="fa fa-users"></span> <span class="xn-text">Persons</span></a>
-                <ul>
-                    <li><a href="person"><span class="fa fa-plus-circle"></span> Add new person</a></li>
-                    <li><a href="plist"><span class="fa fa-list-ul"></span> View persons</a></li>
-                </ul>
+            <li class="active">
+                <a href="event"><span class="fa fa-bullhorn"></span> Add new event</a>
+            </li>
+            <li>
+                <a href="person"><span class="fa fa-users"></span> Add new person</a>
             </li>
         </ul>
         <!-- END X-NAVIGATION -->
@@ -110,13 +103,13 @@
                         <form class="form-horizontal" ng-controller="MyCtrl as up" name="up.upload_form">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><strong>Separated</strong> Layout</h3>
+                                    <h3 class="panel-title"><strong>Event</strong> for a week</h3>
                                     <ul class="panel-controls">
                                         <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
                                     </ul>
                                 </div>
                                 <div class="panel-body">
-                                    <p>Add class <code>.form-group-separated</code> to form wrapper to get rows separated</p>
+                                    <p>Add new <code>EVENT</code> for the week you select. </p>
                                 </div>
                                 <div class="panel-body form-group-separated">
 
@@ -125,13 +118,9 @@
                                         <div class="col-md-6 col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                                <input ng-model="up.title" id="title" name="title" class="form-control" autocomplete="off"
-                                                       pattern="^([\Sa-zA-Z]){1,25}$"
-                                                       oninvalid="setCustomValidity('Plz enter only English Alphabet\n ' +
-                                                                'No spaces, numbers, or funny characters allowed!')"
-                                                       onchange="try{setCustomValidity('')}catch(e){}" required/>
+                                                <input ng-model="up.title" id="title" name="title" class="form-control" autocomplete="off" required/>
                                             </div>
-                                            <span class="help-block">This is sample of text field</span>
+                                            <span class="help-block">Please enter the title of the event</span>
                                         </div>
                                     </div>
 
