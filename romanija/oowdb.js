@@ -34,6 +34,15 @@ var port = 8443;
 
 console.log("baza podataka: ", db);
 
+// var privateKey  = fs.readFileSync('/etc/letsencrypt/live/worldsword.com/privkey.pem');
+// var certificate = fs.readFileSync('/etc/letsencrypt/live/worldsword.com/cert.pem');
+// var cacert = fs.readFileSync('/etc/letsencrypt/live/worldsword.com/chain.pem');
+// var options = {
+//     key: privateKey,
+//     cert: certificate,
+//     ca: cacert
+// };
+//
 var privateKey  = fs.readFileSync('./romanija/localhost-key.pem', 'utf8');
 var certificate = fs.readFileSync('./romanija/localhost-cert.pem', 'utf8');
 var options = {

@@ -46,6 +46,7 @@ app.use('/custom', express.static('custom'));
 app.use('/images', express.static('images'));
 app.use('/application', express.static('application'));
 app.use('/views', express.static('views'));
+app.use('/.well-known', express.static('/.well-known'));
 console.log("All static routes are set");
 console.log("*********************************************************************\n");
 
