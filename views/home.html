@@ -20,96 +20,98 @@
         </div>
     </div>
 </header>
-<section id="person" class="person bg-person text-center">
-    <div class="container">
-        <div class="col-md-4">
-            <h4 class="section-heading">How do you feel about <i class="fa fa-arrow-right" aria-hidden="true"></i></h4>
-            <form id="formPerson" ng-submit="submitPword()">
-                <input type="hidden" ng-model="person_id" id="person_id" value="{{ person.person_id }}"/>
-                <input ng-model="p" id="p" class="form-control" autocomplete="off"
-                       pattern="^([\Sa-zA-Z]){1,25}$"
-                       oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
-                       onchange="try{setCustomValidity('')}catch(e){}" required/>
-                <button class="form-control btn bg-person">
-                    <strong>Send</strong>
-                </button>
-            </form>
-            <ul class="ul-test">
-                <li ng-repeat="pword in pwords track by $index">{{pword}}</li>
-            </ul>
-            <table class="table table-condensed">
-                <tr><td>Current leading feels</td></tr>
-                <tr ng-repeat="t in personList">
-                    <td>{{ t.a }}</td>
-                    <td>{{ t.c }}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="col-md-8" id="sharePersonDiv">
-            <h2>{{ person.title }}</h2>
-            <div class="badges style" style="background-image: url('{{ person.image }}')">
-                <img ng-src="{{ person.image }}" alt="WOW">
-                <div class="testiramo">
-                    <strong>{{pi}}</strong>
+<section ng-controller="FbController">
+    <section id="person" class="person bg-person text-center">
+        <div class="container">
+            <div class="col-md-4">
+                <h4 class="section-heading">How do you feel about <i class="fa fa-arrow-right" aria-hidden="true"></i></h4>
+                <form id="formPerson" ng-submit="submitPword()">
+                    <input type="hidden" ng-model="person_id" id="person_id" value="{{ person.person_id }}"/>
+                    <input ng-model="p" id="p" class="form-control" autocomplete="off"
+                           pattern="^([\Sa-zA-Z]){1,25}$"
+                           oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
+                           onchange="try{setCustomValidity('')}catch(e){}" required/>
+                    <button class="form-control btn bg-person">
+                        <strong>Send</strong>
+                    </button>
+                </form>
+                <ul class="ul-test">
+                    <li ng-repeat="pword in pwords track by $index">{{pword}}</li>
+                </ul>
+                <table class="table table-condensed">
+                    <tr><td>Current leading feels</td></tr>
+                    <tr ng-repeat="t in personList">
+                        <td>{{ t.a }}</td>
+                        <td>{{ t.c }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-8" id="sharePersonDiv">
+                <h2>{{ person.title }}</h2>
+                <div class="badges style" style="background-image: url('{{ person.image }}')">
+                    <img ng-src="{{ person.image }}" alt="WOW">
+                    <div class="testiramo">
+                        <strong>{{pi}}</strong>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-info btn-sm" data-ng-click="sharePerson()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Person</button>
                 </div>
             </div>
-            <div ng-controller="FbController">
-                <button type="button" class="btn btn-info btn-sm" data-ng-click="sharePerson()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Person</button>
-            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section id="event" class="event bg-event text-center">
-    <div class="container">
-        <div class="col-md-4">
-            <h4 class="section-heading">How do you feel about <i class="fa fa-arrow-right" aria-hidden="true"></i></h4>
-            <form id="formEvent" ng-submit="submitEword()">
-                <input type="hidden" ng-model="event_id" id="event_id" value="{{ event.event_id }}"/>
-                <input ng-model="e" id="e" class="form-control" autocomplete="off"
-                       pattern="^([\Sa-zA-Z]){1,25}$"
-                       oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
-                       onchange="try{setCustomValidity('')}catch(e){}"required />
-                <button class="form-control btn bg-event">
-                    <strong>Send</strong>
-                </button>
-            </form>
-            <ul class="ul-test">
-                <li ng-repeat="eword in ewords track by $index">{{eword}}</li>
-            </ul>
-            <table class="table table-condensed" >
-                <tr ng-repeat="t in eventList">
-                    <td>{{ t.a }}</td>
-                    <td>{{ t.c }}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="col-md-8" id="shareEventDiv">
-            <h2>{{ event.title }}</h2>
-            <div class="badges style" style="background-image: url('{{ event.image }}')">
-                <div class="testiramo">
-                    <strong>{{ei}}</strong>
+    <section id="event" class="event bg-event text-center">
+        <div class="container">
+            <div class="col-md-4">
+                <h4 class="section-heading">How do you feel about <i class="fa fa-arrow-right" aria-hidden="true"></i></h4>
+                <form id="formEvent" ng-submit="submitEword()">
+                    <input type="hidden" ng-model="event_id" id="event_id" value="{{ event.event_id }}"/>
+                    <input ng-model="e" id="e" class="form-control" autocomplete="off"
+                           pattern="^([\Sa-zA-Z]){1,25}$"
+                           oninvalid="setCustomValidity('Plz enter only English Alphabet\n No spaces, numbers, or funny characters allowed!')"
+                           onchange="try{setCustomValidity('')}catch(e){}"required />
+                    <button class="form-control btn bg-event">
+                        <strong>Send</strong>
+                    </button>
+                </form>
+                <ul class="ul-test">
+                    <li ng-repeat="eword in ewords track by $index">{{eword}}</li>
+                </ul>
+                <table class="table table-condensed" >
+                    <tr ng-repeat="t in eventList">
+                        <td>{{ t.a }}</td>
+                        <td>{{ t.c }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-8" id="shareEventDiv">
+                <h2>{{ event.title }}</h2>
+                <div class="badges style" style="background-image: url('{{ event.image }}')">
+                    <div class="testiramo">
+                        <strong>{{ei}}</strong>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-info btn-sm" data-ng-click="shareEvent()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Event</button>
                 </div>
             </div>
-            <div ng-controller="FbController">
-                <button type="button" class="btn btn-info btn-sm" data-ng-click="shareEvent()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Event</button>
-            </div>
         </div>
-    </div>
+    </section>
+
 </section>
+<!--<div ng-controller="FbController">-->
 
-<div ng-controller="FbController">
+    <!--<button type="button" data-ng-disabled="status" data-ng-click="getAuth()">Get Auth</button>-->
+    <!--<button type="button" data-ng-disabled="!status" data-ng-click="disconnect()">Disconnect</button>-->
+    <!--<button type="button" data-ng-disabled="!status" data-ng-click="logout()">Logout</button>-->
+    <!--<button type="button" data-ng-click="sharePerson()">Share Person</button>-->
+    <!--<button type="button" data-ng-click="shareEvent()">Share Event</button>-->
+    <!--<button type="button" data-ng-click="shareWorld()">Share World</button>-->
 
-    <button type="button" data-ng-disabled="status" data-ng-click="getAuth()">Get Auth</button>
-    <button type="button" data-ng-disabled="!status" data-ng-click="disconnect()">Disconnect</button>
-    <button type="button" data-ng-disabled="!status" data-ng-click="logout()">Logout</button>
-    <button type="button" data-ng-click="sharePerson()">Share Person</button>
-    <button type="button" data-ng-click="shareEvent()">Share Event</button>
-    <button type="button" data-ng-click="shareWorld()">Share World</button>
-
-    <div data-ng-show="status">
-        <pre data-ng-bind="token"></pre>
-        <pre data-ng-bind="me | json"></pre>
-    </div>
-</div>
+    <!--<div data-ng-show="status">-->
+        <!--<pre data-ng-bind="token"></pre>-->
+        <!--<pre data-ng-bind="me | json"></pre>-->
+    <!--</div>-->
+<!--</div>-->
 
