@@ -10,6 +10,7 @@
     OwwVPS.$inject = ['$rootScope', '$cookies', 'socket'];
     function OwwVPS($rootScope, $cookies, socket) {
         // var socket = io.connect();
+        
         $rootScope.$on('$viewContentLoaded', function (event) {
             console.log("factory reading OK", $cookies);
         });
