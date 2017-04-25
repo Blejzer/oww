@@ -62,7 +62,7 @@
 
         socket.on('disconnect', function(){
             console.log('event page socket disconnected');
-            socket.removeAllListeners();
+            // socket.removeAllListeners();
         });
 
     }

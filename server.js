@@ -148,6 +148,7 @@ io.sockets.on('connection', function (socket) {
 
         socket.emit('test', lists.event[0], lists.person[0]);
 
+
         visitor.id = lists.visitorid;
 
         io.sockets.emit('conn', io.engine.clientsCount);

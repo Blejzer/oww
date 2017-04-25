@@ -11,21 +11,29 @@
         });
 
         socket.on('conn', function (num) {
-            console.log('socket.on conn fired');
+            console.log('socket.on conn fired', $scope.event);
             $scope.users = num;
-        });
-        socket.on('test', function (event, person) {
-            console.log('socket.on test fired', event);
-            $scope.event = event;
-            $scope.person = person;
+            // $scope.event = event;
+            // $scope.person = person;
             $rootScope.person = $scope.person;
             $rootScope.event = $scope.event;
+        });
+        socket.on('test', function (listEvent, listPerson) {
+            console.log('socket.on test fired');
+            $scope.event = listEvent;
+            $scope.person = listPerson;
+            $rootScope.person = listPerson;
+            $rootScope.event = listEvent;
+            $scope.$apply($scope.$broadcast('listEvent', listEvent));
+            $scope.$apply($scope.$broadcast('listPerson', listPerson));
+
         })
 
         $scope.changeState = function () {
             //$state.go('contact.detail');
             console.log('index controller: change state invoked');
         };
+
 
         $location.path("/")
 

@@ -1,23 +1,15 @@
-<!--/***************************************************
-*                ONE WORD WORLD PROCESOR               *
-* ******************************************************
-* Copyright (C) Nikola Kujaca - All Rights Reserved    *
-* Unauthorized copying of this file, via any medium    *
-* is strictly prohibited proprietary and confidential  *
-* Written by Nikola Kujaca <www.bdslab.info>, 1411972  *
-********************************************************/-->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
+    <title>World's Word - Fastest Trends Stats</title>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>World's Word - Fastest Trends Stats</title>
+    <meta name="description" content="World's word is a place where you should try and express yourself in ONE word only!">
+    <meta name="author" content="Nikola Kujaca - nikola.kujaca@gmail.com">
 
     <!-- Bootstrap Core CSS -->
     <link href="scripts/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -75,7 +67,7 @@
 <div ui-view></div>
 
 <footer>
-    <div class="container">
+    <div class="container" ng-controller="FbController">
         <p>&copy; 2017 World's Word. All Rights Reserved.</p>
         <ul class="list-inline">
             <li>
@@ -85,13 +77,15 @@
                 <a ui-sref="terms" href="#page-top">Terms</a>
             </li>
             <li>
-                FAQ
+                <button type="button" class="btn btn-info btn-sm" data-ng-click="shareWorld()"><span class="glyphicon glyphicon-thumbs-up"></span>Share World</button>
             </li>
         </ul>
         <p>This product includes GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com" target="_blank">http://www.maxmind.com</a>.</p>
     </div>
 </footer>
 
+<!--Facebook Sharing-->
+<!--<script src="custom/js/fbsharing.js"></script>-->
 <!-- jQuery -->
 <script src="scripts/jquery/dist/jquery.min.js"></script>
 
@@ -110,6 +104,7 @@
 <script src="scripts/d3/d3.min.js"></script>
 <script src="scripts/nvd3/build/nv.d3.min.js"></script> <!-- or use another assembly -->
 <script src="scripts/angular-nvd3/dist/angular-nvd3.min.js"></script>
+<script src="scripts/angular-facebook-factory/dist/bundle.min.js"></script>
 
 <!--AngularJS briant f socket purifier-->
 <script src="custom/js/socket.js"></script>
@@ -124,9 +119,10 @@
 <script src="application/controllers/home.controller.js"></script>
 <script src="application/controllers/event.controller.js"></script>
 <script src="application/controllers/person.controller.js"></script>
-<!--<script src="application/controllers/visitor.controller.js"></script>-->
+<script src="application/controllers/fb.controller.js"></script>
 <script src="application/factories/kukiz.function.js"></script>
 <script src="application/factories/visitor.factory.js"></script>
+<script src="application/factories/fb.factory.js"></script>
 <script src="scripts/moment/min/moment.min.js"></script>
 <script src="scripts/angular-moment/angular-moment.min.js"></script>
 <script>

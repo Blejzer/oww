@@ -1,4 +1,3 @@
-
 <header>
     <div class="container">
         <div class="row">
@@ -46,10 +45,16 @@
                 </tr>
             </table>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8" id="sharePersonDiv">
             <h2>{{ person.title }}</h2>
             <div class="badges style" style="background-image: url('{{ person.image }}')">
-                <!--<img src="img/OneWordWorld.png" alt="WOW" />-->
+                <img ng-src="{{ person.image }}" alt="WOW">
+                <div class="testiramo">
+                    <strong>{{pi}}</strong>
+                </div>
+            </div>
+            <div ng-controller="FbController">
+                <button type="button" class="btn btn-info btn-sm" data-ng-click="sharePerson()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Person</button>
             </div>
         </div>
     </div>
@@ -79,10 +84,32 @@
                 </tr>
             </table>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8" id="shareEventDiv">
             <h2>{{ event.title }}</h2>
             <div class="badges style" style="background-image: url('{{ event.image }}')">
+                <div class="testiramo">
+                    <strong>{{ei}}</strong>
+                </div>
+            </div>
+            <div ng-controller="FbController">
+                <button type="button" class="btn btn-info btn-sm" data-ng-click="shareEvent()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Event</button>
             </div>
         </div>
     </div>
 </section>
+
+<div ng-controller="FbController">
+
+    <button type="button" data-ng-disabled="status" data-ng-click="getAuth()">Get Auth</button>
+    <button type="button" data-ng-disabled="!status" data-ng-click="disconnect()">Disconnect</button>
+    <button type="button" data-ng-disabled="!status" data-ng-click="logout()">Logout</button>
+    <button type="button" data-ng-click="sharePerson()">Share Person</button>
+    <button type="button" data-ng-click="shareEvent()">Share Event</button>
+    <button type="button" data-ng-click="shareWorld()">Share World</button>
+
+    <div data-ng-show="status">
+        <pre data-ng-bind="token"></pre>
+        <pre data-ng-bind="me | json"></pre>
+    </div>
+</div>
+
