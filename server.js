@@ -16,15 +16,15 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-// var ioToProcessor = require('socket.io-client');
+const fs = require('fs');
 var eventList;
 var personList;
 const net = require("net");
 var multer = require('multer')
-// var upload = multer({ dest: 'images/upload/' })
 var bodyParser = require('body-parser');
-var filename;
 
+var cache = [];// Array is OK!
+cache[0] = fs.readFileSync( __dirname + '/views/index.html');
 
 // ******************************************************
 console.log(new Date());
@@ -51,56 +51,69 @@ console.log("All static routes are set");
 console.log("*********************************************************************\n");
 
 // serving index page on connection
+// unless it is bot
+// then we are serving cashed index.html
+
 app.get('*', function (req, res) {
-    res.sendFile(__dirname + '/views/index.html');
+    var str = req.headers['user-agent'];
+    const regexList = [/facebookexternalhit\/[0-9]/, /Facebot/];
+    const isMatch = regexList.some(function(rx) { return rx.test(str); });
+    console.log('User-Agent: ' + req.headers['user-agent']);
+    console.log('localeCompare: ', isMatch);
+    if(!isMatch){
+        res.sendFile(__dirname + '/views/index.html');
+    }else{
+        console.log('serving cache: ', cache[0]);
+        res.setHeader('Content-Type', 'text/html');
+        res.send( cache[0] );
+    }
+
 });
 
 
 console.log("index.html page prepped to be served");
 console.log("*********************************************************************\n");
 
-var storage = multer.diskStorage({ //multers disk storage settings
-    destination: function (req, file, cb) {
-        console.log("setting up destination");
-        cb(null, 'images/upload');
-    },
-    filename: function (req, file, cb) {
-        console.log("setting up filename");
-        var datetimestamp = Date.now();
-        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1]);
-    }
-});
-console.log("File upload destination set to: /images/upload");
-console.log("*********************************************************************\n");
-
-var upload = multer({ //multer settings
-    storage: storage
-}).single('file');
-/** API path that will upload the files */
-app.post('/newevent', function (req, res) {
-    upload(req, res, function (err) {
-        if (err) {
-            res.json({error_code: 1, err_desc: err});
-            return;
-        }
-        res.json({error_code: 0, err_desc: null});
-    });
-});
-console.log("multer settings set!");
-console.log("*********************************************************************\n");
-
-// cross origin requests - required for image upload!
-app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
-    res.header("Access-Control-Allow-Origin", "http://localhost");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-app.use(bodyParser.json());
-
-
-console.log("cross origin request permited");
-console.log("*********************************************************************\n");
+// var storage = multer.diskStorage({ //multers disk storage settings
+//     destination: function (req, file, cb) {
+//         console.log("setting up destination");
+//         cb(null, 'images/upload');
+//     },
+//     filename: function (req, file, cb) {
+//         console.log("setting up filename");
+//         var datetimestamp = Date.now();
+//         cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1]);
+//     }
+// });
+// console.log("File upload destination set to: /images/upload");
+// console.log("*********************************************************************\n");
+//
+// var upload = multer({ //multer settings
+//     storage: storage
+// }).single('file');
+// /** API path that will upload the files */
+// app.post('/newevent', function (req, res) {
+//     upload(req, res, function (err) {
+//         if (err) {
+//             res.json({error_code: 1, err_desc: err});
+//             return;
+//         }
+//         res.json({error_code: 0, err_desc: null});
+//     });
+// });
+// console.log("multer settings set!");
+// console.log("*********************************************************************\n");
+//
+// // cross origin requests - required for image upload!
+// app.use(function (req, res, next) {
+//     res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
+//     res.header("Access-Control-Allow-Origin", "http://localhost");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
+// app.use(bodyParser.json());
+// console.log("cross origin request permited");
+// console.log("*********************************************************************\n");
 
 console.log("*********************************************************************\n");
 console.log("I guess we're all set.");
@@ -155,6 +168,7 @@ io.sockets.on('connection', function (socket) {
 
         io.emit("eventList", JSON.stringify(lists.eventList));
         io.emit("personList", JSON.stringify(lists.personList));
+
 
         procSocket.end();
     });
