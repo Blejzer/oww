@@ -60,8 +60,8 @@
             FacebookService.share({
                 href: 'http://www.worldsword.com/',
                 title: 'World`s Word',
-                description: 'World`s word is a place where you should try and express yourself in ONE word only!'
-                // image: 'http://www.worldsword.com/images/OneWordWorld1.png'
+                description: 'World`s word is a place where you should try and express yourself in ONE word only!',
+                image: 'http://www.worldsword.com/images/OneWordWorld1.png'
             }, function (response) {
                 $scope.me = response;
                 $scope.status = true;
@@ -71,10 +71,10 @@
         $scope.sharePerson = function () {
             console.log('verify scope values: ', vm.event.image, vm.person.image);
             FacebookService.share({
-                href: 'http://www.worldsword.com/main#sharePersonDiv',
+                href: 'http://www.worldsword.com/person/'+vm.person.person_id+'/',
                 title: 'Person of the week',
-                description: vm.person.title
-                // image: vm.person.image
+                description: vm.person.title,
+                image: vm.person.image
             }, function (response) {
                 $scope.me = response;
                 $scope.status = true;
@@ -82,10 +82,10 @@
         }
         $scope.shareEvent = function () {
             FacebookService.share({
-                href: 'http://www.worldsword.com/main#shareEventDiv',
+                href: 'http://www.worldsword.com/event/'+vm.event.event_id+'/',
                 title: 'Event of the week',
-                description: vm.event.title
-                // image: vm.event.image
+                description: vm.event.title,
+                image: vm.event.image
             }, function (response) {
                 $scope.me = response;
                 $scope.status = true;

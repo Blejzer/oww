@@ -10,9 +10,10 @@
         // If user goes to a path that doesn't exist, redirect to public root
         $urlRouterProvider.otherwise('/');
 
+
         $stateProvider
             .state('home', {
-                url: '/',
+                url: '/:tag',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar.html'},
                     // the main template will be placed here (relatively named)
@@ -73,7 +74,7 @@
                                                                                                     // })
             // novi prelaz na statistiku
             .state('person', {
-                url: '/person:person_id',
+                url: '/person/:person_id/',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar2.html'},
                     '': {
@@ -98,7 +99,7 @@
                 }
             })
             .state('event', {
-                url: '/event:event_id',
+                url: '/event/:event_id/',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar2.html'},
                     '': {
@@ -114,8 +115,7 @@
                     templateUrl: 'views/archive.html',
                     controller: "ArchiveController"}
             }
-        })
-        ;
+        });
 
         $locationProvider.html5Mode({
             enabled: true,

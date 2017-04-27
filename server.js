@@ -50,15 +50,17 @@ app.use('/.well-known', express.static('/.well-known'));
 console.log("All static routes are set");
 console.log("*********************************************************************\n");
 
+
 // serving index page on connection
 // unless it is bot
 // then we are serving cashed index.html
 
 app.get('*', function (req, res) {
     var str = req.headers['user-agent'];
+    console.log('req.url: ', req.url);
     const regexList = [/facebookexternalhit\/[0-9]/, /Facebot/];
     const isMatch = regexList.some(function(rx) { return rx.test(str); });
-    console.log('User-Agent: ' + req.headers['user-agent']);
+    console.log('User-Agent: ' + str);
     console.log('localeCompare: ', isMatch);
     if(!isMatch){
         res.sendFile(__dirname + '/views/index.html');
@@ -69,7 +71,6 @@ app.get('*', function (req, res) {
     }
 
 });
-
 
 console.log("index.html page prepped to be served");
 console.log("*********************************************************************\n");
