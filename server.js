@@ -22,9 +22,11 @@ var personList;
 const net = require("net");
 var multer = require('multer')
 var bodyParser = require('body-parser');
+// var redis = require("redis").createClient();
+var cache = require('express-redis-cache')();
 
-var cache = [];// Array is OK!
-cache[0] = fs.readFileSync( __dirname + '/views/index.html');
+// var cache = [];// Array is OK!
+// cache[0] = fs.readFileSync( __dirname + '/views/index.html');
 
 // ******************************************************
 console.log(new Date());
@@ -47,27 +49,49 @@ app.use('/images', express.static('images'));
 app.use('/application', express.static('application'));
 app.use('/views', express.static('views'));
 app.use('/.well-known', express.static('/.well-known'));
+// app.use(require('prerender-node').set('prerenderToken', 'ygpN6ECxoeblte8YPQOj'));
 console.log("All static routes are set");
 console.log("*********************************************************************\n");
+
+
+// cache.on('message', function(message){
+//     console.log("cache", message);
+// });
+//
+// cache.on('error', function(error){
+//     console.error("cache", error);
+// });
+// cache.on('connect', function() {
+//     console.log('connected');
+// });
+
+
 
 
 // serving index page on connection
 // unless it is bot
 // then we are serving cashed index.html
 
-app.get('*', function (req, res) {
+app.get('*', cache.route({ expire: 5000  }), function (req, res) {
     var str = req.headers['user-agent'];
     console.log('req.url: ', req.url);
-    const regexList = [/facebookexternalhit\/[0-9]/, /Facebot/];
+    const regexList = [/facebookexternalhit\/[0-9]/, /Chrome/];
     const isMatch = regexList.some(function(rx) { return rx.test(str); });
     console.log('User-Agent: ' + str);
     console.log('localeCompare: ', isMatch);
     if(!isMatch){
+        res.use_express_redis_cache = false;
+        console.log ("Cache disabled on this request");
         res.sendFile(__dirname + '/views/index.html');
-    }else{
-        console.log('serving cache: ', cache[0]);
-        res.setHeader('Content-Type', 'text/html');
-        res.send( cache[0] );
+    }else {
+
+        cache.get(function (error, entries) {
+            if ( error ) throw error;
+            console.log('serving cache: ');
+            entries.forEach(console.log.bind(console));
+        });
+        console.log('serving cache');
+        res.sendFile(__dirname + '/views/index.html');
     }
 
 });

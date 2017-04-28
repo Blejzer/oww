@@ -16,10 +16,11 @@
 
     function FbController ($rootScope, $scope, FacebookFactory, FacebookService) {
         var fbAppId = '415516472142865';
+        var fbTestAppId = '418774601817052';
 
         FacebookFactory.setLang('en_US'); // set lang
         FacebookFactory.init({
-            appId: fbAppId, // required, default = null
+            appId: fbTestAppId, // required, default = null
             status: true, // optional, default = true
             cookie: false, // optional, default = false
             xfbml: false, // optional, default = false
