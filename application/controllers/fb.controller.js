@@ -83,7 +83,7 @@
         $scope.shareEvent = function (event) {
             console.log('verify scope values: ', event.image);
             FacebookService.share({
-                href: 'http://www.worldsword.com/event/'+event.event_id+'/',
+                href: 'http://www.worldsword.com/event',
                 title: 'Event of the week',
                 description: event.title,
                 image: event.image
