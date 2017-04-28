@@ -12,9 +12,9 @@
         .controller('FbController', FbController);
 
 
-    FbController.$inject = ['$scope', 'FacebookFactory', 'FacebookService'];
+    FbController.$inject = ['$rootScope', '$scope', 'FacebookFactory', 'FacebookService'];
 
-    function FbController ($scope, FacebookFactory, FacebookService) {
+    function FbController ($rootScope, $scope, FacebookFactory, FacebookService) {
         var fbAppId = '415516472142865';
 
         FacebookFactory.setLang('en_US'); // set lang
@@ -28,8 +28,8 @@
 
 
         var vm = this;
-        vm.person = $scope.person;
-        vm.event = $scope.event;
+        // vm.person = $rootScope.person;
+        // vm.event = $rootScope.event;
 
         $scope.status = false;
 
@@ -68,24 +68,25 @@
             })
         }
 
-        $scope.sharePerson = function () {
-            console.log('verify scope values: ', vm.event.image, vm.person.image);
+        $scope.sharePerson = function (person) {
+            console.log('verify scope values: ', person.image);
             FacebookService.share({
-                href: 'http://www.worldsword.com/person/'+vm.person.person_id+'/',
+                href: 'http://www.worldsword.com/person/'+person.person_id+'/',
                 title: 'Person of the week',
-                description: vm.person.title,
-                image: vm.person.image
+                description: person.title,
+                image: person.image
             }, function (response) {
                 $scope.me = response;
                 $scope.status = true;
             })
         }
-        $scope.shareEvent = function () {
+        $scope.shareEvent = function (event) {
+            console.log('verify scope values: ', event.image);
             FacebookService.share({
-                href: 'http://www.worldsword.com/event/'+vm.event.event_id+'/',
+                href: 'http://www.worldsword.com/event/'+event.event_id+'/',
                 title: 'Event of the week',
-                description: vm.event.title,
-                image: vm.event.image
+                description: event.title,
+                image: event.image
             }, function (response) {
                 $scope.me = response;
                 $scope.status = true;

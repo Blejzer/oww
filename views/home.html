@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-info btn-sm" data-ng-click="sharePerson()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Person</button>
+                    <button type="button" class="btn btn-info btn-sm" data-ng-click="sharePerson(person)"><span class="glyphicon glyphicon-thumbs-up"></span> Share Person</button>
                 </div>
             </div>
         </div>
@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-info btn-sm" data-ng-click="shareEvent()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Event</button>
+                    <button type="button" class="btn btn-info btn-sm" data-ng-click="shareEvent(event)"><span class="glyphicon glyphicon-thumbs-up"></span> Share Event</button>
                 </div>
             </div>
         </div>
@@ -108,16 +108,16 @@
 </section>
 <!--<div ng-controller="FbController">-->
 
-    <!--<button type="button" data-ng-disabled="status" data-ng-click="getAuth()">Get Auth</button>-->
+    <button type="button" data-ng-disabled="status" data-ng-click="getAuth()">Get Auth</button>
     <!--<button type="button" data-ng-disabled="!status" data-ng-click="disconnect()">Disconnect</button>-->
     <!--<button type="button" data-ng-disabled="!status" data-ng-click="logout()">Logout</button>-->
     <!--<button type="button" data-ng-click="sharePerson()">Share Person</button>-->
     <!--<button type="button" data-ng-click="shareEvent()">Share Event</button>-->
     <!--<button type="button" data-ng-click="shareWorld()">Share World</button>-->
 
-    <!--<div data-ng-show="status">-->
-        <!--<pre data-ng-bind="token"></pre>-->
-        <!--<pre data-ng-bind="me | json"></pre>-->
-    <!--</div>-->
+    <div data-ng-show="status">
+        <pre data-ng-bind="token"></pre>
+        <pre data-ng-bind="me | json"></pre>
+    </div>
 <!--</div>-->
 

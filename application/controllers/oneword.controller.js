@@ -10,12 +10,12 @@
             $window.ga('send', 'pageview', {page: $location.url()});
         });
 
-        if ($window.location.pathname == '/fbperson'){
-            console.log('reading correct path!');
-            $scope.fbperson = true;
-            // $state.go('person', {}, { location: '/person/' });
-            // $state.go('person');
-        }
+        // if ($window.location.pathname == '/fbperson'){
+        //     console.log('reading correct path!');
+        //     $scope.fbperson = true;
+        //     // $state.go('person', {}, { location: '/person/' });
+        //     // $state.go('person');
+        // }
 
         socket.on('conn', function (num) {
             console.log('socket.on conn fired', $scope.event);
@@ -24,9 +24,9 @@
             // $scope.person = person;
             $rootScope.person = $scope.person;
             $rootScope.event = $scope.event;
-            if($scope.fbperson){
-                $state.go('person', {person_id: $scope.person.person_id});
-            }
+            // if($scope.fbperson){
+            //     $state.go('person', {person_id: $scope.person.person_id});
+            // }
         });
         socket.on('test', function (listEvent, listPerson) {
             console.log('socket.on test fired');
