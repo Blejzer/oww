@@ -20,6 +20,7 @@
             $scope.person = p2;
         });
         $scope.$on('listEvent', function (p1, p2) {
+            console.log("listEvent event fired: ", p2);
             $scope.event = p2;
         });
 
@@ -76,7 +77,7 @@
             // $scope.person = $rootScope.person;
             // $scope.eventList = $rootScope.eventList;
             // $scope.personList = $rootScope.personList;
-            console.log('$stateChangeSuccess $scope.event: ', $scope.event);
+            console.log('$stateChangeSuccess $scope.event: ', $rootScope.event);
 
         });
 

@@ -30,7 +30,7 @@ var multer = require('multer')
 var name;
 var db = require('./config/processing');
 var app = express();
-var port = 8443;
+var port = 443;
 
 console.log("baza podataka: ", db);
 

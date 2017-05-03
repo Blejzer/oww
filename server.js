@@ -20,13 +20,10 @@ const fs = require('fs');
 var eventList;
 var personList;
 const net = require("net");
-var multer = require('multer')
+// var multer = require('multer')
 var bodyParser = require('body-parser');
-// var redis = require("redis").createClient();
-var cache = require('express-redis-cache')();
 
-// var cache = [];// Array is OK!
-// cache[0] = fs.readFileSync( __dirname + '/views/index.html');
+
 
 // ******************************************************
 console.log(new Date());
@@ -49,20 +46,66 @@ app.use('/images', express.static('images'));
 app.use('/application', express.static('application'));
 app.use('/views', express.static('views'));
 app.use('/.well-known', express.static('/.well-known'));
-// app.use(require('prerender-node').set('prerenderToken', 'ygpN6ECxoeblte8YPQOj'));
+var prerender = require("express-prerender")({
+    cache_path      : '../views/cached',
+    dist_folder     : '../views/',
+    ignore          : ["list", "of", "strings"],
+    protocol        : "http" | "https",
+    verbose         : true,
+});
+app.use(prerender.prerender);
 console.log("All static routes are set");
 console.log("*********************************************************************\n");
 
 
-// cache.on('message', function(message){
-//     console.log("cache", message);
-// });
+// Try serving boots
+// app.get('/social', function (req, res) {
+//     console.log('This is SOCIAL req.url: ', req.url);
+//     var fakeip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+//     console.log(new Date(), "Client IP Address - assuming remote: socket.handshake.address: ", fakeip);
 //
-// cache.on('error', function(error){
-//     console.error("cache", error);
-// });
-// cache.on('connect', function() {
-//     console.log('connected');
+//     var visitor = {};
+//     visitor.address = fakeip;
+//     var data = {"data": "newconn", "visitor": visitor};
+//     jack = JSON.stringify(data);
+//
+//     // Create a socket (client) that connects to the processor
+//     var procSocket = new net.Socket();
+//
+//     // if connection is not successful
+//     procSocket.on('error', function (error) {
+//         console.error(new Date(), "Error connecting to the processor. shutting down the server...", error);
+//         procSocket.end();
+//         process.exit(0);
+//     });
+//
+//     // if connection is successful
+//     procSocket.connect(3001, "localhost", function () {
+//         console.log(new Date(), "Server: Connected to processor");
+//         procSocket.write(jack);
+//     });
+//
+//     // passing data to the processor
+//     procSocket.on("data", function (data) {
+//         var lists = JSON.parse(data);
+//         lists.num = io.engine.clientsCount;
+//         console.log(new Date(), "Server: Response from the processor: %s", lists.event[0]);
+//         res.sendFile(__dirname + '/views/index.html', lists);
+//         // res(lists);
+//         // socket.emit('test', lists.event[0], lists.person[0]);
+//
+//
+//         visitor.id = lists.visitorid;
+//
+//         // io.sockets.emit('conn', io.engine.clientsCount);
+//
+//         // io.emit("eventList", JSON.stringify(lists.eventList));
+//         // io.emit("personList", JSON.stringify(lists.personList));
+//
+//
+//         procSocket.end();
+//     });
+//
 // });
 
 
@@ -71,74 +114,74 @@ console.log("*******************************************************************
 // serving index page on connection
 // unless it is bot
 // then we are serving cashed index.html
-
-app.get('*', cache.route({ expire: 5000  }), function (req, res) {
+app.get('/home', function (req, res) {
     var str = req.headers['user-agent'];
-    console.log('req.url: ', req.url);
-    const regexList = [/facebookexternalhit\/[0-9]/, /Chrome/];
+    console.log('This is HOME req.url: ', req.url);
+    var fakeip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.log(new Date(), "Client IP Address - assuming remote: socket.handshake.address: ", fakeip);
+
+    var visitor = {};
+    visitor.address = fakeip;
+    var data = {"data": "newconn", "visitor": visitor};
+    jack = JSON.stringify(data);
+
+    // Create a socket (client) that connects to the processor
+    var procSocket = new net.Socket();
+
+    // if connection is not successful
+    procSocket.on('error', function (error) {
+        console.error(new Date(), "Error connecting to the processor. shutting down the server...", error);
+        procSocket.end();
+        process.exit(0);
+    });
+
+    // if connection is successful
+    procSocket.connect(3001, "localhost", function () {
+        console.log(new Date(), "Server: Connected to processor");
+        procSocket.write(jack);
+    });
+
+    // passing data to the processor
+    procSocket.on("data", function (data) {
+        var lists = JSON.parse(data);
+        lists.num = io.engine.clientsCount;
+        console.log(new Date(), "Server: Response from the processor: %s", lists.event[0]);
+        res.send(lists);
+        // socket.emit('test', lists.event[0], lists.person[0]);
+
+
+        visitor.id = lists.visitorid;
+
+        // io.sockets.emit('conn', io.engine.clientsCount);
+
+        // io.emit("eventList", JSON.stringify(lists.eventList));
+        // io.emit("personList", JSON.stringify(lists.personList));
+
+
+        procSocket.end();
+    });
+
+});
+
+app.get('*', function (req, res) {
+    var str = req.headers['user-agent'];
+    console.log('This is * req.url: ', req.url);
+    const regexList = [/facebookexternalhit\/[0-9]/, /Faceboot/];
     const isMatch = regexList.some(function(rx) { return rx.test(str); });
     console.log('User-Agent: ' + str);
-    console.log('localeCompare: ', isMatch);
-    if(!isMatch){
-        res.use_express_redis_cache = false;
-        console.log ("Cache disabled on this request");
+    console.log('isMatch: ', isMatch);
+    // if(!isMatch){
+    //     console.log ("Cache disabled on this request");
+    //     res.sendFile(__dirname + '/views/index.html');
+    // }else {
+    //     console.log('should be serving cache');
         res.sendFile(__dirname + '/views/index.html');
-    }else {
-
-        cache.get(function (error, entries) {
-            if ( error ) throw error;
-            console.log('serving cache: ');
-            entries.forEach(console.log.bind(console));
-        });
-        console.log('serving cache');
-        res.sendFile(__dirname + '/views/index.html');
-    }
+    // }
 
 });
 
 console.log("index.html page prepped to be served");
 console.log("*********************************************************************\n");
-
-// var storage = multer.diskStorage({ //multers disk storage settings
-//     destination: function (req, file, cb) {
-//         console.log("setting up destination");
-//         cb(null, 'images/upload');
-//     },
-//     filename: function (req, file, cb) {
-//         console.log("setting up filename");
-//         var datetimestamp = Date.now();
-//         cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1]);
-//     }
-// });
-// console.log("File upload destination set to: /images/upload");
-// console.log("*********************************************************************\n");
-//
-// var upload = multer({ //multer settings
-//     storage: storage
-// }).single('file');
-// /** API path that will upload the files */
-// app.post('/newevent', function (req, res) {
-//     upload(req, res, function (err) {
-//         if (err) {
-//             res.json({error_code: 1, err_desc: err});
-//             return;
-//         }
-//         res.json({error_code: 0, err_desc: null});
-//     });
-// });
-// console.log("multer settings set!");
-// console.log("*********************************************************************\n");
-//
-// // cross origin requests - required for image upload!
-// app.use(function (req, res, next) {
-//     res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
-//     res.header("Access-Control-Allow-Origin", "http://localhost");
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//     next();
-// });
-// app.use(bodyParser.json());
-// console.log("cross origin request permited");
-// console.log("*********************************************************************\n");
 
 console.log("*********************************************************************\n");
 console.log("I guess we're all set.");
@@ -189,7 +232,7 @@ io.sockets.on('connection', function (socket) {
 
         visitor.id = lists.visitorid;
 
-        io.sockets.emit('conn', io.engine.clientsCount);
+        // io.sockets.emit('conn', io.engine.clientsCount);
 
         io.emit("eventList", JSON.stringify(lists.eventList));
         io.emit("personList", JSON.stringify(lists.personList));

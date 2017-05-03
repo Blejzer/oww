@@ -16,17 +16,17 @@
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar.html'},
                     // the main template will be placed here (relatively named)
-                    '': {   templateUrl: 'views/home.html',
+                    'main': {   templateUrl: 'views/home.html',
                             controller: 'HomeController'}
                 }
 
             })
             // novi prelaz na statistiku
             .state('person', {
-                url: '/person/:person_id/',
+                url: '/person/:person_id',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar2.html'},
-                    '': {
+                    'main': {
                         templateUrl: 'views/person1.html',
                         controller: "PersonController"}
                 }
@@ -35,7 +35,7 @@
                 url: '/aboutus',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar2.html'},
-                    '': {
+                    'main': {
                         templateUrl: 'views/aboutus.html'}
                 }
             })
@@ -43,15 +43,15 @@
                 url: '/terms',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar2.html'},
-                    '': {
+                    'main': {
                         templateUrl: 'views/terms.html'}
                 }
             })
             .state('event', {
-                url: '/event/:event_id/',
+                url: '/event/:event_id',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar2.html'},
-                    '': {
+                    'main': {
                         templateUrl: 'views/event2.html',
                         controller: "EventController"}
                 }
@@ -60,7 +60,7 @@
             url: '/archive',
             views: {
                 'navbar@': { templateUrl: 'views/addons/navbar2.html'},
-                '': {
+                'main': {
                     templateUrl: 'views/archive.html',
                     controller: "ArchiveController"}
             }
