@@ -1,4 +1,4 @@
-<!-- views/social/event.ejs -->
+<!-- views/social/person2.ejs -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,17 +7,17 @@
 
     <title>World's Word - Fastest Trends Stats</title>
 
-    <meta http-equiv="content-type" content="text/html" charset="utf-8" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="World's word is a place where you should try and express yourself in ONE word only!">
     <meta name="author" content="Nikola Kujaca - www.bdslab.info">
     <meta property="fb:app_id"          content="415516472142865" />
-    <meta property="og:url"             content="http://www.worldsword.com/sociale" />
+    <meta property="og:url"             content="http://www.worldsword.com/socialp" />
     <meta property="og:type"            content="website" />
-    <meta property="og:title"           content="Event of the week" />
-    <meta property="og:description"     content='<%=event.title%>' />
-    <meta property="og:image"           content='http://www.worldsword.com/<%= event.image %>' />
+    <meta property="og:title"           content="Person of the week" />
+    <meta property="og:description"     content='<%=person.title%>' />
+    <meta property="og:image"           content='http://www.worldsword.com/<%= person.image %>' />
     <meta property="og:image:type"      content="image/png" />
 
     <!-- Bootstrap Core CSS -->
@@ -68,17 +68,17 @@
 </head>
 
 <body ng-app="oneWordWorld" >
-<div ui-view="navbar2"></div>
+<!--<div ui-view="navbar2"></div>-->
 
 <div class="col-md-8" ng-controller="FbController">
     <h2><%= event.title %></h2>
-    <div class="badges style" style="background-image: url('../<%= event.image %>')">
+    <div class="badges style" style="background-image: url('../<%= person.image %>')">
         <div class="testiramo">
             <strong>Test</strong>
         </div>
-        <div ng-init="init('<%= event %>')"></div>
+        <div ng-init="init('<%= person %>')"></div>
         <div>
-            <button type="button" class="btn btn-info btn-sm" data-ng-click="shareEvent()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Event</button>
+            <button type="button" class="btn btn-info btn-sm" data-ng-click="sharePerson()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Event</button>
         </div>
     </div>
 </div>

@@ -47,13 +47,6 @@
                 </table>
             </div>
             <div class="col-md-8" id="sharePersonDiv">
-                <meta property="fb:app_id"          content="415516472142865" />
-                <meta property="og:url"             content="http://www.worldsword.com/main#sharePersonDiv" />
-                <meta property="og:type"            content="website" />
-                <meta property="og:title"           content="Person of the week" />
-                <meta property="og:description"     content="{{person.title}}" />
-                <meta property="og:image"           content="http://www.worldsword.com/{{person.image}}" />
-                <meta property="og:image:type"      content="image/png" />
                 <h2>{{ person.title }}</h2>
                 <div class="badges style" style="background-image: url('{{ person.image }}')">
                     <div class="testiramo">
@@ -61,7 +54,7 @@
                     </div>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-info btn-sm" data-ng-click="sharePerson(person)"><span class="glyphicon glyphicon-thumbs-up"></span> Share Person</button>
+                    <button type="button" class="btn btn-info btn-sm" data-ng-click="sharePerson()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Person</button>
                 </div>
             </div>
         </div>
@@ -99,7 +92,7 @@
                     </div>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-info btn-sm" data-ng-click="shareEvent(event)"><span class="glyphicon glyphicon-thumbs-up"></span> Share Event</button>
+                    <button type="button" class="btn btn-info btn-sm" data-ng-click="shareEvent()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Event</button>
                 </div>
             </div>
         </div>

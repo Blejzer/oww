@@ -21,7 +21,7 @@
 
         FacebookFactory.setLang('en_US'); // set lang
         FacebookFactory.init({
-            appId: fbAppId, // required, default = null
+            appId: fbTestAppId, // required, default = null
             status: true, // optional, default = true
             cookie: false, // optional, default = false
             xfbml: false, // optional, default = false
@@ -30,10 +30,6 @@
 
 
         var vm = this;
-        // vm.person = $rootScope.person;
-        $scope.init = function(stringifiedArray) {
-            vm.event = stringifiedArray;
-        }
 
         $scope.status = false;
 
@@ -72,25 +68,30 @@
             })
         }
 
-        $scope.sharePerson = function (person) {
-            console.log('verify scope values: ', person.image);
+        $scope.sharePerson = function () {
+            $scope.init = function(stringifiedArray) {
+                vm.person = stringifiedArray;
+            }
             FacebookService.share({
                 href: 'http://www.worldsword.com/',
-                // title: 'Person of the week',
-                // description: person.title,
-                // image: person.image
+                title: 'Person of the week',
+                // description: vm.person.title,
+                // image: vm.person.image
             }, function (response) {
                 $scope.me = response;
                 $scope.status = true;
             })
         }
         $scope.shareEvent = function () {
+            $scope.init = function(stringifiedArray) {
+            vm.event = stringifiedArray;
+        }
             // console.log('verify scope values: ', vm.event.image);
             FacebookService.share({
                 href: 'http://www.worldsword.com/',
                 title: 'Event of the week',
-                description: vm.event.title,
-                image: vm.event.image
+                // description: vm.event.title,
+                // image: vm.event.image
             }, function (response) {
                 $scope.me = response;
                 $scope.status = true;
