@@ -18,9 +18,10 @@
         var fbAppId = '415516472142865';
         var fbTestAppId = '418774601817052';
 
+
         FacebookFactory.setLang('en_US'); // set lang
         FacebookFactory.init({
-            appId: fbAppId, // required, default = null
+            appId: fbTestAppId, // required, default = null
             status: true, // optional, default = true
             cookie: false, // optional, default = false
             xfbml: false, // optional, default = false
@@ -30,7 +31,9 @@
 
         var vm = this;
         // vm.person = $rootScope.person;
-        // vm.event = $rootScope.event;
+        $scope.init = function(stringifiedArray) {
+            vm.event = stringifiedArray;
+        }
 
         $scope.status = false;
 
@@ -72,22 +75,22 @@
         $scope.sharePerson = function (person) {
             console.log('verify scope values: ', person.image);
             FacebookService.share({
-                href: 'http://www.worldsword.com/person/'+person.person_id+'/',
-                title: 'Person of the week',
-                description: person.title,
-                image: person.image
+                href: 'http://www.worldsword.com/',
+                // title: 'Person of the week',
+                // description: person.title,
+                // image: person.image
             }, function (response) {
                 $scope.me = response;
                 $scope.status = true;
             })
         }
-        $scope.shareEvent = function (event) {
-            console.log('verify scope values: ', event.image);
+        $scope.shareEvent = function () {
+            // console.log('verify scope values: ', vm.event.image);
             FacebookService.share({
-                href: 'http://www.worldsword.com/event',
+                href: 'http://www.worldsword.com/',
                 title: 'Event of the week',
-                description: event.title,
-                image: event.image
+                description: vm.event.title,
+                image: vm.event.image
             }, function (response) {
                 $scope.me = response;
                 $scope.status = true;

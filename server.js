@@ -46,6 +46,7 @@ app.use('/images', express.static('images'));
 app.use('/application', express.static('application'));
 app.use('/views', express.static('views'));
 app.use('/.well-known', express.static('/.well-known'));
+app.set('view engine', 'ejs'); // set up ejs for templating
 var prerender = require("express-prerender")({
     cache_path      : '../views/cached',
     dist_folder     : '../views/',
@@ -59,54 +60,57 @@ console.log("*******************************************************************
 
 
 // Try serving boots
-// app.get('/social', function (req, res) {
-//     console.log('This is SOCIAL req.url: ', req.url);
-//     var fakeip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-//     console.log(new Date(), "Client IP Address - assuming remote: socket.handshake.address: ", fakeip);
-//
-//     var visitor = {};
-//     visitor.address = fakeip;
-//     var data = {"data": "newconn", "visitor": visitor};
-//     jack = JSON.stringify(data);
-//
-//     // Create a socket (client) that connects to the processor
-//     var procSocket = new net.Socket();
-//
-//     // if connection is not successful
-//     procSocket.on('error', function (error) {
-//         console.error(new Date(), "Error connecting to the processor. shutting down the server...", error);
-//         procSocket.end();
-//         process.exit(0);
-//     });
-//
-//     // if connection is successful
-//     procSocket.connect(3001, "localhost", function () {
-//         console.log(new Date(), "Server: Connected to processor");
-//         procSocket.write(jack);
-//     });
-//
-//     // passing data to the processor
-//     procSocket.on("data", function (data) {
-//         var lists = JSON.parse(data);
-//         lists.num = io.engine.clientsCount;
-//         console.log(new Date(), "Server: Response from the processor: %s", lists.event[0]);
-//         res.sendFile(__dirname + '/views/index.html', lists);
-//         // res(lists);
-//         // socket.emit('test', lists.event[0], lists.person[0]);
-//
-//
-//         visitor.id = lists.visitorid;
-//
-//         // io.sockets.emit('conn', io.engine.clientsCount);
-//
-//         // io.emit("eventList", JSON.stringify(lists.eventList));
-//         // io.emit("personList", JSON.stringify(lists.personList));
-//
-//
-//         procSocket.end();
-//     });
-//
-// });
+app.get('/sociale', function (req, res) {
+    console.log('This is SOCIALE req.url: ', req.url);
+    var fakeip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.log(new Date(), "Client IP Address - assuming remote: socket.handshake.address: ", fakeip);
+
+    var visitor = {};
+    visitor.address = fakeip;
+    var data = {"data": "newconn", "visitor": visitor};
+    jack = JSON.stringify(data);
+
+    // Create a socket (client) that connects to the processor
+    var procSocket = new net.Socket();
+
+    // if connection is not successful
+    procSocket.on('error', function (error) {
+        console.error(new Date(), "Error connecting to the processor. shutting down the server...", error);
+        procSocket.end();
+        process.exit(0);
+    });
+
+    // if connection is successful
+    procSocket.connect(3001, "localhost", function () {
+        console.log(new Date(), "Server: Connected to processor");
+        procSocket.write(jack);
+    });
+
+    // passing data to the processor
+    procSocket.on("data", function (data) {
+        var lists = JSON.parse(data);
+        lists.num = io.engine.clientsCount;
+        console.log(new Date(), "Server: Response from the processor: %s", lists.event[0]);
+        // res.sendFile(__dirname + '/views/index.html', lists);
+        // res(lists);
+        // socket.emit('test', lists.event[0], lists.person[0]);
+        res.render('social/event.ejs', { 'event' : lists.event[0] }, function (err, html) {
+            res.send(html);
+        });
+
+
+        visitor.id = lists.visitorid;
+
+        // io.sockets.emit('conn', io.engine.clientsCount);
+
+        // io.emit("eventList", JSON.stringify(lists.eventList));
+        // io.emit("personList", JSON.stringify(lists.personList));
+
+
+        procSocket.end();
+    });
+
+});
 
 
 
