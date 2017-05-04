@@ -28,9 +28,6 @@
             version: 'v2.9' // optional, default = v2.4
         })
 
-
-        var vm = this;
-
         $scope.status = false;
 
         $scope.getAuth = function (callback) {

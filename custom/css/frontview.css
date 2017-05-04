@@ -641,3 +641,41 @@ img {
     -webkit-transform: translate(-50%, -50%) rotateZ(13deg) ; /* Chrome, Safari, Opera */
     /*transform: rotate(13deg);*/
 }
+
+.fb-share {
+    vertical-align: top;
+    display: inline-block;
+    height: 18px;
+    padding: 0 4px;
+    border: 1px solid #cad4e7;
+    border-radius: 3px;
+    background: #3b5998;
+    color: #eceef5;
+    font-family: 'Lucida Grande', Tahoma, Verdana, Arial, sans-serif;
+    font-size: 11px;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    /* IE7 */
+    *display: inline;
+    *zoom: 1;
+}
+.fb-share:hover {
+    border-color: #9dacce;
+}
+.fb-share-icon {
+    position: relative;
+    top: 2px;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-right: 1px;
+    background-image: url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/y-/r/tbhIfdAHjXE.png);
+    /* IE7 */
+    *display: inline;
+    *zoom: 1;
+}
+.fb-share-text {
+    position: relative;
+    top: -1px;
+}
