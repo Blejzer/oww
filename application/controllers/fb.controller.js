@@ -21,7 +21,7 @@
 
         FacebookFactory.setLang('en_US'); // set lang
         FacebookFactory.init({
-            appId: fbTestAppId, // required, default = null
+            appId: fbAppId, // required, default = null
             status: true, // optional, default = true
             cookie: false, // optional, default = false
             xfbml: false, // optional, default = false
