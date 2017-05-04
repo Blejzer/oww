@@ -69,29 +69,23 @@
         }
 
         $scope.sharePerson = function () {
-            $scope.init = function(stringifiedArray) {
-                vm.person = stringifiedArray;
-            }
             FacebookService.share({
-                href: 'http://www.worldsword.com/',
+                href: 'http://www.worldsword.com/socialp',
                 title: 'Person of the week',
-                // description: vm.person.title,
-                // image: vm.person.image
+                description: $scope.person.title,
+                image: $scope.person.image
             }, function (response) {
                 $scope.me = response;
                 $scope.status = true;
             })
         }
         $scope.shareEvent = function () {
-            $scope.init = function(stringifiedArray) {
-            vm.event = stringifiedArray;
-        }
-            // console.log('verify scope values: ', vm.event.image);
+            console.log('verify scope values: ', $scope.event.image);
             FacebookService.share({
-                href: 'http://www.worldsword.com/',
+                href: 'http://www.worldsword.com/sociale',
                 title: 'Event of the week',
-                // description: vm.event.title,
-                // image: vm.event.image
+                description: $scope.event.title,
+                image: $scope.event.image
             }, function (response) {
                 $scope.me = response;
                 $scope.status = true;

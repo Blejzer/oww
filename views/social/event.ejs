@@ -76,7 +76,7 @@
         <div class="testiramo">
             <strong>Test</strong>
         </div>
-        <div ng-init="init('<%= event %>')"></div>
+        <div ng-init="init(JSON.stringify('<%= event %>'))"></div>
         <div>
             <button type="button" class="btn btn-info btn-sm" data-ng-click="shareEvent()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Event</button>
         </div>
