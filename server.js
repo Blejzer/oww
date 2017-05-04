@@ -61,45 +61,57 @@ console.log("*******************************************************************
 
 // Serving event sharing
 app.get('/sociale', function (req, res) {
+    var str = req.headers['user-agent'];
     console.log('This is SOCIALE req.url: ', req.url);
     var fakeip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     console.log(new Date(), "Client IP Address - assuming remote: socket.handshake.address: ", fakeip);
+    const regexList = [/facebookexternalhit\/[0-9]/, /Faceboot/];
+    const isMatch = regexList.some(function(rx) { return rx.test(str); });
+    console.log('User-Agent: ' + str);
+    console.log('isMatch: ', isMatch);
 
-    var visitor = {};
-    visitor.address = fakeip;
-    var data = {"data": "newconn", "visitor": visitor};
-    jack = JSON.stringify(data);
+    if(!isMatch){
+        console.log ("Cache disabled on this request");
+        res.redirect('/');
+    }else {
+        console.log('serving fb boot');
 
-    // Create a socket (client) that connects to the processor
-    var procSocket = new net.Socket();
+        var visitor = {};
+        visitor.address = fakeip;
+        var data = {"data": "newconn", "visitor": visitor};
+        jack = JSON.stringify(data);
 
-    // if connection is not successful
-    procSocket.on('error', function (error) {
-        console.error(new Date(), "Error connecting to the processor. shutting down the server...", error);
-        procSocket.end();
-        process.exit(0);
-    });
+        // Create a socket (client) that connects to the processor
+        var procSocket = new net.Socket();
 
-    // if connection is successful
-    procSocket.connect(3001, "localhost", function () {
-        console.log(new Date(), "Server: Connected to processor");
-        procSocket.write(jack);
-    });
-
-    // passing data to the processor
-    procSocket.on("data", function (data) {
-        var lists = JSON.parse(data);
-        lists.num = io.engine.clientsCount;
-        console.log(new Date(), "Server: Response from the processor: %s", lists.event[0]);
-
-        res.render('social/event.ejs', { 'event' : lists.event[0] }, function (err, html) {
-            res.send(html);
+        // if connection is not successful
+        procSocket.on('error', function (error) {
+            console.error(new Date(), "Error connecting to the processor. shutting down the server...", error);
+            procSocket.end();
+            process.exit(0);
         });
 
-        visitor.id = lists.visitorid;
+        // if connection is successful
+        procSocket.connect(3001, "localhost", function () {
+            console.log(new Date(), "Server: Connected to processor");
+            procSocket.write(jack);
+        });
 
-        procSocket.end();
-    });
+        // passing data to the processor
+        procSocket.on("data", function (data) {
+            var lists = JSON.parse(data);
+            lists.num = io.engine.clientsCount;
+            console.log(new Date(), "Server: Response from the processor: %s", lists.event[0]);
+
+            res.render('social/event.ejs', {'event': lists.event[0]}, function (err, html) {
+                res.send(html);
+            });
+
+            visitor.id = lists.visitorid;
+
+            procSocket.end();
+        });
+    }
 
 });
 // Serving person sharing
