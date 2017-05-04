@@ -47,14 +47,14 @@ app.use('/application', express.static('application'));
 app.use('/views', express.static('views'));
 app.use('/.well-known', express.static('/.well-known'));
 app.set('view engine', 'ejs'); // set up ejs for templating
-var prerender = require("express-prerender")({
-    cache_path      : '../views/cached',
-    dist_folder     : '../views/',
-    ignore          : ["list", "of", "strings"],
-    protocol        : "http" | "https",
-    verbose         : true,
-});
-app.use(prerender.prerender);
+// var prerender = require("express-prerender")({
+//     cache_path      : '../views/cached',
+//     dist_folder     : '../views/',
+//     ignore          : ["list", "of", "strings"],
+//     protocol        : "http" | "https",
+//     verbose         : true,
+// });
+// app.use(prerender.prerender);
 console.log("All static routes are set");
 console.log("*********************************************************************\n");
 
