@@ -24,15 +24,15 @@
             $scope.event = p2;
         });
 
-        // socket.on('test', function (listEvent, listPerson) {
-        //     console.log('HomeController inside test socket on');
-        //     $scope.$apply(function() {
-        //         $scope.event = listEvent;
-        //         $scope.person = listPerson;
-        //         $rootScope.person = listPerson;
-        //         $rootScope.event = listEvent;
-        //     });
-        // });
+        socket.on('test', function (listEvent, listPerson) {
+            console.log('HomeController inside test socket on');
+            $scope.$apply(function() {
+                $scope.event = listEvent;
+                $scope.person = listPerson;
+                $rootScope.person = listPerson;
+                $rootScope.event = listEvent;
+            });
+        });
 
         socket.on('eventWord', function (evt) {
             $scope.ewords.unshift(evt);
@@ -73,8 +73,8 @@
         };
 
         $scope.$on('$stateChangeSuccess', function () {
-            // $scope.event = $rootScope.event;
-            // $scope.person = $rootScope.person;
+            $scope.event = $rootScope.event;
+            $scope.person = $rootScope.person;
             // $scope.eventList = $rootScope.eventList;
             // $scope.personList = $rootScope.personList;
             console.log('$stateChangeSuccess $scope.event: ', $rootScope.event);

@@ -8,10 +8,12 @@
     /**
      * Configures the routes and views
      */
-    PersonController.$inject = ['$rootScope','$scope', 'socket', '$state'];
-    function PersonController($rootScope, $scope, socket, $state) {
+    PersonController.$inject = ['$rootScope','$scope', 'socket', '$stateParams'];
+    function PersonController($rootScope, $scope, socket, $stateParams) {
         var pctrl = this;
         var person_id = $rootScope.person.person_id;
+        console.log('person_id from rootscope: ', person_id);
+        console.log('person_id from stateparams: ', $stateParams);
 
         // Pie Chart configuration!
         $scope.options = {
@@ -61,8 +63,8 @@
         });
 
         socket.on('disconnect', function(){
-            console.log('event page socket disconnected');
-            // socket.removeAllListeners();
+            console.log('person page socket disconnected');
+            socket.removeAllListeners();
         });
 
     }

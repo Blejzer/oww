@@ -24,7 +24,6 @@ const net = require("net");
 var bodyParser = require('body-parser');
 
 
-
 // ******************************************************
 console.log(new Date());
 console.log(ver, "starting with initialization sequence: ");
@@ -39,22 +38,15 @@ console.log("Loaded all required modules");
  * required for image upload
  ********************************************************/
 app.enable('trust proxy');
-app.use('/bootstrap', express.static('bootstrap'));
-app.use('/scripts', express.static('node_modules/'));
-app.use('/custom', express.static('custom'));
-app.use('/images', express.static('images'));
-app.use('/application', express.static('application'));
-app.use('/views', express.static('views'));
-app.use('/.well-known', express.static('/.well-known'));
+app.use('/bootstrap', express['static']('bootstrap'));
+app.use('/scripts', express['static']('node_modules/'));
+app.use('/custom', express['static']('custom'));
+app.use('/images', express['static']('images'));
+app.use('/application', express['static']('application'));
+app.use('/views', express['static']('views'));
+app.use('/.well-known', express['static']('/.well-known'));
 app.set('view engine', 'ejs'); // set up ejs for templating
-// var prerender = require("express-prerender")({
-//     cache_path      : '../views/cached',
-//     dist_folder     : '../views/',
-//     ignore          : ["list", "of", "strings"],
-//     protocol        : "http" | "https",
-//     verbose         : true,
-// });
-// app.use(prerender.prerender);
+
 console.log("All static routes are set");
 console.log("*********************************************************************\n");
 
@@ -228,17 +220,25 @@ app.get('/home', function (req, res) {
 app.get('*', function (req, res) {
     var str = req.headers['user-agent'];
     console.log('This is * req.url: ', req.url);
-    const regexList = [/facebookexternalhit\/[0-9]/, /Faceboot/];
-    const isMatch = regexList.some(function(rx) { return rx.test(str); });
-    console.log('User-Agent: ' + str);
+    const regexList = [/person/, /event/];
+    const isMatch = regexList.some(function(rx) { return rx.test(req.url); });
     console.log('isMatch: ', isMatch);
-    // if(!isMatch){
-    //     console.log ("Cache disabled on this request");
-    //     res.sendFile(__dirname + '/views/index.html');
-    // }else {
-    //     console.log('should be serving cache');
+    if(isMatch){
+        res.redirect('/');
+    }else{
+        // const regexList = [/facebookexternalhit\/[0-9]/, /Faceboot/];
+        // const isMatch = regexList.some(function(rx) { return rx.test(str); });
+        // console.log('User-Agent: ' + str);
+        // console.log('isMatch: ', isMatch);
+        // if(!isMatch){
+        //     console.log ("Cache disabled on this request");
+        //     res.sendFile(__dirname + '/views/index.html');
+        // }else {
+        //     console.log('should be serving cache');
         res.sendFile(__dirname + '/views/index.html');
-    // }
+        // }
+    }
+
 
 });
 
@@ -294,7 +294,7 @@ io.sockets.on('connection', function (socket) {
 
         visitor.id = lists.visitorid;
 
-        // io.sockets.emit('conn', io.engine.clientsCount);
+        io.sockets.emit('conn', io.engine.clientsCount);
 
         io.emit("eventList", JSON.stringify(lists.eventList));
         io.emit("personList", JSON.stringify(lists.personList));
@@ -387,7 +387,7 @@ io.sockets.on('connection', function (socket) {
         // Create a socket (client) that connects to the server
         var procSocket = new net.Socket();
         procSocket.connect(3001, "localhost", function () {
-            console.log("Client: newPersonPageLoaded: Connected to server");
+            console.log("Server: newPersonPageLoaded: Connected to Processor");
             procSocket.write(jack);
         });
         // Emitujemo klijentu izmjenu na event
@@ -396,6 +396,11 @@ io.sockets.on('connection', function (socket) {
         // Cekamo odgovor sa procesora i osvjezenu event listu
         procSocket.on("data", function (data) {
             var list = JSON.parse(data);
+            var list = JSON.parse(data);
+            console.log("list", list);
+            console.log("list[0]", list[0]);
+            console.log("test",list[0].global);
+            console.log("list[1]", list[1].continent);
             socket.emit('personCtnPageSuccess', list[1].continent);
             socket.emit('personPageSuccess', list[0].global);
             procSocket.end();

@@ -7,8 +7,8 @@ module.exports = {
      * versioning information
      *************************************/
     ver: {
-        proc: 'v0.1-alpha.50',
-        srvr: 'v0.1-alpha.50'
+        proc: 'v1.1-beta.50',
+        srvr: 'v2.1-beta.12'
     },
 
 

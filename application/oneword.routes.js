@@ -18,7 +18,8 @@
                     // the main template will be placed here (relatively named)
                     'main': {   templateUrl: 'views/home.html',
                             controller: 'HomeController'}
-                }
+                },
+                reloadOnSearch: true
 
             })
             // novi prelaz na statistiku
@@ -57,14 +58,14 @@
                 }
             })
             .state('archive', {
-            url: '/archive',
-            views: {
-                'navbar@': { templateUrl: 'views/addons/navbar2.html'},
-                'main': {
-                    templateUrl: 'views/archive.html',
-                    controller: "ArchiveController"}
-            }
-        });
+                url: '/archive',
+                views: {
+                    'navbar@': { templateUrl: 'views/addons/navbar2.html'},
+                    'main': {
+                        templateUrl: 'views/archive.html',
+                        controller: "ArchiveController"}
+                }
+            });
 
         $locationProvider.html5Mode({
             enabled: true,
