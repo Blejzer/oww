@@ -8,9 +8,9 @@
     /**
      * Configures the routes and views
      */
-    EventController.$inject = ['$rootScope','$scope', 'socket'];
-    function EventController($rootScope, $scope, socket) {
-        // var ectrl = this;
+    EventController.$inject = ['$rootScope','$scope', 'socket', '$state'];
+    function EventController($rootScope, $scope, socket, $state) {
+        var ectrl = this;
         var event_id = $rootScope.event.event_id;
         // Pie Chart configuration!
         $scope.options = {

@@ -19,22 +19,22 @@ module.exports = {
     *   - db4free.net testing version
     *   - production version (localhost)
     ***************************************/
-    // sequel: {
-    //     conlimt: '10',
-    //     link: 'mysql8.db4free.net',
-    //     baza: 'onewordengine',
-    //     juzer: 'owwuser',
-    //     lozinka: 'myscrtW0rd',
-    //     prt: 3307
-    // },
-    sequel : {
+    sequel: {
         conlimt: '10',
-        link : 'localhost',
+        link: 'mysql8.db4free.net',
         baza: 'onewordengine',
-        juzer: 'root',
-        lozinka: 'ou812id10t',
-        prt: 3306
+        juzer: 'owwuser',
+        lozinka: 'myscrtW0rd',
+        prt: 3307
     },
+    // sequel : {
+    //     conlimt: '10',
+    //     link : 'localhost',
+    //     baza: 'onewordengine',
+    //     juzer: 'root',
+    //     lozinka: 'ou812id10t',
+    //     prt: 3306
+    // },
     /**************************************
      * END OF Database configuration parameters
      **************************************/

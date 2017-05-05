@@ -88,7 +88,7 @@
                 <button class="fb-share" data-ng-click="shareWorld()"><span class="glyphicon glyphicon-thumbs-up"></span><span class="fb-share-text"> Share World</span></button>
             </li>
         </ul>
-        <p style="font-size: xx-small">This product includes GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com" target="_blank">http://www.maxmind.com</a>.</p>
+        <p>This product includes GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com" target="_blank">http://www.maxmind.com</a>.</p>
     </div>
 </footer>
 
@@ -100,6 +100,7 @@
 
 <!-- AngularJS Libraries -->
 <script src="scripts/angular/angular.min.js"></script>
+<!--<script src="scripts/ng-file-upload/dist/ng-file-upload-shim.js"></script>-->
 <script src="scripts/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="scripts/angular-cookies/angular-cookies.min.js"></script>
 <!--Socket.io client Library-->
@@ -114,19 +115,39 @@
 <!--AngularJS briant f socket purifier-->
 <script src="custom/js/socket.js"></script>
 
+
+<!--&lt;!&ndash; Main OneWordWorld Module &ndash;&gt;-->
+<!--<script src="application/oneword.module.js"></script>-->
+<!--&lt;!&ndash;<script src="application/modules/fileupload.module.min.js"></script>&ndash;&gt;-->
+<!--<script src="application/oneword.routes.js"></script>-->
+<!--<script src="application/factories/socket.factory.js"></script>-->
+<!--<script src="application/controllers/oneword.controller.js"></script>-->
+<!--<script src="application/controllers/home.controller.js"></script>-->
+<!--<script src="application/controllers/event.controller.js"></script>-->
+<!--<script src="application/controllers/person.controller.js"></script>-->
+<!--<script src="application/controllers/fb.controller.js"></script>-->
+<!--<script src="application/controllers/social.controller.js"></script>-->
+<!--<script src="application/factories/kukiz.function.js"></script>-->
+<!--&lt;!&ndash;<script src="application/factories/visitor.factory.min.js"></script>&ndash;&gt;-->
+<!--<script src="application/factories/fb.factory.js"></script>-->
+<!--<script src="scripts/moment/min/moment.min.js"></script>-->
+<!--<script src="scripts/angular-moment/angular-moment.min.js"></script>-->
+
 <!-- Main OneWordWorld Module -->
 <script src="application/oneword.module.min.js"></script>
+<!--<script src="application/modules/fileupload.module.min.js"></script>-->
 <script src="application/oneword.routes.min.js"></script>
 <script src="application/factories/socket.factory.min.js"></script>
 <script src="application/controllers/oneword.controller.min.js"></script>
 <script src="application/controllers/home.controller.min.js"></script>
 <script src="application/controllers/event.controller.min.js"></script>
 <script src="application/controllers/person.controller.min.js"></script>
+<!--<script src="application/controllers/fb.controller.min.js"></script>-->
 <script src="application/factories/kukiz.function.min.js"></script>
+<!--<script src="application/factories/visitor.factory.min.js"></script>-->
 <script src="application/factories/fb.factory.min.js"></script>
 <script src="scripts/moment/min/moment.min.js"></script>
 <script src="scripts/angular-moment/angular-moment.min.js"></script>
-
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
