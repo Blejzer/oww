@@ -10,10 +10,10 @@
      */
     PersonController.$inject = ['$rootScope','$scope', 'socket', '$stateParams'];
     function PersonController($rootScope, $scope, socket, $stateParams) {
-        var pctrl = this;
+        // var pctrl = this;
         var person_id = $rootScope.person.person_id;
-        console.log('person_id from rootscope: ', person_id);
-        console.log('person_id from stateparams: ', $stateParams);
+        // console.log('person_id from rootscope: ', person_id);
+        // console.log('person_id from stateparams: ', $stateParams);
 
         // Pie Chart configuration!
         $scope.options = {
