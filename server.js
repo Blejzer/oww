@@ -226,17 +226,9 @@ app.get('*', function (req, res) {
     if(isMatch){
         res.redirect('/');
     }else{
-        // const regexList = [/facebookexternalhit\/[0-9]/, /Faceboot/];
-        // const isMatch = regexList.some(function(rx) { return rx.test(str); });
-        // console.log('User-Agent: ' + str);
-        // console.log('isMatch: ', isMatch);
-        // if(!isMatch){
-        //     console.log ("Cache disabled on this request");
-        //     res.sendFile(__dirname + '/views/index.html');
-        // }else {
-        //     console.log('should be serving cache');
-        res.sendFile(__dirname + '/views/index.html');
-        // }
+
+    res.sendFile(__dirname + '/views/index.html');
+
     }
 
 
@@ -253,10 +245,10 @@ console.log("*******************************************************************
 
 
 /* ******************************************************
- * Kreiranje socketa prilikom konekcije klijenta na
- * server. Kupimo IP adresu, povecavamo broj online
- * korisnika i emitujemo svima osvjezenu informacije:
- * broj korisnika, event, person.
+ * Kreiranje socketa prilikom konekcije klijenta na     *
+ * server. Kupimo IP adresu, povecavamo broj online     *
+ * korisnika i emitujemo svima osvjezenu informacije:   *
+ * broj korisnika, event, person.                       *
  ********************************************************/
 io.sockets.on('connection', function (socket) {
     socket.removeAllListeners();
@@ -443,11 +435,9 @@ io.sockets.on('connection', function (socket) {
 
 
 
-/* ****************************************************************
- * Palimo server na portu 3000. Ovo je dev verzija. za produkciju  *
- * potrebno je unijeti i IP adresu na kojoj ce server slusati      *
- * http.listen(3000, xxx.xxx.xxx.xxx, function(){...               *
- *******************************************************************/
+/* *****************************************************************
+ *                  Palimo server na portu 80.                     *
+ * *****************************************************************/
 http.listen(80, function () {
     console.log(ver, " Initialization sequence complete. ");
     console.log(new Date(), 'Started listening on port:80');
