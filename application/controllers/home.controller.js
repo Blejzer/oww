@@ -4,57 +4,27 @@
     angular.module('oneWordWorld')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$rootScope', '$scope', '$location', '$window', 'socket', 'OwwUPS', 'FacebookFactory', 'FacebookService'];
-    function HomeController($rootScope, $scope, $location, $window, socket, OwwUPS, FacebookFactory, FacebookService) {
+    HomeController.$inject = ['$rootScope', '$scope', '$location', '$window', 'socket', 'FacebookFactory', 'FacebookService'];
+    function HomeController($rootScope, $scope, $location, $window, socket, FacebookFactory, FacebookService) {
         $scope.ewords = [];
         $scope.pwords = [];
         $scope.event = [];
         $scope.person = [];
 
-        $scope.$on('$viewContentLoaded', function () {
-            console.log('HomeController inside $viewContentLoaded', $scope.event);
-        });
+        // $scope.$on('$viewContentLoaded', function () {
+        //     console.log('HomeController inside $viewContentLoaded', $scope.event);
+        // });
 
         $scope.$on('listPerson', function (p1, p2) {
-            console.log("listPerson event fired: ", p2);
+            // console.log("listPerson event fired: ", p2);
             $scope.person = p2;
         });
         $scope.$on('listEvent', function (p1, p2) {
-            console.log("listEvent event fired: ", p2);
+            // console.log("listEvent event fired: ", p2);
             $scope.event = p2;
         });
 
-        socket.on('test', function (listEvent, listPerson) {
-            console.log('HomeController inside test socket on');
-            $scope.$apply(function() {
-                $scope.event = listEvent;
-                $scope.person = listPerson;
-                $rootScope.person = listPerson;
-                $rootScope.event = listEvent;
-            });
-        });
 
-        socket.on('eventWord', function (evt) {
-            $scope.ewords.unshift(evt);
-            console.log('ewords.unshift: ', evt);
-        });
-
-        socket.on('personWord', function (evt) {
-            $scope.pwords.unshift(evt);
-            console.log('pwords.unshift: ', evt);
-        });
-
-        socket.on('eventList', function(json){
-            var evt = JSON.parse(json);
-            $scope.eventList = evt;
-            $rootScope.eventList = $scope.eventList;
-        });
-
-        socket.on('personList', function(json){
-            var evt = JSON.parse(json);
-            $scope.personList = evt;
-            $rootScope.personList = $scope.personList;
-        });
 
         $scope.submitEword = function () {
             socket.emit('event', 'event', this.e, this.event.event_id);
@@ -77,8 +47,47 @@
             $scope.person = $rootScope.person;
             // $scope.eventList = $rootScope.eventList;
             // $scope.personList = $rootScope.personList;
-            console.log('$stateChangeSuccess $scope.event: ', $rootScope.event);
+            // console.log('$stateChangeSuccess $scope.event: ', $rootScope.event);
 
+        });
+
+        socket.on('test', function (listEvent, listPerson) {
+            // console.log('HomeController inside test socket on');
+            $scope.$apply(function() {
+                $scope.event = listEvent;
+                $scope.person = listPerson;
+                $rootScope.person = listPerson;
+                $rootScope.event = listEvent;
+            });
+        });
+
+        /*
+        * working with socket.io
+        */
+        socket.on('eventWord', function (evt) {
+            $scope.ewords.unshift(evt);
+            // console.log('ewords.unshift: ', evt);
+        });
+
+        socket.on('personWord', function (evt) {
+            $scope.pwords.unshift(evt);
+            // console.log('pwords.unshift: ', evt);
+        });
+
+        socket.on('eventList', function(json){
+            var evt = JSON.parse(json);
+            $scope.eventList = evt;
+            $rootScope.eventList = $scope.eventList;
+        });
+
+        socket.on('personList', function(json){
+            var evt = JSON.parse(json);
+            $scope.personList = evt;
+            $rootScope.personList = $scope.personList;
+        });
+        socket.on('disconnect', function(){
+            console.log('home page socket disconnected');
+            socket.removeAllListeners();
         });
 
 
@@ -112,14 +121,14 @@
         }
         $scope.logout = function () {
             FacebookService.logout(function (response) {
-                console.log('logout response: ', response);
+                // console.log('logout response: ', response);
                 $scope.status = false;
             })
         }
 
         $scope.disconnect = function () {
             FacebookService.disconnect(function (response) {
-                console.log('disconnect response: ', response);
+                // console.log('disconnect response: ', response);
                 $scope.status = false;
             })
         }
@@ -148,7 +157,6 @@
             })
         }
         $scope.shareEvent = function () {
-            console.log('verify scope values: ', $scope.event.image);
             FacebookService.share({
                 href: 'http://www.worldsword.com/sociale',
                 title: 'Event of the week',
