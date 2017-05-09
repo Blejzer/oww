@@ -176,7 +176,7 @@ function NewConnection(data, callback) {
     visitor = data.visitor;
     if ((visitor.address !== '::1') && (visitor.address !== '::ffff:127.0.0.1') && (visitor.address !=='fe80::1')){
         ipJson = cityLookup.get(visitor.address);
-        console.log('pronadjena adresa izgleda ovako: ', ipJson);
+        console.log('pronadjena adresa izgleda ovako: ', ipJson.country.names.en);
     }else {
         visitor.address = '::ffff:24.201.206.226';
         ipJson = cityLookup.get(visitor.address);

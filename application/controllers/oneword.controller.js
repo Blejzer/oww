@@ -2,10 +2,17 @@
     'use strict';
 
     angular.module('oneWordWorld')
-        .controller('OwwController', OwwController);
+        .controller('OwwController', OwwController).run(['$rootScope', '$location', registerRedirection]);
 
     OwwController.$inject = ['$rootScope', '$scope', '$location', '$state', '$window', 'socket'];
     function OwwController($rootScope, $scope, $location, $state, $window, socket) {
+
+        $scope.myModel = {
+            Url: 'http://www.worldsword.com',
+            Name: "World`s word is a place where you should try and express yourself in ONE word only!",
+            ImageUrl: 'http://www.worldsword.com/images/OneWordWorld1.png'
+        };
+
         $rootScope.$on('$viewContentLoaded', function (event) {
             $window.ga('send', 'pageview', {page: $location.url()});
         });
@@ -26,7 +33,7 @@
         // });
 
         socket.on('conn', function (num) {
-            // console.log('socket.on conn fired', $scope.event);
+            console.log('socket.on conn fired', $scope.event);
             $scope.users = num;
             // $scope.event = event;
             // $scope.person = person;
@@ -34,7 +41,7 @@
             $rootScope.event = $scope.event;
         });
         socket.on('test', function (listEvent, listPerson) {
-            // console.log('socket.on test fired');
+            console.log('socket.on test fired');
             $scope.event = listEvent;
             $scope.person = listPerson;
             $rootScope.person = listPerson;
@@ -48,7 +55,9 @@
             socket.removeAllListeners();
         });
 
-
+        $rootScope.$on("$routeChangeError", function () {
+            console.log("failed to change routes");
+        });
 
         // $scope.changeState = function () {
         //     //$state.go('contact.detail');
@@ -58,6 +67,15 @@
 
         $location.path("/")
 
+    }
+
+    // This function prevents redirection to home state once the requested state is loaded
+    // Still clueless on why it was happening in the first place
+
+    function registerRedirection($rootScope, $location){
+        $rootScope.$on('$locationChangeStart', function(event, next){
+            $location.path('/');
+        });
     }
 })();
 

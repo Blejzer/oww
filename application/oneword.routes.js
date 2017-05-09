@@ -15,28 +15,24 @@
                 url: '/:tag',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar.html'},
-                    // the main template will be placed here (relatively named)
-                    'main': {   templateUrl: 'views/home.html',
+                    '': {   templateUrl: 'views/home.html',
                             controller: 'HomeController'}
-                },
-                reloadOnSearch: true
-
+                }
             })
-            // novi prelaz na statistiku
             .state('person', {
                 url: '/person/:person_id',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar2.html'},
-                    'main': {
+                    '': {
                         templateUrl: 'views/person1.html',
-                        controller: "PersonController"}
+                        controller: 'PersonController'}
                 }
             })
             .state('aboutus', {
                 url: '/aboutus',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar2.html'},
-                    'main': {
+                    '': {
                         templateUrl: 'views/aboutus.html'}
                 }
             })
@@ -44,7 +40,7 @@
                 url: '/terms',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar2.html'},
-                    'main': {
+                    '': {
                         templateUrl: 'views/terms.html'}
                 }
             })
@@ -52,18 +48,18 @@
                 url: '/event/:event_id',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar2.html'},
-                    'main': {
+                    '': {
                         templateUrl: 'views/event2.html',
-                        controller: "EventController"}
+                        controller: 'EventController'}
                 }
             })
             .state('archive', {
                 url: '/archive',
                 views: {
                     'navbar@': { templateUrl: 'views/addons/navbar2.html'},
-                    'main': {
+                    '': {
                         templateUrl: 'views/archive.html',
-                        controller: "ArchiveController"}
+                        controller: 'ArchiveController'}
                 }
             });
 
@@ -74,58 +70,7 @@
         // $locationProvider.hashPrefix('!');
         // $locationProvider.html5Mode(true);
 
-    }
+    };
+
 })();
-
-
-// .state('event', {
-//     url: '/event?event_id',
-//     views: {
-//         'navbar@': { templateUrl: 'views/addons/navbar.html'},
-//         // the main template will be placed here (relatively named)
-//         '': {templateUrl: 'views/Event.html',
-//             controller: 'EventController'},
-//         'footer@': { templateUrl: 'views/addons/footer.html'}
-//     }
-// })
-// .state('econtinent', {
-//     url: '/econtinent:event_id',
-//     views: {
-//         'navbar@': { templateUrl: 'views/addons/navbar.html'},
-//         // the main template will be placed here (relatively named)
-//         '': {templateUrl: 'views/Econtinent.html',
-//             controller: 'EventController'},
-//         'footer@': { templateUrl: 'views/addons/footer.html'}
-//     }
-// })
-// .state('person', {
-//     url: '/person:person_id',
-//     views: {
-//         'navbar@': { templateUrl: 'views/addons/navbar.html'},
-//         '': {
-//             templateUrl: 'views/Person.html',
-//             controller: "PersonController"},
-//         'footer@': { templateUrl: 'views/addons/footer.html'}
-//     }
-// })
-// .state('pcontinent', {
-//     url: '/pcontinent:person_id',
-//     views: {
-//         'navbar@': { templateUrl: 'views/addons/navbar.html'},
-//         // the main template will be placed here (relatively named)
-//         '': {templateUrl: 'views/Pcontinent.html',
-//             controller: 'PersonController'},
-//         'footer@': { templateUrl: 'views/addons/footer.html'}
-//     }
-// })
-// .state('newevent', {
-//     url: '/newevent',
-//     views: {
-//         'navbar@': { templateUrl: 'views/addons/navbar.html'},
-//         // the main template will be placed here (relatively named)
-//         '': {templateUrl: 'views/newevent.html'},
-//         'footer@': { templateUrl: 'views/addons/footer.html'}
-//     }
-//
-// })
 

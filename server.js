@@ -57,16 +57,16 @@ app.get('/sociale', function (req, res) {
     console.log('This is SOCIALE req.url: ', req.url);
     var fakeip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     console.log(new Date(), "Client IP Address - assuming remote: socket.handshake.address: ", fakeip);
-    const regexList = [/facebookexternalhit\/[0-9]/, /Faceboot/];
+    const regexList = [/facebookexternalhit\/[0-9]/, /Faceboot/, /Twitterbot\/[0-9]/];
     const isMatch = regexList.some(function(rx) { return rx.test(str); });
     console.log('User-Agent: ' + str);
     console.log('isMatch: ', isMatch);
 
     if(!isMatch){
-        console.log ("FB visitor: Redirecting...");
+        console.log ("FB or Twitter visitor: Redirecting...");
         res.redirect('/');
     }else {
-        console.log('serving fb boot');
+        console.log('serving bots');
 
         var visitor = {};
         visitor.address = fakeip;
@@ -112,16 +112,16 @@ app.get('/socialp', function (req, res) {
     console.log('This is SOCIALP req.url: ', req.url);
     var fakeip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     console.log(new Date(), "Client IP Address - assuming remote: socket.handshake.address: ", fakeip);
-    const regexList = [/facebookexternalhit\/[0-9]/, /Faceboot/];
+    const regexList = [/facebookexternalhit\/[0-9]/, /Faceboot/, /Twitterbot\/[0-9]/];
     const isMatch = regexList.some(function(rx) { return rx.test(str); });
     console.log('User-Agent: ' + str);
     console.log('isMatch: ', isMatch);
 
     if(!isMatch){
-        console.log ("FB visitor: Redirecting...");
+        console.log ("FB or Twitter visitor: Redirecting...");
         res.redirect('/');
     }else {
-        console.log('serving fb boot');
+        console.log('serving bots');
 
         var visitor = {};
         visitor.address = fakeip;
@@ -218,6 +218,7 @@ app.get('/home', function (req, res) {
 });
 
 app.get('*', function (req, res) {
+    console.log('req.headers', req.headers);
     var str = req.headers['user-agent'];
     console.log('This is * req.url: ', req.url);
     const regexList = [/person/, /event/];
@@ -253,10 +254,12 @@ console.log("*******************************************************************
 io.sockets.on('connection', function (socket) {
     socket.removeAllListeners();
     var fakeip = socket.handshake.address;
-    console.log(new Date(), "Client IP Address - assuming remote: socket.handshake.address: ", fakeip);
+    var nowDate = new Date();
+    console.log(nowDate, "Client IP Address - assuming remote: socket.handshake.address: ", fakeip);
 
     var visitor = {};
     visitor.address = fakeip;
+    visitor.nowDate = nowDate;
     var data = {"data": "newconn", "visitor": visitor};
     jack = JSON.stringify(data);
 

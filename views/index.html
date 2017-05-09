@@ -11,7 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="World's word is a place where you should try and express yourself in ONE word only!">
     <meta name="author" content="Nikola Kujaca - www.bdslab.info">
-
     <!-- Bootstrap Core CSS -->
     <link href="scripts/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -19,6 +18,8 @@
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" rel="stylesheet">-->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js" rel="stylesheet">-->
 
     <!-- Plugin CSS -->
     <link rel="stylesheet" href="scripts/font-awesome/css/font-awesome.min.css">
@@ -60,32 +61,28 @@
 </head>
 
 <body id="page-top" ng-app="oneWordWorld" ng-controller="OwwController">
-<!--<div id="fb-root"></div>-->
-<!--<script>(function(d, s, id) {-->
-    <!--var js, fjs = d.getElementsByTagName(s)[0];-->
-    <!--if (d.getElementById(id)) return;-->
-    <!--js = d.createElement(s); js.id = id;-->
-    <!--js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=415516472142865";-->
-    <!--fjs.parentNode.insertBefore(js, fjs);-->
-<!--}(document, 'script', 'facebook-jssdk'));</script>-->
 
 
 <div ui-view="navbar"></div>
 
-<div ui-view="main"></div>
+<div ui-view></div>
 
 <footer>
     <div class="container">
         <p>&copy; 2017 World's Word. All Rights Reserved.</p>
         <ul class="list-inline">
             <li>
-                <a ui-sref="aboutus" href="#page-top">About Us</a>
+                <a ui-sref="aboutus">About Us</a>
             </li>
             <li>
-                <a ui-sref="terms" href="#page-top">Terms</a>
+                <a ui-sref="terms">Terms</a>
             </li>
             <li>
                 <button class="fb-share" data-ng-click="shareWorld()"><span class="glyphicon glyphicon-thumbs-up"></span><span class="fb-share-text"> Share World</span></button>
+            </li>
+            <li>
+                <div tweet="myModel.Name" tweet-url="myModel.Url" tweet-img="myModel.ImageUrl"></div>
+                <!--<a href="https://twitter.com/share" class="twitter-share-button" data-text="Hi! Check out what Worlds Word has to say on the person of the week" data-url="http://www.worldsword.com/socialp" data-hashtags="worldsword" data-show-count="true">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>-->
             </li>
         </ul>
         <p style="font-size: xx-small">This product includes GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com" target="_blank">http://www.maxmind.com</a>.</p>
@@ -113,6 +110,9 @@
 
 <!--AngularJS briant f socket purifier-->
 <script src="custom/js/socket.js"></script>
+<!--<script src="custom/css/theme-default.css"></script>-->
+<script src="custom/js/bootstrap-datepicker.js"></script>
+<script src="custom/js/angulike.js"></script>
 
 <!-- Main OneWordWorld Module -->
 <script src="application/oneword.module.js"></script>
@@ -123,8 +123,8 @@
 <script src="application/controllers/home.controller.js"></script>
 <script src="application/controllers/event.controller.js"></script>
 <script src="application/controllers/person.controller.js"></script>
-<script src="application/controllers/fb.controller.js"></script>
-<script src="application/controllers/social.controller.js"></script>
+<script src="application/controllers/archive.controller.js"></script>
+<!--<script src="application/controllers/social.controller.js"></script>-->
 <script src="application/factories/kukiz.function.js"></script>
 <!--<script src="application/factories/visitor.factory.min.js"></script>-->
 <script src="application/factories/fb.factory.js"></script>

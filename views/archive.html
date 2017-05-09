@@ -1,55 +1,41 @@
-
-
-<div class="container">
+<header>
     <div class="row text-center">
         <h1>World's Word Archive</h1>
         <h3 >Select the week you want to view!</h3>
     </div>
+</header>
+
+<div class="container">
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-sm-4">
-            <form class="form-horizontal" name="up.upload_form">
+            <form class="form-horizontal" ng-controller="ArchiveController as up" name="up.upload_form">
                 <div class="panel panel-default">
                     <div class="panel-body form-group-separated">
-
                         <div class="form-group">
+                            <label for="sel1">Select list:</label>
+                            <select class="form-control" id="sel1" ng-model="up.sel1">
+                                <option>Person</option>
+                                <option>Event</option>
+                            </select>
+                        </div>
 
-
-                            <div class="col-md-6 col-xs-12">
-                                <input ng-model="up.week" name="week" id="week" type="week"
-                                       placeholder="YYYYW## 201712" min="2017W6"
-                                       max="2017W52" required />
-                                <span class="help-block">Select week</span>
-                            </div>
+                        <div class="form-group input-group date">
+                            <label for="week">Pick any day of the week to review: </label>
+                            <input class="form-control datepicker"  ng-model="up.week" name="week" id="week" type="text"
+                                   placeholder="YYYY-W##" min="2017W6"
+                                   max="2017W52" required />
+                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
                     <div class="panel-footer">
                         <button class="btn btn-default">Clear Form</button>
-                        <button class="btn btn-primary pull-right" ng-click="up.submitEvent()">Submit</button>
+                        <button class="btn btn-primary pull-right" ng-click="up.submitDate()">Submit</button>
                     </div>
                 </div>
             </form>
         </div>
         <div class="col-md-4"></div>
     </div>
-
-
-
 </div>
-<!-- Libs -->
-<!-- jQuery library -->
-<script src="scripts/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap Library -->
-<script src="scripts/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- AngularJS Libraries -->
-<script src="scripts/angular/angular.min.js"></script>
-<script src="scripts/ng-file-upload/dist/ng-file-upload-shim.js"></script>
-<script src="scripts/angular-ui-router/release/angular-ui-router.min.js"></script>
-<script src="scripts/angular-cookies/angular-cookies.js"></script>
-<script src="scripts/moment/moment.js"></script>
-<script src="scripts/angular-moment/angular-moment.js"></script>
-
-
-<script type="application/javascript" src="application/archive.module.js"></script>
-<!--<script type="application/javascript" src="/client/img.module.js"></script>-->
-
+<script type="text/javascript" src="custom/js/plugins.js"></script>

@@ -78,10 +78,10 @@ var upload = multer({ //multer settings
 
 require('../romanija/config/passport')(passport); // pass passport for configuration
 // app.set('views', [__dirname, '/views', __dirname, '/joli']);
-app.use('/joli', express.static('./romanija/joli'));
-app.use('/scripts', express.static('./node_modules'));
-app.use('/client', express.static('./romanija/client'));
-app.use('/images', express.static('./images'));
+app.use('/joli', express['static']('./romanija/joli'));
+app.use('/scripts', express['static']('./node_modules'));
+app.use('/client', express['static']('./romanija/client'));
+app.use('/images', express['static']('./images'));
 app.set('views', path.join(__dirname, '../romanija/views'));
 app.set('view engine', 'ejs'); // set up ejs for templating
 app.set('view options', { layout: false });
@@ -151,7 +151,6 @@ app.post('/person', isLoggedIn, function (req, res) {
             res.json({error_code: 1, err_desc: err});
             return;
         }
-        res.json({error_code: 0, err_desc: null});
 
         // samo naziv filea
         // console.log(res.req.body.title);
