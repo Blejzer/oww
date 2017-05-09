@@ -9,8 +9,10 @@
 
         $scope.myModel = {
             Url: 'http://www.worldsword.com',
+            Urle: 'http://www.worldsword.com/sociale',
+            Urlp: 'http://www.worldsword.com/socialp',
             Name: "World`s word is a place where you should try and express yourself in ONE word only!",
-            ImageUrl: 'http://www.worldsword.com/images/OneWordWorld1.png'
+            ImageUrl: 'http://www.worldsword.com/images/owwLogo.png'
         };
 
         $rootScope.$on('$viewContentLoaded', function (event) {
