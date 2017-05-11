@@ -53,6 +53,10 @@ module.exports = function(passport) {
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
         connection.query("SELECT * FROM korisnici WHERE id = ? ",[id], function(err, rows){
+            // TODO Provjeriti da li ovaj hvata error
+            if (err){
+                throw err;
+            }
             done(err, rows[0]);
         });
     });

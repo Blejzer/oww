@@ -628,15 +628,18 @@ img {
     float: right;
     padding-right: 2px;
 }
+/*
+Testiramo je css za slova preko slike
+ */
 
 .testiramo {
     position: absolute;
-    font-size-adjust: 12;
+    font-size-adjust: 6; /* Velicina fonta */
     top: 50%;
     left: 50%;
     float: left;
     margin: 0 auto;
-    transform: translate(50%, 50%) rotateZ(13deg) ;
+    transform: translate(50%, 50%) rotateZ(13deg) ; /* pozicioniranje i rotiranje fonta */
     -ms-transform: rotateZ(13deg) ; /* IE 9 */
     -webkit-transform: translate(-50%, -50%) rotateZ(13deg) ; /* Chrome, Safari, Opera */
     /*transform: rotate(13deg);*/
@@ -645,7 +648,7 @@ img {
 .fb-share {
     vertical-align: top;
     display: inline-block;
-    height: 18px;
+    height: 20px;
     padding: 0 4px;
     border: 1px solid #cad4e7;
     border-radius: 3px;
@@ -665,19 +668,22 @@ img {
 }
 .fb-share-icon {
     position: relative;
-    top: 2px;
+    /*top: 2px;*/
     display: inline-block;
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 18px;
     margin-right: 1px;
-    background-image: url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/y-/r/tbhIfdAHjXE.png);
+    background-image: url(/images/ThumbIcon_online/png/ThumbsUpSmall.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
     /* IE7 */
     *display: inline;
     *zoom: 1;
 }
 .fb-share-text {
     position: relative;
-    top: -1px;
+    top: -2px;
 }
 
 /* BOOTSTRAP DATEPICKER */

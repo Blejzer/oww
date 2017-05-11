@@ -53,9 +53,12 @@
                 </div>
             </div>
             <div>
-                <button type="button" class="fb-share" data-ng-click="sharePerson()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Person</button>
-                <div tweet="person.title" tweet-url="myModel.Urlp"></div>
+                <div class="col-md-6">
+                    <button type="button" class="fb-share" data-ng-click="sharePerson()"><span class="fa fa-facebook-f"></span><span class="fb-share-text"> Share Person</span></button>
+                </div>
+                <div class="col-md-6" tweet="person.title" tweet-url="myModel.Urlp"></div>
             </div>
+
         </div>
     </div>
 </section>
@@ -92,8 +95,12 @@
                 </div>
             </div>
             <div>
-                <button type="button" class="fb-share" data-ng-click="shareEvent()"><span class="glyphicon glyphicon-thumbs-up"></span> Share Event</button>
-                <div tweet="event.title" tweet-url="myModel.Urle"></div>
+                <div class="col-md-6 -align-right" style="vertical-align: bottom">
+                <button type="button" class="fb-share" data-ng-click="shareEvent()"><span class="fa fa-facebook"></span><span class="fb-share-text"> Share Event</span></button>
+                </div>
+                <div class="col-md-6">
+                    <div tweet="event.title" tweet-url="myModel.Urle"></div>
+                </div>
             </div>
         </div>
     </div>

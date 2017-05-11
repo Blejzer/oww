@@ -10,5 +10,6 @@
 
     // https://github.com/btford/angular-socket-io-seed to get more info on 'btford.socket-io'
     // http://krispo.github.io/angular-nvd3/
+    // https://github.com/lipis/bootstrap-social za dugmice
 
 })();

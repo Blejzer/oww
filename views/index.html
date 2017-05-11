@@ -24,6 +24,7 @@
     <!-- Plugin CSS -->
     <link rel="stylesheet" href="scripts/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="scripts/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="scripts/bootstrap-social/bootstrap-social.css">
 
     <!-- Theme CSS -->
     <link href="/custom/css/frontview.min.css" rel="stylesheet">
@@ -62,7 +63,6 @@
 
 <body id="page-top" ng-app="oneWordWorld" ng-controller="OwwController">
 
-
 <div ui-view="navbar"></div>
 
 <div ui-view></div>
@@ -78,10 +78,10 @@
                 <a ui-sref="terms">Terms</a>
             </li>
             <li>
-                <button class="fb-share" data-ng-click="shareWorld()"><span class="glyphicon glyphicon-thumbs-up"></span><span class="fb-share-text"> Share World</span></button>
+                <button class="fb-share" data-ng-click="shareWorld()"><span class="fb-share-icon"></span><span class="fb-share-text"> Share World</span></button>
             </li>
-            <li>
-                <div tweet="myModel.Name" tweet-url="myModel.Url"></div>
+            <li style="vertical-align: bottom">
+                <div  style="margin-bottom: -6%" tweet="myModel.Name" tweet-url="myModel.Url"></div>
                 <!--<a href="https://twitter.com/share" class="twitter-share-button" data-text="Hi! Check out what Worlds Word has to say on the person of the week" data-url="http://www.worldsword.com/socialp" data-hashtags="worldsword" data-show-count="true">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>-->
             </li>
         </ul>
