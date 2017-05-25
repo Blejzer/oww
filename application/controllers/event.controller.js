@@ -11,7 +11,20 @@
     EventController.$inject = ['$rootScope','$scope', 'socket'];
     function EventController($rootScope, $scope, socket) {
         // var ectrl = this;
-        var event_id = $rootScope.event.event_id;
+
+        var event_id;
+        // var week;
+        if($rootScope.archive){
+            console.log('archive exists: ', $rootScope.archive);
+            event_id = $rootScope.archive.event;
+            // week = $scope.archive.week;
+            // socket.emit('checkevnt', week);
+        }else{
+
+            console.log('archive exists: ', $scope.archive);
+            event_id = $rootScope.event.event_id;
+        }
+
         // Pie Chart configuration!
         $scope.options = {
             chart: {

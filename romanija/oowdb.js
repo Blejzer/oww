@@ -242,7 +242,7 @@ function checkAuth (req, res, next) {
 
 httpsServer.listen(port, function () {
     console.log(" Initialization sequence complete. ");
-    console.log(new Date(), 'Started TLS listening on port:8443');
+    console.log(new Date(), 'Started Secure TLS listening on port:443');
 });
 
 

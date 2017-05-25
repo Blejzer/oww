@@ -1,11 +1,11 @@
-<!-- views/social/person.ejs -->
+<!-- views/social/event.ejs -->
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <title>World's Word - Fastest Trends Stats</title>
+    <title>World's Word - Express yourself</title>
 
     <meta http-equiv="content-type" content="text/html" charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,10 +13,10 @@
     <meta name="description" content="World's word is a place where you should try and express yourself in ONE word only!">
     <meta name="author" content="Nikola Kujaca - www.bdslab.info">
     <meta property="fb:app_id"          content="415516472142865" />
-    <meta property="og:url"             content="http://www.worldsword.com/socialp" />
+    <meta property="og:url"             content="http://www.worldsword.com/sociale" />
     <meta property="og:type"            content="website" />
-    <meta property="og:title"           content="Person of the week" />
-    <meta property="og:description"     content='<%= event.title %>' />
+    <meta property="og:title"           content="Event of the week" />
+    <meta property="og:description"     content='<%=event.title%>' />
     <meta property="og:image"           content='http://www.worldsword.com/<%= event.image %>' />
     <meta property="og:image:type"      content="image/png" />
     <meta name="twitter:card"           content="summary" />
@@ -25,37 +25,103 @@
     <meta name="twitter:description"    content='<%=event.title%>' />
     <meta name="twitter:image"          content='http://www.worldsword.com/<%= event.image %>' />
 
+    <!-- Bootstrap Core CSS -->
+    <link href="scripts/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Plugin CSS -->
+    <!--<link rel="stylesheet" href="scripts/font-awesome/css/font-awesome.min.css">-->
+    <!--<link rel="stylesheet" href="scripts/simple-line-icons/css/simple-line-icons.css">-->
+
+    <!-- Theme CSS -->
+    <!--<link href="/custom/css/frontview.min.css" rel="stylesheet">-->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>-->
+    <!--<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
+    <![endif]-->
+
+    <!--Bootstrap import -->
+    <!--<link rel="stylesheet" href="scripts/nvd3/build/nv.d3.min.css">-->
+
+    <!--Favicons-->
+    <link rel="apple-touch-icon" sizes="57x57" href="images/icons.ico/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="images/icons.ico/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/icons.ico/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="images/icons.ico/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/icons.ico/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="images/icons.ico/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/icons.ico/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/icons.ico/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/icons.ico/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="images/icons.ico/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/icons.ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/icons.ico/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/icons.ico/favicon-16x16.png">
+    <link rel="manifest" href="images/icons.ico/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="images/icons.ico/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <base href="/">
 
 </head>
 
-<body id="page-top">
+<body>
 
-<section>
-    <div class="container">
-        <div class="col-md-12">
-            <h2><%= event.title %></h2>
-            <div class="badges style" style="background-image: url('../<%= event.image %>')">
-                <div class="testiramo">
-                    <strong>Person of the week!</strong>
-                </div>
-            </div>
+<div>
+    <h2><%= event.title %></h2>
+    <div style="background-image: url('../<%= event.image %>')">
+        <div>
+            <strong>Person of the week!</strong>
         </div>
-
     </div>
+</div>
 
-</section>
 
-<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-17888622-6', 'auto');
-    // ga('send', 'pageview');
+<!-- jQuery -->
+<!--<script src="scripts/jquery/dist/jquery.min.js"></script>-->
 
-</script>
+<!--Bootstrap Core JavaScript-->
+<!--<script src="scripts/bootstrap/dist/js/bootstrap.min.js"></script>-->
+
+<!-- AngularJS Libraries -->
+<!--<script src="scripts/angular/angular.min.js"></script>-->
+<!--<script src="scripts/ng-file-upload/dist/ng-file-upload-shim.js"></script>-->
+<!--<script src="scripts/angular-ui-router/release/angular-ui-router.min.js"></script>-->
+<!--<script src="scripts/moment/min/moment.min.js"></script>-->
+<!--<script src="scripts/angular-moment/angular-moment.min.js"></script>-->
+<!--<script src="scripts/angular-cookies/angular-cookies.min.js"></script>-->
+<!--Socket.io client Library-->
+<!--<script src="scripts/socket.io-client/dist/socket.io.slim.js"></script>-->
+
+<!-- AngularJS Charts using charts.js-->
+<!--<script src="scripts/d3/d3.min.js"></script>-->
+<!--<script src="scripts/nvd3/build/nv.d3.min.js"></script> &lt;!&ndash; or use another assembly &ndash;&gt;-->
+<!--<script src="scripts/angular-nvd3/dist/angular-nvd3.min.js"></script>-->
+<!--<script src="scripts/angular-facebook-factory/dist/bundle.min.js"></script>-->
+
+<!--AngularJS briant f socket purifier-->
+<!--<script src="custom/js/socket.js"></script>-->
+
+
+<!-- Main OneWordWorld Module -->
+<!--<script src="application/oneword.module.js"></script>-->
+<!--<script src="application/oneword.routes.js"></script>-->
+<!--<script src="application/factories/socket.factory.js"></script>-->
+<!--<script src="application/controllers/oneword.controller.js"></script>-->
+<!--<script src="application/controllers/home.controller.js"></script>-->
+<!--<script src="application/controllers/event.controller.js"></script>-->
+<!--<script src="application/factories/fb.factory.js"></script>-->
+<!--<script src="application/controllers/fb.controller.js"></script>-->
+
+
 
 </body>
 

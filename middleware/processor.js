@@ -111,6 +111,14 @@ var processor = net.createServer(function (conn) {
             }
                 break;
 
+            case "checkevnt": {
+                CheckEventID(data, function (rezultat) {
+                    console.log('rezultat: ', rezultat);
+                    conn.write(rezultat);
+                });
+            }
+                break;
+
             case "newEventPageLoaded": {
                 var rezultati = [];
                 function pushToAry(name, val) {
@@ -350,6 +358,36 @@ function InsertPersonWord(data, callback) {
     });
 }
 
+
+/* **********************************************
+ *     CHECKING EVENT_ID if we know week_id      *
+ * function Running geolocation on the provided  *
+ * IP address and saving it in the tlocation     *
+ * table. Returning list of 25 most used         *
+ * words in the current event                    *
+ *************************************************/
+function CheckEventID(data, callback) {
+    data = JSON.parse(data);
+    console.log("DATA: CheckEventID: Response from client: %s", data.data, data.week);
+
+    // working with database requesting full list of words for the given person
+    dbcon.getConnection(function (err, connection) {
+
+        connection.query(config.get('evnt.cur'), data.week, function (err, rows) {
+            if (err) {
+                if (err.fatal) {
+                    throw err;
+                }
+                console.error("Processor: List: CheckEventID: ", new Date(), config.get('poruke.konNaBazu'), err.code, err.fatal);
+            }
+            ritrn = JSON.stringify(rows);
+            console.log('CheckEventID: ', ritrn);
+            callback(ritrn);
+        });
+        connection.release();
+
+    });
+}
 
 /* **********************************************
  *     EVENT GLOBAL PAGE LOADED function         *
