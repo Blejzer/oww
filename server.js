@@ -442,11 +442,11 @@ io.sockets.on('connection', function (socket) {
 // pa je potrebno dostaviti duzi spisak rijeci po nekoj
 // kvalifikaciji
 // *********************************************************************
-    socket.on('checkevnt', function (week) {
+    socket.on('checkevnt', function (type, week) {
 
         console.log("Registrujem checkevnt socket ", week);
         // *********************************************************************
-        var data = {"data": "checkevnt", "week" : week}; // "ip": fakeip,
+        var data = {"data": type, "week" : week}; // "ip": fakeip,
         jack = JSON.stringify(data);
 
         // Create a socket (client) that connects to the server

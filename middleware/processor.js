@@ -111,7 +111,15 @@ var processor = net.createServer(function (conn) {
             }
                 break;
 
-            case "checkevnt": {
+            case "person": {
+                CheckEventID(data, function (rezultat) {
+                    console.log('rezultat: ', rezultat);
+                    conn.write(rezultat);
+                });
+            }
+                break;
+
+            case "event": {
                 CheckEventID(data, function (rezultat) {
                     console.log('rezultat: ', rezultat);
                     conn.write(rezultat);
@@ -369,11 +377,19 @@ function InsertPersonWord(data, callback) {
 function CheckEventID(data, callback) {
     data = JSON.parse(data);
     console.log("DATA: CheckEventID: Response from client: %s", data.data, data.week);
+    var query;
+
+    if(data.data=='event'){
+        query = config.get('evnt.cur');
+    }else{
+        query = config.get('prsn.cur');
+    }
 
     // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {
+        console.log('initializing connection to the database: ', query);
 
-        connection.query(config.get('evnt.cur'), data.week, function (err, rows) {
+        connection.query(query, data.week, function (err, rows) {
             if (err) {
                 if (err.fatal) {
                     throw err;

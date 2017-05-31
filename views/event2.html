@@ -1,29 +1,93 @@
 <header style="padding-top: 50px">
-    <div class="container">
-        <div class="col-md-12 text-center">
-            <h2>"{{ event.title }}"</h2>
-        </div>
-    </div>
-    <div class="container">
-        <div class="col-md-6">
-            <div>
-                <h2 class="text-center">Global feel</h2>
-            </div>
-            <div class="thumbnail">
-                <h3>Global feel</h3>
-                <nvd3 options="options" data="globalList"></nvd3>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div>
-                <h2 class="text-center">Per Continent feel</h2>
-            </div>
-            <div class="thumbnail" ng-repeat="kont in contList">
-                <h3>{{ kont.cont }}</h3>
-                <nvd3 options="options" data="kont.ewords"></nvd3>
-            </div>
-        </div>
+    <!--<div class="container">-->
+        <!--<div class="col-md-12 text-center">-->
+            <!--<h2>"{{ event.title }}"</h2>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="container">-->
+        <!--<div class="col-md-6">-->
+            <!--<div>-->
+                <!--<h2 class="text-center">Global feel</h2>-->
+            <!--</div>-->
+            <!--<div class="thumbnail">-->
+                <!--<h3>Global feel</h3>-->
+                <!--<nvd3 options="options" data="globalList"></nvd3>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-md-6">-->
+            <!--<div>-->
+                <!--<h2 class="text-center">Per Continent feel</h2>-->
+            <!--</div>-->
+            <!--<div class="thumbnail" ng-repeat="kont in contList">-->
+                <!--<h3>{{ kont.cont }}</h3>-->
+                <!--<nvd3 options="options" data="kont.ewords"></nvd3>-->
+            <!--</div>-->
+        <!--</div>-->
 
+    <!--</div>-->
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-sm-6"><img alt="Bootstrap Image Preview" src="{{event.image}}" class="img-thumbnail" /></div>
+                    <div class="col-sm-6">{{event.title}}</div>
+                </div>
+                <!--<p>-->
+                    <!--{{event.title}}-->
+                <!--</p>-->
+                <!--<img alt="Bootstrap Image Preview" src="{{event.image}}" class="img-thumbnail" />-->
+                <table class="table table-inverse table-sm">
+                    <tr>
+                        <th>#</th>
+                        <th>Word</th>
+                        <th>Repetitions</th>
+                    </tr>
+                    <tr ng-repeat="item in globalList | limitTo:10">
+                        <td>[{{$index + 1}}]</td>
+                        <td> {{item.a}}</td>
+                        <td> {{item.c}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div >
+                <div>
+                    <h2 class="text-center">Global feel</h2>
+                </div>
+                <div class="thumbnail">
+                    <nvd3 options="options" data="globalList"></nvd3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <h2 class="text-center">Per Continent feel</h2>
+                </div>
+                <div class="thumbnail" ng-repeat="kont in contList">
+                    <h3>{{ kont.cont }}</h3>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-inverse table-sm">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Word</th>
+                                    <th>Repetitions</th>
+                                </tr>
+                                <tr ng-repeat="item in kont.ewords | limitTo:10">
+                                    <td>[{{$index + 1}}]</td>
+                                    <td> {{item.a}}</td>
+                                    <td> {{item.c}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-sm-6"><nvd3 options="options" data="kont.ewords"></nvd3></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 </header>
 
