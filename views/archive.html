@@ -14,9 +14,10 @@
                     <div class="panel-body form-group-separated">
                         <div class="form-group">
                             <label for="sel1">Select list:</label>
-                            <select class="form-control" id="sel1" ng-model="up.sel1">
-                                <option>Person</option>
-                                <option>Event</option>
+                            <select class="form-control" name="sel1" id="sel1" ng-model="up.sel1" ng-options="type.TypeID as type.TypeName for type in types" ng-required="true">
+                                <!--<option>Person</option>-->
+                                <!--<option>Event</option>-->
+                                <option value=''>- Please Choose -</option>
                             </select>
                         </div>
 
@@ -24,7 +25,7 @@
                             <label for="week">Pick any day of the week to review: </label>
                             <input class="form-control datepicker"  ng-model="up.week" name="week" id="week" type="text"
                                    placeholder="YYYY-W##" min="2017W6"
-                                   max="2017W52" required />
+                                   max="2017W52" ng-required="true" />
                             <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>

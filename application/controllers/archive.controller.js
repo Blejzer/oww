@@ -10,6 +10,11 @@
 
     function ArchiveController ($rootScope, $state, socket, $scope) {
 
+        $scope.types = [
+            {typeID: 'person', TypeName: 'Person'},
+            {typeID: 'event', TypeName: 'Event'},
+        ];
+
         console.log('ArchiveController loaded');
         if($rootScope.archive){
             console.log('$rootScope.archive exists... removing');
@@ -17,6 +22,7 @@
         }
 
         var vm = this;
+        vm.sel1 = '';
         // vm.test = moment(vm.week).format('YYYYWW');
         // console.log('test', vm.test);
         vm.bar = 0;
