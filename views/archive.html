@@ -23,20 +23,20 @@
                         <div class="form-group input-group date">
                             <label for="week">Pick any day of the week to review: </label>
                             <input class="form-control datepicker"  ng-model="up.week" name="week" id="week" type="text"
-                                   placeholder="YYYY-W##" min="2017W6" ng-required="true" />
+                                   placeholder="YYYY-W##" min="2017W6" ng-required="true" min="2017W18"/>
                             <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button class="btn btn-default">Clear Form</button>
-                        <button class="btn btn-primary pull-right" ng-disabled="up.sel1==undefined || up.sel1=='' || up.upload_form.$invalid" ng-click="up.submitDate()">Submit</button>
+                        <button class="btn btn-default" type="reset">Clear Form</button>
+                        <button type="button" class="btn btn-primary pull-right" ng-disabled="up.sel1==undefined || up.sel1=='' || up.upload_form.$invalid" ng-click="up.submitDate()">Submit</button>
                     </div>
                 </div>
             </form>
         </div>
         <div class="col-md-4"></div>
     </div>
-
+    <img class="spinner" ng-show="loading" src="/images/spinner.svg" />
     <div data-ng-show="archive" class="row">
         <div class="col-lg-6">
             <div class="row">

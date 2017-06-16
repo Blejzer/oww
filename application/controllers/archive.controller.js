@@ -15,6 +15,9 @@
             {typeID: 'event', TypeName: 'Event'},
         ];
 
+        console.log('$scope.loading: ', $scope.loading);
+        $scope.loading = false;
+
         console.log('ArchiveController loaded');
         if($rootScope.archive){
             console.log('$rootScope.archive exists... removing');
@@ -29,6 +32,7 @@
 
 
         vm.submitDate = function () { //function to call on form submit
+            $scope.loading = true;
             console.log('vm.title ', vm.sel1);
             console.log('vm.week ', vm.week);
             var test = moment(vm.week).format('YYYYWW');
@@ -51,6 +55,7 @@
             }else if(result[0].event_id){
                 socket.emit('newEventPageLoaded', result[0].event_id);
             }
+            console.log('$scope.loading: ', $scope.loading);
         });
 
         socket.on('disconnect', function(){
@@ -107,7 +112,7 @@
                 })
             });
             $scope.contList = resultingArray;
-
+            $scope.loading = false;
         });
 
         socket.on('personPageSuccess', function(json){
@@ -129,6 +134,7 @@
                 })
             });
             $scope.contList = resultingArray;
+            $scope.loading = false;
         });
 
 

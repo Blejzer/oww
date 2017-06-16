@@ -21,7 +21,9 @@
     </div>
 </header>
 <section id="person" class="person bg-person text-center">
-    <div class="container">
+    <img class="spinner" ng-show="loading" src="/images/spinner.svg" />
+    <div ng-hide="loading" class="container">
+        <h2>{{ person.title }}</h2>
         <div class="col-md-4">
             <h4 class="section-heading">How do you feel about <i class="fa fa-arrow-right" aria-hidden="true"></i></h4>
             <form id="formPerson" ng-submit="submitPword()">
@@ -38,15 +40,15 @@
                 <li ng-repeat="pword in pwords track by $index">{{pword}}</li>
             </ul>
             <table class="table table-condensed">
-                <tr><td>Current leading feels</td></tr>
                 <tr ng-repeat="t in personList">
                     <td>{{ t.a }}</td>
                     <td>{{ t.c }}</td>
                 </tr>
             </table>
+            <p><a ui-sref="person({person_id : '{{ person.person_id }}'})">See results</a></p>
         </div>
         <div class="col-md-8" id="sharePersonDiv">
-            <h2>{{ person.title }}</h2>
+
             <div class="badges style" style="background-image: url('{{ person.image }}')">
                 <div class="testiramo">
                     <strong>{{pi}}</strong>
@@ -65,6 +67,7 @@
 
 <section id="event" class="event bg-event text-center">
     <div class="container">
+        <h2>{{ event.title }}</h2>
         <div class="col-md-4">
             <h4 class="section-heading">How do you feel about <i class="fa fa-arrow-right" aria-hidden="true"></i></h4>
             <form id="formEvent" ng-submit="submitEword()">
@@ -86,9 +89,10 @@
                     <td>{{ t.c }}</td>
                 </tr>
             </table>
+            <p><a ui-sref="event({event_id : '{{ event.event_id }}'})">See results</a></p>
         </div>
         <div class="col-md-8" id="shareEventDiv">
-            <h2>{{ event.title }}</h2>
+
             <div class="badges style" style="background-image: url('{{ event.image }}')">
                 <div class="testiramo">
                     <strong>{{ei}}</strong>
