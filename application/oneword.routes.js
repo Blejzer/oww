@@ -59,7 +59,7 @@
                     'navbar@': { templateUrl: 'views/addons/navbar2.html'},
                     '': {
                         templateUrl: 'views/archive.html',
-                        controller: 'ArchiveController'}
+                        controller: 'ArchiveController as up'}
                 }
             });
 

@@ -1,45 +1,100 @@
-<header>
+<header style="padding: 50px 0px 0px 0px">
     <div class="row text-center">
         <h1>World's Word Archive</h1>
         <h3 >Select the week you want to view!</h3>
     </div>
-</header>
 
 <div class="container">
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-sm-4">
-            <form class="form-horizontal" ng-controller="ArchiveController as up" name="up.upload_form">
+            <form class="form-horizontal" name="up.upload_form">
                 <div class="panel panel-default">
                     <div class="panel-body form-group-separated">
                         <div class="form-group">
                             <label for="sel1">Select list:</label>
-                            <select class="form-control" name="sel1" id="sel1" ng-model="up.sel1" ng-options="type.TypeID as type.TypeName for type in types" ng-required="true">
-                                <!--<option>Person</option>-->
-                                <!--<option>Event</option>-->
+                            <select name='sel1' id="sel1" ng-model="up.sel1" class="form-control">
                                 <option value=''>- Please Choose -</option>
+                                <option ng-repeat="type in types" value="{{type.typeID}}" ng-selected="up.sel1 == type.typeID">{{type.TypeName}}
+                                </option>
                             </select>
                         </div>
 
                         <div class="form-group input-group date">
                             <label for="week">Pick any day of the week to review: </label>
                             <input class="form-control datepicker"  ng-model="up.week" name="week" id="week" type="text"
-                                   placeholder="YYYY-W##" min="2017W6"
-                                   max="2017W52" ng-required="true" />
+                                   placeholder="YYYY-W##" min="2017W6" ng-required="true" />
                             <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
                     <div class="panel-footer">
                         <button class="btn btn-default">Clear Form</button>
-                        <button class="btn btn-primary pull-right" ng-click="up.submitDate()">Submit</button>
+                        <button class="btn btn-primary pull-right" ng-disabled="up.sel1==undefined || up.sel1=='' || up.upload_form.$invalid" ng-click="up.submitDate()">Submit</button>
                     </div>
                 </div>
             </form>
         </div>
         <div class="col-md-4"></div>
     </div>
-    <div ng-show="globalList">
-        TESTIRAMO
+
+    <div data-ng-show="archive" class="row">
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-sm-6"><img alt="Bootstrap Image Preview" src="{{archive.image}}" class="img-thumbnail" /></div>
+                <div class="col-sm-6">{{archive.title}}</div>
+            </div>
+            <table class="table table-inverse table-sm">
+                <tr>
+                    <th>#</th>
+                    <th>Word</th>
+                    <th>Repetitions</th>
+                </tr>
+                <tr ng-repeat="item in globalList | limitTo:10">
+                    <td>[{{$index + 1}}]</td>
+                    <td> {{item.a}}</td>
+                    <td> {{item.c}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6 thumbnail">
+            <div>
+                <h2 class="text-center">Global feel</h2>
+            </div>
+            <div>
+                <nvd3 options="options" data="globalList"></nvd3>
+            </div>
+        </div>
+    </div>
+    <div data-ng-show="archive" class="row">
+        <div class="col-md-12">
+            <div>
+                <h2 class="text-center">Per Continent feel</h2>
+            </div>
+            <div class="col-xs-pull-12" ng-repeat="kont in contList">
+                <h3>{{ kont.cont }}</h3>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <table class="table table-inverse table-sm">
+                            <tr>
+                                <th>#</th>
+                                <th>Word</th>
+                                <th>Repetitions</th>
+                            </tr>
+                            <tr ng-repeat="item in kont.words | limitTo:10">
+                                <td>[{{$index + 1}}]</td>
+                                <td> {{item.a}}</td>
+                                <td> {{item.c}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-xs-6 thumbnail"><nvd3 options="options" data="kont.words"></nvd3></div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
+
+</header>
+
 <script type="text/javascript" src="custom/js/plugins.js"></script>

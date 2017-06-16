@@ -424,8 +424,8 @@ io.sockets.on('connection', function (socket) {
         // Cekamo odgovor sa procesora i osvjezenu event listu
         procSocket.on("data", function (data) {
             var list = JSON.parse(data);
-            console.log("list", list);
-            console.log("list[0]", list[0]);
+            console.log("newEventPageLoaded list: ", list);
+            console.log("newEventPageLoaded list[0]: ", list[0]);
             console.log("test",list[0].global);
             console.log("list[1]", list[1].continent);
             socket.emit('eventCtnPageSuccess', list[1].continent);
@@ -442,9 +442,9 @@ io.sockets.on('connection', function (socket) {
 // pa je potrebno dostaviti duzi spisak rijeci po nekoj
 // kvalifikaciji
 // *********************************************************************
-    socket.on('checkevnt', function (type, week) {
+    socket.on('checkarchive', function (type, week) {
 
-        console.log("Registrujem checkevnt socket ", week);
+        console.log("Registrujem checkarchive socket ", type, week);
         // *********************************************************************
         var data = {"data": type, "week" : week}; // "ip": fakeip,
         jack = JSON.stringify(data);
@@ -452,18 +452,14 @@ io.sockets.on('connection', function (socket) {
         // Create a socket (client) that connects to the server
         var procSocket = new net.Socket();
         procSocket.connect(3001, "localhost", function () {
-            console.log("Server: checkevnt: Connected to Processor");
+            console.log("Server: checkarchive: Connected to Processor");
             procSocket.write(jack);
         });
 
         // Cekamo odgovor sa procesora i osvjezenu event listu
         procSocket.on("data", function (data) {
             var list = JSON.parse(data);
-            console.log("list", list);
-            // console.log("list[0]", list[0]);
-            // console.log("test",list[0].global);
-            // console.log("list[1]", list[1].continent);
-            // socket.emit('eventCtnPageSuccess', list[1].continent);
+            console.log("checkarchive list: ", list);
             socket.emit('checkOK', JSON.stringify(list));
             console.log('checkOK emitted! ', list);
             procSocket.end();

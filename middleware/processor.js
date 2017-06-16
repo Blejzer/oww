@@ -384,6 +384,7 @@ function CheckEventID(data, callback) {
     }else{
         query = config.get('prsn.cur');
     }
+    console.log("DATA: CheckEventID: Query looks like: %s", query);
 
     // working with database requesting full list of words for the given person
     dbcon.getConnection(function (err, connection) {

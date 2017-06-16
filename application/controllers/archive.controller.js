@@ -22,7 +22,7 @@
         }
 
         var vm = this;
-        vm.sel1 = '';
+        // vm.sel1 = '';
         // vm.test = moment(vm.week).format('YYYYWW');
         // console.log('test', vm.test);
         vm.bar = 0;
@@ -36,8 +36,8 @@
             // console.log('archive.type: ', archive.type);
             // $rootScope.archive = archive;
             if(vm.sel1){
-                socket.emit('checkevnt', vm.sel1.toLowerCase(), test);
-                console.log('checkevnt emited');
+                socket.emit('checkarchive', vm.sel1, test);
+                console.log('checkarchive emited');
             }
 
         };
@@ -46,13 +46,15 @@
             var result = JSON.parse(json);
             console.log('checkOK received', result[0]);
             $rootScope.archive = result[0];
-            // socket.emit('newEventPageLoaded', archive.event);
-            console.log('event chosen', $rootScope.archive);
-            // $state.go(vm.sel1.toLowerCase());
+            if(result[0].person_id){
+                socket.emit('newPersonPageLoaded', result[0].person_id);
+            }else if(result[0].event_id){
+                socket.emit('newEventPageLoaded', result[0].event_id);
+            }
         });
 
         socket.on('disconnect', function(){
-            // delete $rootScope.archive;
+            delete $rootScope.archive;
             console.log('archive page socket disconnected');
             socket.removeAllListeners();
         });
@@ -90,7 +92,7 @@
         socket.on('eventPageSuccess', function(json){
             var evt = JSON.parse(json);
             $scope.globalList = evt;
-            $scope.edata = evt;
+            $scope.data = evt;
         });
         socket.on('eventCtnPageSuccess', function(json){
 
@@ -101,7 +103,7 @@
                 words = cont.ewords;
                 resultingArray.push({
                     cont: cont.cont,
-                    ewords: words
+                    words: words
                 })
             });
             $scope.contList = resultingArray;
@@ -112,7 +114,7 @@
 
             var glbprsn = JSON.parse(json);
             $scope.globalList = glbprsn;
-            $scope.pdata = glbprsn;
+            $scope.data = glbprsn;
         });
         socket.on('personCtnPageSuccess', function(json){
 
@@ -123,7 +125,7 @@
                 words = cont.pwords;
                 resultingArray.push({
                     cont: cont.cont,
-                    pwords: words
+                    words: words
                 })
             });
             $scope.contList = resultingArray;

@@ -25,7 +25,7 @@ $(function() {
         //Daterangepicker 
         var feDaterangepicker = function(){
             if($(".daterange").length > 0)
-               $(".daterange").daterangepicker({format: 'YYYY-MM-DD',startDate: '2013-01-01',endDate: '2013-12-31'});
+               $(".daterange").daterangepicker({format: 'YYYY-MM-DD',startDate: '2013-01-01',endDate: new Date});
         }
         // END Daterangepicker
         
