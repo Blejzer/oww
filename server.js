@@ -11,7 +11,7 @@
 /* ******************************************************
  * Loading all required middleware
  ********************************************************/
-var ver = 'owwServer v.0.1-alpha.20f';
+var ver = 'owwServer v.0.8-beta.20f';
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);

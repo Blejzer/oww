@@ -24,10 +24,10 @@
 
         // $scope.$apply();
 
-        console.log('fbevent page started');
+        // console.log('fbevent page started');
 
         $scope.$on('$viewContentLoaded', function () {
-            console.log('SocialController inside $viewContentLoaded', $scope.event);
+            // console.log('SocialController inside $viewContentLoaded', $scope.event);
         });
 
     }
