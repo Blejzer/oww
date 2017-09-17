@@ -32,7 +32,7 @@ var db = require('./config/processing');
 var app = express();
 var port = 443;
 
-console.log("baza podataka: ", db);
+console.log("baza podataka: ", db.constructor);
 
 // var privateKey  = fs.readFileSync('/etc/letsencrypt/live/worldsword.com/privkey.pem');
 // var certificate = fs.readFileSync('/etc/letsencrypt/live/worldsword.com/cert.pem');

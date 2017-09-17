@@ -1,6 +1,7 @@
 var mysql = require("mysql");
 var Config = require("config-js"); // Da bi ucitali config.js file, moramo imati ovaj modul ???
 var config = new Config("./application/config/config.js");
+console.log(config.configObj.sequel);
 
 // Pravimo konekciju na bazu podataka koristeci podatke iz config.js file
 var dbcon = mysql.createPool({
@@ -23,7 +24,7 @@ var dbcon = mysql.createPool({
  *************************************************/
 module.exports = {
     insertEvent: function(data, callback){
-    // console.log("DATA: Event: %s", data.title, data.path, data.week);
+    console.log("DATA: Event: %s", data.title, data.path, data.week);
 
     // working with database inserting new event
     dbcon.getConnection(function (err, connection) {
