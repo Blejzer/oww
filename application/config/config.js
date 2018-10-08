@@ -13,20 +13,22 @@ module.exports = {
 
 
     /**************************************
-    *   Database configuration parameters
-    *
-    *   contains two versions:
-    *   - db4free.net testing version
-    *   - production version (localhost)
+     *
+     *   Database configuration parameters
+     *
+     *   contains two versions:
+     *   - db4free.net testing version
+     *   - production version (localhost)
+     *     - TRYING TO MOVE THIS TO .ENV FILE
     ***************************************/
-    sequel: {
-        conlimt: '10',
-        link: 'mysql8.db4free.net',
-        baza: 'onewordengine',
-        juzer: 'owwuser',
-        lozinka: 'myscrtW0rd',
-        prt: 3307
-    },
+    // sequel: {
+    //     conlimt: '10',
+    //     link: 'mysql8.db4free.net',
+    //     baza: 'onewordengine',
+    //     juzer: 'owwuser',
+    //     lozinka: 'myscrtW0rd',
+    //     prt: 3307
+    // },
     // sequel : {
     //     conlimt: '10',
     //     link : 'localhost',
