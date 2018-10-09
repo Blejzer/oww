@@ -1,16 +1,16 @@
 var mysql = require("mysql");
 var Config = require("config-js"); // Da bi ucitali config.js file, moramo imati ovaj modul ???
-var config = new Config("./application/config/config.js");
-console.log(config.configObj.sequel);
+var config = new Config(process.env.OWW_ROOT_PATH + "/application/config/config.js");
+console.log(process.env);
 
 // Pravimo konekciju na bazu podataka koristeci podatke iz config.js file
 var dbcon = mysql.createPool({
-    connectionLimit: config.get('sequel.conlimt'),
-    host: config.get('sequel.link'),
-    user: config.get('sequel.juzer'),
-    password: config.get('sequel.lozinka'),
-    database: config.get('sequel.baza'),
-    port: config.get('sequel.prt')
+    connectionLimit: process.env.DB_VAR_CONN,
+    host: process.env.DB_VAR_LINK,
+    user: process.env.DB_VAR_JUZER,
+    password: process.env.DB_VAR_LOZINKA,
+    database: process.env.DB_VAR_BAZA,
+    port: process.env.DB_VAR_PORT
 });
 
 
