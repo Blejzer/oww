@@ -1,6 +1,6 @@
 var mysql = require("mysql");
 var Config = require("config-js"); // Da bi ucitali config.js file, moramo imati ovaj modul ???
-var config = new Config(process.env.OWW_ROOT_PATH + "/application/config/config.js");
+var config = new Config(process.env.OWW_DEV_PATH + "/application/config/config.js");
 console.log(process.env);
 
 // Pravimo konekciju na bazu podataka koristeci podatke iz config.js file

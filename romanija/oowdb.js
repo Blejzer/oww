@@ -43,7 +43,7 @@ if (myError.error) {
 }
 
 console.log('process.env', process.env);
-var db = require(process.env.OWW_ROOT_PATH+'/romanija/config/processing');
+var db = require(process.env.OWW_DEV_PATH+'/romanija/config/processing');
 console.log("baza podataka: ", db.constructor);
 
 // var privateKey  = fs.readFileSync('/etc/letsencrypt/live/worldsword.com/privkey.pem');
@@ -55,8 +55,8 @@ console.log("baza podataka: ", db.constructor);
 //     ca: cacert
 // };
 //
-var privateKey  = fs.readFileSync(process.env.OWW_ROOT_PATH+'/romanija/localhost-key.pem', 'utf8');
-var certificate = fs.readFileSync(process.env.OWW_ROOT_PATH+'/romanija/localhost-cert.pem', 'utf8');
+var privateKey  = fs.readFileSync(process.env.OWW_DEV_PATH+'/romanija/localhost-key.pem', 'utf8');
+var certificate = fs.readFileSync(process.env.OWW_DEV_PATH+'/romanija/localhost-cert.pem', 'utf8');
 var options = {
     key: privateKey,
     cert: certificate,
@@ -69,7 +69,7 @@ var options = {
 var storage = multer.diskStorage({ //multers disk storage settings
     destination: function (req, file, cb) {
         console.log("setting up destination");
-        cb(null, process.env.OWW_ROOT_PATH+'/images/upload');
+        cb(null, process.env.OWW_DEV_PATH+'/images/upload');
     },
     filename: function (req, file, cb) {
         console.log("setting up filename");
@@ -78,7 +78,7 @@ var storage = multer.diskStorage({ //multers disk storage settings
         cb(null, name);
     }
 });
-console.log("File upload destination set to: romanija/images/upload");
+console.log("File upload destination set to: /images/upload");
 console.log("*********************************************************************\n");
 
 var upload = multer({ //multer settings
@@ -88,13 +88,13 @@ var upload = multer({ //multer settings
 
 
 
-require('../romanija/config/passport')(passport); // pass passport for configuration
+require(process.env.OWW_DEV_PATH+'/romanija/config/passport')(passport); // pass passport for configuration
 // app.set('views', [__dirname, '/views', __dirname, '/joli']);
-app.use('/joli', express['static'](process.env.OWW_ROOT_PATH+'/romanija/joli'));
-app.use('/scripts', express['static'](process.env.OWW_ROOT_PATH+'/node_modules'));
-app.use('/client', express['static'](process.env.OWW_ROOT_PATH+'/romanija/client'));
-app.use('/images', express['static'](process.env.OWW_ROOT_PATH+'/images'));
-app.set('views', path.join(process.env.OWW_ROOT_PATH, '/romanija/views'));
+app.use('/joli', express['static'](process.env.OWW_DEV_PATH+'/romanija/joli'));
+app.use('/scripts', express['static'](process.env.OWW_DEV_PATH+'/node_modules'));
+app.use('/client', express['static'](process.env.OWW_DEV_PATH+'/romanija/client'));
+app.use('/images', express['static'](process.env.OWW_DEV_PATH+'/images'));
+app.set('views', path.join(process.env.OWW_DEV_PATH, '/romanija/views'));
 app.set('view engine', 'ejs'); // set up ejs for templating
 app.set('view options', { layout: false });
 app.set('trust proxy', 1);  // trust first proxy
@@ -165,9 +165,9 @@ app.post('/person', isLoggedIn, function (req, res) {
         }
 
         // samo naziv filea
-        // console.log(res.req.body.title);
-        // console.log(res.req.file.path);
-        // console.log(res.req.body.week);
+        console.log(res.req.body.title);
+        console.log(res.req.file.path);
+        console.log(res.req.body.week);
 
         var data = {title: res.req.body.title, path: res.req.file.path, week: res.req.body.week};
         db.insertPerson(data, function (rezultat) {
@@ -235,7 +235,7 @@ console.log("*******************************************************************
 
 
 // routes ======================================================================
-require('../romanija/app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require(process.env.OWW_DEV_PATH+'/romanija/app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 var httpsServer = https.createServer(options, app);
 

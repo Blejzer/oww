@@ -473,7 +473,7 @@ io.sockets.on('connection', function (socket) {
 /* *****************************************************************
  *                  Palimo server na portu 80.                     *
  * *****************************************************************/
-http.listen(80, function () {
+http.listen(8088, function () {
     console.log(ver, " Initialization sequence complete. ");
     console.log(new Date(), 'Started listening on port:80');
 });
