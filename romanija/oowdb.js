@@ -31,6 +31,7 @@ var name;
 var dotenv = require("dotenv").config({ path: "/Volumes/Projects/Internal/onewordworld" }); // Environment variables
 var app = express();
 var port = 443;
+var uploadFileName="";
 
 var dotenv = require("dotenv"); // Environment variables
 
@@ -75,10 +76,11 @@ var storage = multer.diskStorage({ //multers disk storage settings
         console.log("setting up filename");
         var datetimestamp = Date.now();
         name = file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1];
+        uploadFileName = name;
         cb(null, name);
     }
 });
-console.log("File upload destination set to: /images/upload");
+console.log("File upload destination set to: "+process.env.OWW_DEV_PATH+"/images/upload");
 console.log("*********************************************************************\n");
 
 var upload = multer({ //multer settings
@@ -139,7 +141,8 @@ app.post('/event', isLoggedIn, function (req, res) {
         // console.log(res.req.file.path);
         // console.log(res.req.body.week);
 
-        var data = {title: res.req.body.title, path: res.req.file.path, week: res.req.body.week};
+        var stringa = res.req.file.path.substring(process.env.OWW_DEV_PATH.length+1);
+        var data = {title: res.req.body.title, path: stringa, week: res.req.body.week};
         db.insertEvent(data, function (rezultat) {
             console.log("DATA: end of InsertEventWord - result: ", rezultat);
 
@@ -168,8 +171,8 @@ app.post('/person', isLoggedIn, function (req, res) {
         console.log(res.req.body.title);
         console.log(res.req.file.path);
         console.log(res.req.body.week);
-
-        var data = {title: res.req.body.title, path: res.req.file.path, week: res.req.body.week};
+        var stringa = res.req.file.path.substring(process.env.OWW_DEV_PATH.length+1);
+        var data = {title: res.req.body.title, path: stringa, week: res.req.body.week};
         db.insertPerson(data, function (rezultat) {
             console.log("DATA: end of InsertPerson - result: ", rezultat);
             if(rezultat.weekcheck){
