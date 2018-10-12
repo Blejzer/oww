@@ -1,11 +1,11 @@
 // config/database.js
 module.exports = {
     'connection': {
-        'host': 'mysql8.db4free.net',
-        'user': 'owwuser',
-        'password': 'myscrtW0rd',
-        'port':3307
+        'host': process.env.DB_VAR_LINK,
+        'user': process.env.DB_VAR_JUZER,
+        'password': process.env.DB_VAR_LOZINKA,
+        'port':process.env.DB_VAR_PORT
     },
-	'database': 'onewordengine',
-    'users_table': 'korisnici'
+	'database': process.env.DB_VAR_BAZA,
+    'users_table': process.env.DB_VAR_TABELA
 };

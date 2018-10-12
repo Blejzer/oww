@@ -28,11 +28,24 @@ var https = require('https');
 var path = require('path');
 var multer = require('multer')
 var name;
-var db = require('./config/processing');
+var dotenv = require("dotenv").config({ path: "/Volumes/Projects/Internal/onewordworld" }); // Environment variables
 var app = express();
 var port = 443;
+var uploadFileName="";
 
-console.log("baza podataka: ", db);
+var dotenv = require("dotenv"); // Environment variables
+
+// const { error } = dotenv.config({ path: "/home/deploy/www/worldsword.com/current/" });
+
+const myError = dotenv.config({path: "/Volumes/Projects/Internal/onewordworld/.env"});
+
+if (myError.error) {
+    throw myError.error
+}
+
+console.log('process.env', process.env);
+var db = require(process.env.OWW_DEV_PATH+'/romanija/config/processing');
+console.log("baza podataka: ", db.constructor);
 
 // var privateKey  = fs.readFileSync('/etc/letsencrypt/live/worldsword.com/privkey.pem');
 // var certificate = fs.readFileSync('/etc/letsencrypt/live/worldsword.com/cert.pem');
@@ -43,8 +56,8 @@ console.log("baza podataka: ", db);
 //     ca: cacert
 // };
 //
-var privateKey  = fs.readFileSync('./romanija/localhost-key.pem', 'utf8');
-var certificate = fs.readFileSync('./romanija/localhost-cert.pem', 'utf8');
+var privateKey  = fs.readFileSync(process.env.OWW_DEV_PATH+'/romanija/localhost-key.pem', 'utf8');
+var certificate = fs.readFileSync(process.env.OWW_DEV_PATH+'/romanija/localhost-cert.pem', 'utf8');
 var options = {
     key: privateKey,
     cert: certificate,
@@ -57,16 +70,17 @@ var options = {
 var storage = multer.diskStorage({ //multers disk storage settings
     destination: function (req, file, cb) {
         console.log("setting up destination");
-        cb(null, './images/upload');
+        cb(null, process.env.OWW_DEV_PATH+'/images/upload');
     },
     filename: function (req, file, cb) {
         console.log("setting up filename");
         var datetimestamp = Date.now();
         name = file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1];
+        uploadFileName = name;
         cb(null, name);
     }
 });
-console.log("File upload destination set to: romanija/images/upload");
+console.log("File upload destination set to: "+process.env.OWW_DEV_PATH+"/images/upload");
 console.log("*********************************************************************\n");
 
 var upload = multer({ //multer settings
@@ -76,13 +90,13 @@ var upload = multer({ //multer settings
 
 
 
-require('../romanija/config/passport')(passport); // pass passport for configuration
+require(process.env.OWW_DEV_PATH+'/romanija/config/passport')(passport); // pass passport for configuration
 // app.set('views', [__dirname, '/views', __dirname, '/joli']);
-app.use('/joli', express['static']('./romanija/joli'));
-app.use('/scripts', express['static']('./node_modules'));
-app.use('/client', express['static']('./romanija/client'));
-app.use('/images', express['static']('./images'));
-app.set('views', path.join(__dirname, '../romanija/views'));
+app.use('/joli', express['static'](process.env.OWW_DEV_PATH+'/romanija/joli'));
+app.use('/scripts', express['static'](process.env.OWW_DEV_PATH+'/node_modules'));
+app.use('/client', express['static'](process.env.OWW_DEV_PATH+'/romanija/client'));
+app.use('/images', express['static'](process.env.OWW_DEV_PATH+'/images'));
+app.set('views', path.join(process.env.OWW_DEV_PATH, '/romanija/views'));
 app.set('view engine', 'ejs'); // set up ejs for templating
 app.set('view options', { layout: false });
 app.set('trust proxy', 1);  // trust first proxy
@@ -127,7 +141,8 @@ app.post('/event', isLoggedIn, function (req, res) {
         // console.log(res.req.file.path);
         // console.log(res.req.body.week);
 
-        var data = {title: res.req.body.title, path: res.req.file.path, week: res.req.body.week};
+        var stringa = res.req.file.path.substring(process.env.OWW_DEV_PATH.length+1);
+        var data = {title: res.req.body.title, path: stringa, week: res.req.body.week};
         db.insertEvent(data, function (rezultat) {
             console.log("DATA: end of InsertEventWord - result: ", rezultat);
 
@@ -153,11 +168,11 @@ app.post('/person', isLoggedIn, function (req, res) {
         }
 
         // samo naziv filea
-        // console.log(res.req.body.title);
-        // console.log(res.req.file.path);
-        // console.log(res.req.body.week);
-
-        var data = {title: res.req.body.title, path: res.req.file.path, week: res.req.body.week};
+        console.log(res.req.body.title);
+        console.log(res.req.file.path);
+        console.log(res.req.body.week);
+        var stringa = res.req.file.path.substring(process.env.OWW_DEV_PATH.length+1);
+        var data = {title: res.req.body.title, path: stringa, week: res.req.body.week};
         db.insertPerson(data, function (rezultat) {
             console.log("DATA: end of InsertPerson - result: ", rezultat);
             if(rezultat.weekcheck){
@@ -223,7 +238,7 @@ console.log("*******************************************************************
 
 
 // routes ======================================================================
-require('../romanija/app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require(process.env.OWW_DEV_PATH+'/romanija/app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 var httpsServer = https.createServer(options, app);
 

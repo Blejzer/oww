@@ -16,20 +16,29 @@ const net = require("net");
 var mysql = require("mysql");
 var maxmind = require("maxmind"); // GeoLite2-City.mmdb
 var Config = require("config-js"); // Da bi ucitali config.js file, moramo imati ovaj modul ???
-var config = new Config("application/config/config.js");
+var config = new Config(__dirname+ "/application/config/config.js");
+var dotenv = require("dotenv"); // Environment variables
+
+// const { error } = dotenv.config({ path: "/home/deploy/www/worldsword.com/current/" });
+
+// var myError = dotenv.config({path: "/Volumes/Projects/Internal/onewordworld/.env"});
+//
+// if (myError.error) {
+//     throw myError.error
+// }
 
 // Pravimo konekciju na bazu podataka koristeci podatke iz config.js file
 var dbcon = mysql.createPool({
-    connectionLimit: config.get('sequel.conlimt'),
-    host: config.get('sequel.link'),
-    user: config.get('sequel.juzer'),
-    password: config.get('sequel.lozinka'),
-    database: config.get('sequel.baza'),
-    port: config.get('sequel.prt')
+    connectionLimit: process.env.DB_VAR_CONN,
+    host: process.env.DB_VAR_LINK,
+    user: process.env.DB_VAR_JUZER,
+    password: process.env.DB_VAR_LOZINKA,
+    database: process.env.DB_VAR_BAZA,
+    port: process.env.DB_VAR_PORT
 });
 
 // kreiramo konekciju na maxmind
-var cityLookup = maxmind.openSync('data/maxmind/GeoLite2-City.mmdb');
+var cityLookup = maxmind.openSync(__dirname+'/data/maxmind/GeoLite2-City.mmdb');
 
 // Kreiramo jednostavan server
 var processor = net.createServer(function (conn) {

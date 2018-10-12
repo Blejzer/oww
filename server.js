@@ -38,12 +38,12 @@ console.log("Loaded all required modules");
  * required for image upload
  ********************************************************/
 app.enable('trust proxy');
-app.use('/bootstrap', express['static']('bootstrap'));
-app.use('/scripts', express['static']('node_modules/'));
-app.use('/custom', express['static']('custom'));
-app.use('/images', express['static']('images'));
-app.use('/application', express['static']('application'));
-app.use('/views', express['static']('views'));
+app.use('/bootstrap', express['static'](__dirname+'/bootstrap'));
+app.use('/scripts', express['static'](__dirname+'/node_modules/'));
+app.use('/custom', express['static'](__dirname+'/custom'));
+app.use('/images', express['static'](__dirname+'/images'));
+app.use('/application', express['static'](__dirname+'/application'));
+app.use('/views', express['static'](__dirname+'/views'));
 app.use('/.well-known', express['static']('/.well-known'));
 app.set('view engine', 'ejs'); // set up ejs for templating
 
@@ -228,7 +228,7 @@ app.get('*', function (req, res) {
         res.redirect('/');
     }else{
 
-    res.sendFile(__dirname + '/views/index.html');
+        res.sendFile(__dirname + '/views/index.html');
 
     }
 
@@ -300,7 +300,7 @@ io.sockets.on('connection', function (socket) {
 
     //
     socket.on('disconnect', function () {
-        console.log(new Date(), "Diskonekcija: Broj trenutnih korisnika: ", io.engine.clientsCount);
+        console.log(new Date(), "Diskonekcija: Broj trenutnih korisnika: ", io.engine.clientsCount); // this is just a test
         // console.log(socket.list());
         io.sockets.emit('conn', io.engine.clientsCount);
         socket.removeAllListeners();
@@ -437,11 +437,11 @@ io.sockets.on('connection', function (socket) {
 
 
 
-// *********************************************************************
-// Socket u slucaju kada korisnik otvori stranicu Results -> Event
-// pa je potrebno dostaviti duzi spisak rijeci po nekoj
-// kvalifikaciji
-// *********************************************************************
+    // *********************************************************************
+    // Socket u slucaju kada korisnik otvori stranicu Results -> Event
+    // pa je potrebno dostaviti duzi spisak rijeci po nekoj
+    // kvalifikaciji
+    // *********************************************************************
     socket.on('checkarchive', function (type, week) {
 
         console.log("Registrujem checkarchive socket ", type, week);
