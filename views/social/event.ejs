@@ -25,31 +25,6 @@
     <meta name="twitter:description"    content='<%=event.title%>' />
     <meta name="twitter:image"          content='http://www.worldsword.com/<%= event.image %>' />
 
-    <!-- Bootstrap Core CSS -->
-    <link href="scripts/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
-
-    <!-- Plugin CSS -->
-    <link rel="stylesheet" href="scripts/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="scripts/simple-line-icons/css/simple-line-icons.css">
-
-    <!-- Theme CSS -->
-    <link href="/custom/css/frontview.min.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!--Bootstrap import -->
-    <!--<link rel="stylesheet" href="scripts/nvd3/build/nv.d3.min.css">-->
-
     <!--Favicons-->
     <link rel="apple-touch-icon" sizes="57x57" href="images/icons.ico/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="images/icons.ico/apple-icon-60x60.png">
@@ -70,60 +45,28 @@
     <meta name="theme-color" content="#ffffff">
     <base href="/">
 
+    <style>
+        div {
+          height: 100%;
+          width: 100%;
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: contain;
+        }
+        </style>
+
 </head>
 
-<body ng-app="oneWordWorld" >
-<div ui-view="navbar2"></div>
+<body>
 
 <div class="col-md-8" ng-controller="FbController">
     <h2><%= event.title %></h2>
-    <div class="badges style" style="background-image: url('../<%= event.image %>')">
-        <div class="testiramo">
+    <div style="background-image: url('../<%= event.image %>')">
+        <div>
             <strong>Event of the week!</strong>
         </div>
     </div>
 </div>
-
-
-
-<!-- jQuery -->
-<script src="scripts/jquery/dist/jquery.min.js"></script>
-
- Bootstrap Core JavaScript
-<script src="scripts/bootstrap/dist/js/bootstrap.min.js"></script>
-
-<!-- AngularJS Libraries -->
-<script src="scripts/angular/angular.min.js"></script>
-<script src="scripts/ng-file-upload/dist/ng-file-upload-shim.js"></script>
-<script src="scripts/angular-ui-router/release/angular-ui-router.min.js"></script>
-<script src="scripts/moment/min/moment.min.js"></script>
-<script src="scripts/angular-moment/angular-moment.min.js"></script>
-<script src="scripts/angular-cookies/angular-cookies.min.js"></script>
-<!--Socket.io client Library-->
-<script src="scripts/socket.io-client/dist/socket.io.slim.js"></script>
-
-<!-- AngularJS Charts using charts.js-->
-<script src="scripts/d3/d3.min.js"></script>
-<script src="scripts/nvd3/build/nv.d3.min.js"></script> <!-- or use another assembly -->
-<script src="scripts/angular-nvd3/dist/angular-nvd3.min.js"></script>
-<script src="scripts/angular-facebook-factory/dist/bundle.min.js"></script>
-
-<!--AngularJS briant f socket purifier-->
-<script src="custom/js/socket.js"></script>
-
-
-<!-- Main OneWordWorld Module -->
-<script src="application/oneword.module.js"></script>
-<script src="application/oneword.routes.js"></script>
-<script src="application/factories/socket.factory.js"></script>
-<script src="application/controllers/oneword.controller.js"></script>
-<script src="application/controllers/home.controller.js"></script>
-<script src="application/controllers/event.controller.js"></script>
-<script src="application/factories/fb.factory.js"></script>
-<script src="application/controllers/fb.controller.js"></script>
-
-
-
 </body>
 
 </html>

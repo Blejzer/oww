@@ -24,20 +24,18 @@ var flash = require('connect-flash');
 var morgan = require('morgan');
 var passport = require('passport');
 var fs = require('fs');
-var https = require('https');
+var app = express();
+var http = require('http').Server(app);
 var path = require('path');
 var multer = require('multer')
 var name;
-var dotenv = require("dotenv").config({ path: "/Volumes/Projects/Internal/onewordworld" }); // Environment variables
-var app = express();
-var port = 443;
-var uploadFileName="";
-
 var dotenv = require("dotenv"); // Environment variables
+var port = 8089;
+var uploadFileName="";
 
 // const { error } = dotenv.config({ path: "/home/deploy/www/worldsword.com/current/" });
 
-const myError = dotenv.config({path: "/Volumes/Projects/Internal/onewordworld/.env"});
+const myError = dotenv.config({path: "/Volumes/Projects/Internal/onewordworld/.env"}); // "/Volumes/Projects/Internal/onewordworld/.env"
 
 if (myError.error) {
     throw myError.error
@@ -240,7 +238,7 @@ console.log("*******************************************************************
 // routes ======================================================================
 require(process.env.OWW_DEV_PATH+'/romanija/app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-var httpsServer = https.createServer(options, app);
+// var httpsServer = https.createServer(options, app);
 
 function checkAuth (req, res, next) {
     console.log('checkAuth ' + req.url);
@@ -255,9 +253,9 @@ function checkAuth (req, res, next) {
     next();
 }
 
-httpsServer.listen(port, function () {
+http.listen(port, function () {
     console.log(" Initialization sequence complete. ");
-    console.log(new Date(), 'Started Secure TLS listening on port:443');
+    console.log(new Date(), 'Started Secure TLS listening on port:8089');
 });
 
 

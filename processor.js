@@ -19,13 +19,11 @@ var Config = require("config-js"); // Da bi ucitali config.js file, moramo imati
 var config = new Config(__dirname+ "/application/config/config.js");
 var dotenv = require("dotenv"); // Environment variables
 
-// const { error } = dotenv.config({ path: "/home/deploy/www/worldsword.com/current/" });
+var myError = dotenv.config({path: "/Volumes/Projects/Internal/onewordworld/.env"}); // "/home/deploy/www/worldsword.com/current/"
 
-// var myError = dotenv.config({path: "/Volumes/Projects/Internal/onewordworld/.env"});
-//
-// if (myError.error) {
-//     throw myError.error
-// }
+if (myError.error) {
+    throw myError.error
+}
 
 // Pravimo konekciju na bazu podataka koristeci podatke iz config.js file
 var dbcon = mysql.createPool({
@@ -36,6 +34,8 @@ var dbcon = mysql.createPool({
     database: process.env.DB_VAR_BAZA,
     port: process.env.DB_VAR_PORT
 });
+
+
 
 // kreiramo konekciju na maxmind
 var cityLookup = maxmind.openSync(__dirname+'/data/maxmind/GeoLite2-City.mmdb');
