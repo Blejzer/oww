@@ -62,10 +62,10 @@ app.get('/sociale', function (req, res) {
     console.log('User-Agent: ' + str);
     console.log('isMatch: ', isMatch);
 
-    // if(!isMatch){
-    //     console.log ("FB or Twitter visitor: Redirecting...");
-    //     res.redirect('/');
-    // }else {
+    if(!isMatch){
+        console.log ("FB or Twitter visitor: Redirecting...");
+        res.redirect('/');
+    }else {
         console.log('serving bots');
 
         var visitor = {};
@@ -103,7 +103,7 @@ app.get('/sociale', function (req, res) {
 
             procSocket.end();
         });
-    // }
+    }
 
 });
 // Serving person sharing
@@ -117,10 +117,10 @@ app.get('/socialp', function (req, res) {
     console.log('User-Agent: ' + str);
     console.log('isMatch: ', isMatch);
 
-    // if(!isMatch){
-    //     console.log ("FB or Twitter visitor: Redirecting...");
-    //     res.redirect('/');
-    // }else {
+    if(!isMatch){
+        console.log ("FB or Twitter visitor: Redirecting...");
+        res.redirect('/');
+    }else {
         console.log('serving bots');
 
         var visitor = {};
@@ -158,7 +158,7 @@ app.get('/socialp', function (req, res) {
 
             procSocket.end();
         });
-    // }
+    }
 
 });
 
