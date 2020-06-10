@@ -31,7 +31,7 @@
     "express-session": "^1.15.6",
     "font-awesome": "^4.7.0",
     "fs": "0.0.1-security",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "maxmind": "^2.7.0",
     "moment": "^2.22.2",
     "morgan": "~1.9.1",
