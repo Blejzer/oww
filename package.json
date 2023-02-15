@@ -20,7 +20,7 @@
     "body-parser": "^1.18.3",
     "bootstrap": "^3.4.1",
     "bootstrap-social": "^5.1.1",
-    "config-js": "^1.1.9",
+    "config-js": "^1.1.15",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.0.1",
     "debug": "^4.1.0",
