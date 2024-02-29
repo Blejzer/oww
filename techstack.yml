@@ -2,7 +2,7 @@ repo_name: Blejzer/oww
 report_id: 4ac9f9ede9f9bc77f1553d07e7a7f9f4
 version: 0.1
 repo_type: Public
-timestamp: '2024-02-01T07:42:30+00:00'
+timestamp: '2024-02-29T19:48:53+00:00'
 requested_by: Blejzer
 provider: github
 branch: master
@@ -310,6 +310,12 @@ tools:
   last_updated_by: dependabot[bot]
   last_updated_on: 2020-06-18 15:33:34.000000000 Z
   vulnerabilities:
+  - name: angular vulnerable to super-linear runtime due to backtracking
+    cve_id: CVE-2024-21490
+    cve_url: https://github.com/advisories/GHSA-4w4v-5hc9-xrr2
+    detected_date: Feb 14
+    severity: high
+    first_patched: 
   - name: angular vulnerable to regular expression denial of service via the $resource
       service
     cve_id: CVE-2023-26117
