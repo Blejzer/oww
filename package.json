@@ -33,7 +33,7 @@
     "fs": "0.0.1-security",
     "jquery": "^3.5.0",
     "maxmind": "^2.7.0",
-    "moment": "^2.29.4",
+    "moment": "^2.31.0",
     "morgan": "~1.11.0",
     "multer": "^2.2.0",
     "mysql": "^2.16.0",
